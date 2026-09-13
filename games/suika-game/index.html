@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Suika Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="game-wrapper">
+        <!-- Left Side Panel: English Minimal UI -->
+        <aside class="side-panel">
+            <!-- 1. Game Title -->
+            <h1 class="brand-title">Suika Game</h1>
+
+            <!-- 2. Current Score -->
+            <div class="stat-box" id="scoreCard">
+                <div class="stat-label">SCORE</div>
+                <div class="stat-value" id="currentScore">0</div>
+            </div>
+
+            <!-- 3. High Score -->
+            <div class="stat-box high-score" id="highScoreCard">
+                <div class="stat-label">BEST</div>
+                <div class="stat-value" id="highScore">0</div>
+            </div>
+
+            <!-- Next Fruit Preview (Canvas only, no text) -->
+            <div class="next-fruit-card">
+                <canvas id="nextFruitCanvas" class="next-fruit-canvas" width="85" height="85"></canvas>
+            </div>
+
+            <!-- Difficulty Selector -->
+            <div class="difficulty-group" id="difficultyGroup">
+                <button class="diff-btn" data-diff="easy">EASY</button>
+                <button class="diff-btn active" data-diff="normal">NORMAL</button>
+                <button class="diff-btn" data-diff="hard">HARD</button>
+            </div>
+
+            <!-- 4. Restart Button -->
+            <div class="controls-group">
+                <button class="btn btn-primary" id="restartBtn">RESTART</button>
+            </div>
+        </aside>
+
+        <!-- Center Game Box & Bottom Evolution Canvas -->
+        <section class="game-center">
+            <!-- Canvas Viewport -->
+            <div class="canvas-container">
+                <canvas id="gameCanvas" width="440" height="680"></canvas>
+            </div>
+
+            <!-- Bottom Horizontal Evolution Bar (Pure Hand-Drawn Colored Pencil Canvas, No Text) -->
+            <div class="bottom-evolution-bar">
+                <canvas id="evolutionCanvas" width="440" height="50"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <!-- Game Over Modal -->
+    <div class="modal-overlay hidden" id="gameOverModal">
+        <div class="modal-box">
+            <div class="modal-score-cards">
+                <div class="stat-box">
+                    <div class="stat-label">SCORE</div>
+                    <div class="stat-value" id="finalScore">0</div>
+                </div>
+                <div class="stat-box high-score">
+                    <div class="stat-label">BEST</div>
+                    <div class="stat-value" id="bestScoreModal">0</div>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="modalRestartBtn" style="width: 100%; font-size: 18px; padding: 12px;">
+                RESTART
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="libs/matter.min.js"></script>
+    <script src="js/fruits.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

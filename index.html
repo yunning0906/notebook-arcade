@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Notebook Arcade</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 1. LOBBY VIEW -->
+    <div id="lobbyView" class="lobby-view">
+        <div class="lobby-container">
+            <!-- Header Banner -->
+            <header class="lobby-header">
+                <h1 class="portal-title">NOTEBOOK<br>ARCADE</h1>
+                <p class="portal-subtitle">Select a game to view rules and play</p>
+            </header>
+
+            <!-- 4 Game Cards (Pure English) -->
+            <main class="games-grid">
+                <!-- Game 1: Suika Game -->
+                <article class="game-card" data-game="suika">
+                    <div class="card-media">
+                        <img src="assets/suika-preview.png" alt="Suika Game" class="preview-img">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title-row">
+                            <h2 class="card-title">Suika Game</h2>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn-play" data-target="suika" aria-label="Play Suika Game">
+                                <span>PLAY</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Game 2: 2048 -->
+                <article class="game-card" data-game="2048">
+                    <div class="card-media">
+                        <img src="assets/2048-preview.png" alt="2048" class="preview-img">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title-row">
+                            <h2 class="card-title">2048</h2>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn-play" data-target="2048" aria-label="Play 2048">
+                                <span>PLAY</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Game 3: Bubble Shooter -->
+                <article class="game-card" data-game="bubble">
+                    <div class="card-media">
+                        <img src="assets/bubble-preview.png" alt="Bubble Shooter" class="preview-img">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title-row">
+                            <h2 class="card-title">Bubble Shooter</h2>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn-play" data-target="bubble" aria-label="Play Bubble Shooter">
+                                <span>PLAY</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Game 4: One Line -->
+                <article class="game-card" data-game="oneline">
+                    <div class="card-media">
+                        <img src="assets/oneline-preview.png" alt="One Line" class="preview-img">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title-row">
+                            <h2 class="card-title">One Line</h2>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn-play" data-target="oneline" aria-label="Play One Line">
+                                <span>PLAY</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </main>
+        </div>
+    </div>
+
+    <!-- 2. INSTRUCTION MODAL (Bilingual: English & Chinese) -->
+    <div id="instructionModal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <h3 class="modal-game-title" id="modalGameTitle">GAME TITLE</h3>
+                    <span class="modal-game-subtitle" id="modalGameSubtitle">遊戲名稱</span>
+                </div>
+            </div>
+            
+            <div class="modal-body" id="modalGameContent">
+                <!-- Dynamically injected bilingual instructions -->
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="btnCancelModal">
+                    <span>Back / 返回大廳</span>
+                </button>
+                <button class="btn btn-primary" id="btnConfirmStart">
+                    <span>Play Now / 開始遊玩</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. GAME PLAYER VIEW (Pure English Dock) -->
+    <div id="gamePlayerView" class="game-player-view hidden">
+        <nav class="floating-dock" id="floatingDock">
+            <!-- Lobby -->
+            <button class="dock-btn dock-home-btn" id="btnBackToLobby" title="Back to Lobby">
+                <span>LOBBY</span>
+            </button>
+
+            <span class="dock-divider"></span>
+
+            <!-- Game Tabs: Pure English -->
+            <div class="dock-games-group">
+                <button class="dock-tab-btn" data-game="suika">SUIKA</button>
+                <button class="dock-tab-btn" data-game="2048">2048</button>
+                <button class="dock-tab-btn" data-game="bubble">BUBBLE</button>
+                <button class="dock-tab-btn" data-game="oneline">ONE LINE</button>
+            </div>
+
+            <span class="dock-divider"></span>
+
+            <!-- Actions: Rules (Bilingual) & Fullscreen -->
+            <div class="dock-actions-group">
+                <button class="dock-tab-btn" id="btnShowRulesInGame" title="Rules / 說明">RULES</button>
+                <button class="dock-icon-btn" id="btnFullscreen" title="Toggle Fullscreen">
+                    <svg class="icon-expand" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                    </svg>
+                    <svg class="icon-compress hidden" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Iframe Container -->
+        <div class="iframe-container">
+            <iframe id="gameFrame" src="about:blank" title="Active Game Viewport" allow="autoplay; fullscreen"></iframe>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/portal.js"></script>
+</body>
+</html>

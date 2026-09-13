@@ -1,0 +1,652 @@
+:root {
+    /* Notebook Grid & Beige Palette from Suika Game */
+    --paper-bg: #F7F3E9;
+    --paper-grid: rgba(185, 168, 145, 0.22);
+    --paper-card: #FFFEFA;
+    --board-bg: #FFFDF9;
+    --cell-empty: #F4ECE1;
+    
+    --text-black: #000000;
+    --text-pencil: #222222;
+    --pencil-border: #524338;
+    
+    --sketch-border: 2px solid var(--pencil-border);
+    --sketch-border-thin: 1.8px solid var(--pencil-border);
+    
+    --font-main: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    
+    /* Dynamic Board Sizes */
+    --board-size: 440px;
+    --grid-gap: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--paper-bg);
+    /* Notebook Graph Paper Light Grid */
+    background-image: 
+        linear-gradient(to right, var(--paper-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--paper-grid) 1px, transparent 1px);
+    background-size: 22px 22px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-black);
+    overflow-x: hidden;
+    padding: 16px;
+}
+
+/* Main Layout Wrapper */
+.game-wrapper {
+    position: relative;
+    display: flex;
+    gap: 22px;
+    max-width: 800px;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+/* Left Side Panel: Clean Rounded Rectangle, No Shadow */
+.side-panel {
+    background: var(--paper-card);
+    border: var(--sketch-border);
+    border-radius: 24px;
+    padding: 22px;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 240px;
+}
+
+/* Brand Header */
+.brand-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+}
+
+/* 1. Game Title: Thinner font, Pure Black */
+.brand-title {
+    font-family: var(--font-main);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--text-black);
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
+/* Sound Toggle Button */
+.sound-toggle-btn {
+    background: transparent;
+    border: 1.6px solid var(--pencil-border);
+    border-radius: 10px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--pencil-border);
+    transition: all 0.15s ease;
+}
+
+.sound-toggle-btn:hover {
+    background: #F4EFE6;
+}
+
+.sound-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.sound-icon.hidden {
+    display: none;
+}
+
+/* Stat Cards: Thinner fonts, No Shadow */
+.stat-box {
+    background: #FFFDF8;
+    border: var(--sketch-border-thin);
+    border-radius: 16px;
+    padding: 10px 14px;
+    text-align: center;
+    box-shadow: none;
+    transition: transform 0.2s ease;
+}
+
+.stat-box.high-score {
+    background: #FFFDF8;
+    border-color: var(--pencil-border);
+}
+
+/* Thinner Text (500 ~ 600) */
+.stat-label {
+    font-family: var(--font-main);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-black);
+    margin-bottom: 2px;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    font-family: var(--font-main);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-black);
+    line-height: 1.1;
+}
+
+/* Difficulty Selector */
+.difficulty-group {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+}
+
+.diff-btn {
+    flex: 1;
+    font-family: var(--font-main);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 0;
+    text-align: center;
+    border: 1.6px solid var(--pencil-border);
+    border-radius: 12px;
+    background: #FFFDF8;
+    color: var(--text-black);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: none;
+    letter-spacing: 0.5px;
+}
+
+.diff-btn:hover {
+    transform: translateY(-1px);
+    background: #F4EFE6;
+}
+
+.diff-btn.active[data-size="3"] {
+    background: #F8DFDB;
+    border-color: #C98679;
+    color: #5C2820;
+}
+
+.diff-btn.active[data-size="4"] {
+    background: #FDF4DE;
+    border-color: #C2A25D;
+    color: #6B5115;
+}
+
+.diff-btn.active[data-size="5"] {
+    background: #E6EFE3;
+    border-color: #7E9F6E;
+    color: #2E4A23;
+}
+
+/* Controls Group */
+.controls-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Restart Button: Thinner text, No Shadow */
+.btn {
+    font-family: var(--font-main);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 16px;
+    border-radius: 16px;
+    border: var(--sketch-border-thin);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+    transition: all 0.15s ease;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: #F8DFDB;
+    color: #5C2820;
+    border-color: #C98679;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    background: #F2D1CC;
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.btn-secondary {
+    background: #E8F8F0;
+    border-color: #2D6A4F;
+    color: #1B4D2E;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-1px);
+    background: #D4F2E2;
+}
+
+.btn-secondary:active {
+    transform: translateY(1px);
+}
+
+.control-hint {
+    text-align: center;
+    font-size: 12px;
+    color: #7D6B5E;
+    font-weight: 500;
+    line-height: 1.4;
+    padding: 2px 4px;
+}
+
+/* Center Game Area */
+.game-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.board-outer-container {
+    position: relative;
+}
+
+/* Canvas / Board Container (Grid inside, No Shadow, Standard Rounded Rectangle) */
+.board-container {
+    position: relative;
+    width: var(--board-size);
+    height: var(--board-size);
+    background-color: var(--board-bg);
+    /* Notebook Grid inside Board */
+    background-image: 
+        linear-gradient(to right, rgba(185, 168, 145, 0.14) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(185, 168, 145, 0.14) 1px, transparent 1px);
+    background-size: 22px 22px;
+    border: var(--sketch-border);
+    border-radius: 24px;
+    box-shadow: none;
+    padding: var(--grid-gap);
+    touch-action: none;
+    cursor: grab;
+}
+
+.board-container:active {
+    cursor: grabbing;
+}
+
+/* Grid Cell Layers */
+.grid-layer {
+    position: absolute;
+    top: var(--grid-gap);
+    left: var(--grid-gap);
+    right: var(--grid-gap);
+    bottom: var(--grid-gap);
+    display: grid;
+    gap: var(--grid-gap);
+}
+
+.board-container.size-3 .grid-layer {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.board-container.size-4 .grid-layer {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+
+.board-container.size-5 .grid-layer {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+/* Empty Cell in Background (Soft cream pastel, no shadow) */
+.grid-cell {
+    background: var(--cell-empty);
+    border-radius: 14px;
+    box-shadow: none;
+}
+
+/* Active Tile Layer */
+.tile-layer {
+    position: absolute;
+    top: var(--grid-gap);
+    left: var(--grid-gap);
+    right: var(--grid-gap);
+    bottom: var(--grid-gap);
+    pointer-events: none;
+}
+
+/* Individual Tile: Pure color, Borderless, Rounded Rectangle, No Black Border */
+.tile {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    border: none;
+    box-shadow: none;
+    font-family: var(--font-main);
+    color: var(--text-black);
+    transition: transform 120ms ease-out;
+    will-change: transform;
+    z-index: 10;
+}
+
+/* Tile Number Typography: Pure Black, Crisp & Centered */
+.tile-number {
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 1;
+    color: var(--text-black);
+    letter-spacing: -0.5px;
+    z-index: 2;
+    text-align: center;
+}
+
+.board-container.size-3 .tile-number {
+    font-size: 42px;
+}
+
+.board-container.size-5 .tile-number {
+    font-size: 26px;
+}
+
+/* Spawn / Merge Animations */
+.tile-new {
+    animation: tile-pop 160ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tile-merged {
+    animation: tile-merge-pop 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 20;
+}
+
+@keyframes tile-pop {
+    0% {
+        transform: scale(0.2);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes tile-merge-pop {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.18);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Colored Pencil / Soft Macaron & Morandi Pastel Palette: Borderless Pure Colors (No Fluorescent/Neon) */
+.tile-2 {
+    background-color: #F7EFE8; /* Soft Almond Milk Cream */
+}
+.tile-4 {
+    background-color: #F5D6CE; /* Rose Macaron */
+}
+.tile-8 {
+    background-color: #F7D9C8; /* Peach Macaron */
+}
+.tile-16 {
+    background-color: #F3C7B6; /* Warm Biscuit Orange */
+}
+.tile-32 {
+    background-color: #D4E5CC; /* Pistachio Green (Soft, Zero Neon) */
+}
+.tile-64 {
+    background-color: #ECA89C; /* Coral Rose */
+}
+.tile-128 {
+    background-color: #F6E6BA; /* Vanilla Buttercream (Warm, Zero Neon) */
+}
+.tile-256 {
+    background-color: #D2ECE5; /* Mint Macaron (Calm, Zero Neon) */
+}
+.tile-512 {
+    background-color: #97BCDB; /* Sea Salt Dusty Blue */
+}
+.tile-1024 {
+    background-color: #D8C8EA; /* Lavender Macaron */
+}
+.tile-2048 {
+    background-color: #EAD098; /* Honey Caramel Amber (Rich, Zero Neon) */
+}
+.tile-4096 {
+    background-color: #B8D8D8; /* Dusty Eucalyptus */
+}
+.tile-8192 {
+    background-color: #D9B4C7; /* Dusty Mauve Rose */
+}
+.tile-super {
+    background-color: #C9B7A6; /* Earl Grey Milk Tea */
+}
+
+/* Higher numbers smaller font */
+.tile-128 .tile-number,
+.tile-256 .tile-number,
+.tile-512 .tile-number {
+    font-size: 24px;
+}
+.tile-1024 .tile-number,
+.tile-2048 .tile-number,
+.tile-4096 .tile-number,
+.tile-8192 .tile-number {
+    font-size: 20px;
+}
+
+/* Canvas for Floating Scores & Particles */
+.fx-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 30;
+}
+
+/* Game Over / Victory Modal: No Heavy Shadow */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+    padding: 20px;
+}
+
+.modal-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-box {
+    background: #FFFDF9;
+    border-radius: 24px;
+    padding: 28px 24px;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+    box-shadow: none;
+    border: var(--sketch-border);
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-black);
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+}
+
+.modal-subtext {
+    font-size: 14px;
+    font-weight: 500;
+    color: #7D6B5E;
+    margin-bottom: 18px;
+}
+
+.modal-score-cards {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.modal-score-cards .stat-box {
+    flex: 1;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-buttons .btn {
+    flex: 1;
+    font-size: 16px;
+    padding: 12px;
+}
+
+.modal-buttons .btn.hidden {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 780px) {
+    .game-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .side-panel {
+        width: 100%;
+        max-width: 440px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px;
+    }
+
+    .brand-header {
+        width: 100%;
+        margin-bottom: -4px;
+    }
+
+    .side-panel .stat-box {
+        flex: 1;
+        min-width: 90px;
+    }
+
+    .side-panel .difficulty-group {
+        width: 100%;
+    }
+
+    .side-panel .controls-group {
+        width: 100%;
+        flex-direction: row;
+    }
+
+    .side-panel .controls-group .btn {
+        flex: 1;
+    }
+
+    .control-hint {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --board-size: calc(100vw - 32px);
+        --grid-gap: 8px;
+    }
+
+    body {
+        padding: 10px;
+    }
+
+    .side-panel {
+        border-radius: 18px;
+        padding: 14px;
+        gap: 10px;
+    }
+
+    .brand-title {
+        font-size: 26px;
+    }
+
+    .stat-value {
+        font-size: 24px;
+    }
+
+    .board-container {
+        border-radius: 18px;
+    }
+
+    .grid-cell, .tile {
+        border-radius: 10px;
+    }
+
+    .tile-number {
+        font-size: 22px;
+    }
+    
+    .board-container.size-3 .tile-number {
+        font-size: 26px;
+    }
+
+    .board-container.size-5 .tile-number {
+        font-size: 17px;
+    }
+
+    .tile-128 .tile-number,
+    .tile-256 .tile-number,
+    .tile-512 .tile-number {
+        font-size: 18px;
+    }
+    .tile-1024 .tile-number,
+    .tile-2048 .tile-number,
+    .tile-4096 .tile-number,
+    .tile-8192 .tile-number {
+        font-size: 15px;
+    }
+}

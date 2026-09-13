@@ -1,0 +1,11 @@
+{
+  "name": "one-stroke-puzzle",
+  "version": "1.0.0",
+  "description": "Minimalist Notebook Aesthetic One-Stroke Line Puzzle Game",
+  "scripts": {
+    "dev": "npx -y serve . -l 3000",
+    "start": "npx -y serve . -l 3000"
+  },
+  "keywords": ["puzzle", "one-line", "game", "notebook", "web-audio"],
+  "license": "MIT"
+}

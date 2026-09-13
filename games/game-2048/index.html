@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2048</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="game-wrapper">
+        <!-- Left Side Panel: English Minimal UI matching Suika Game -->
+        <aside class="side-panel">
+            <!-- 1. Game Title -->
+            <div class="brand-header">
+                <h1 class="brand-title">2048</h1>
+                <button class="sound-toggle-btn" id="soundToggleBtn" aria-label="Toggle Sound" title="Sound Mute / Unmute">
+                    <svg class="sound-icon sound-on" id="soundIconOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    </svg>
+                    <svg class="sound-icon sound-off hidden" id="soundIconOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- 2. Current Score -->
+            <div class="stat-box" id="scoreCard">
+                <div class="stat-label">SCORE</div>
+                <div class="stat-value" id="currentScore">0</div>
+            </div>
+
+            <!-- 3. High Score -->
+            <div class="stat-box high-score" id="highScoreCard">
+                <div class="stat-label">BEST</div>
+                <div class="stat-value" id="highScore">0</div>
+            </div>
+
+            <!-- 4. Difficulty Selector (3x3 Challenge, 4x4 Classic, 5x5 Relax) -->
+            <div class="difficulty-group" id="difficultyGroup">
+                <button class="diff-btn" data-size="3" id="diffBtn3">3×3</button>
+                <button class="diff-btn active" data-size="4" id="diffBtn4">4×4</button>
+                <button class="diff-btn" data-size="5" id="diffBtn5">5×5</button>
+            </div>
+
+            <!-- 5. Controls Group: Restart Button -->
+            <div class="controls-group">
+                <button class="btn btn-primary" id="restartBtn">RESTART</button>
+            </div>
+
+            <!-- Instructions Hint -->
+            <div class="control-hint">
+                <span>Swipe, Drag or use Arrow Keys</span>
+            </div>
+        </aside>
+
+        <!-- Center Game Board Area -->
+        <section class="game-center">
+            <div class="board-outer-container">
+                <!-- Board grid viewport -->
+                <div class="board-container size-4" id="boardContainer">
+                    <!-- Background Grid Cells Layer -->
+                    <div class="grid-layer" id="gridLayer"></div>
+                    <!-- Dynamic Tiles Layer -->
+                    <div class="tile-layer" id="tileLayer"></div>
+                    <!-- Canvas for floating pure orange score + particles -->
+                    <canvas id="fxCanvas" class="fx-canvas"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Game Over / Victory Modal -->
+    <div class="modal-overlay hidden" id="gameOverModal">
+        <div class="modal-box">
+            <h2 class="modal-title" id="modalTitle">GAME OVER</h2>
+            <p class="modal-subtext" id="modalSubtext">No more moves available!</p>
+            <div class="modal-score-cards">
+                <div class="stat-box">
+                    <div class="stat-label">SCORE</div>
+                    <div class="stat-value" id="finalScore">0</div>
+                </div>
+                <div class="stat-box high-score">
+                    <div class="stat-label">BEST</div>
+                    <div class="stat-value" id="bestScoreModal">0</div>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary hidden" id="keepGoingBtn">KEEP GOING</button>
+                <button class="btn btn-primary" id="modalRestartBtn">TRY AGAIN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

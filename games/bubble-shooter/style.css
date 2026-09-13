@@ -1,0 +1,416 @@
+:root {
+    /* Notebook Grid & Beige Palette matching Suika Game & 2048 */
+    --paper-bg: #F7F3E9;
+    --paper-grid: rgba(185, 168, 145, 0.22);
+    --paper-card: #FFFEFA;
+    --board-bg: #FFFDF9;
+    
+    --text-black: #000000;
+    --text-pencil: #222222;
+    --pencil-border: #524338;
+    
+    --sketch-border: 2px solid var(--pencil-border);
+    --sketch-border-thin: 1.8px solid var(--pencil-border);
+    
+    --font-main: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    
+    --board-width: 360px;
+    --board-height: 540px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--paper-bg);
+    /* Notebook Graph Paper Light Grid */
+    background-image: 
+        linear-gradient(to right, var(--paper-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--paper-grid) 1px, transparent 1px);
+    background-size: 22px 22px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-black);
+    overflow-x: hidden;
+    padding: 16px;
+}
+
+/* Main Layout Wrapper */
+.game-wrapper {
+    position: relative;
+    display: flex;
+    gap: 22px;
+    max-width: 720px;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+/* Left Side Panel: Clean Rounded Rectangle, No Shadow */
+.side-panel {
+    background: var(--paper-card);
+    border: var(--sketch-border);
+    border-radius: 24px;
+    padding: 22px;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    width: 230px;
+    flex-shrink: 0;
+}
+
+/* Brand Header */
+.brand-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+}
+
+/* 1. Game Title: Thinner font, Pure Black */
+.brand-title {
+    font-family: var(--font-main);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--text-black);
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
+/* Sound Toggle Button */
+.sound-toggle-btn {
+    background: transparent;
+    border: 1.6px solid var(--pencil-border);
+    border-radius: 10px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--pencil-border);
+    transition: all 0.15s ease;
+}
+
+.sound-toggle-btn:hover {
+    background: #F4EFE6;
+}
+
+.sound-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.sound-icon.hidden {
+    display: none;
+}
+
+/* Stat Cards: Thinner fonts, No Shadow */
+.stat-box {
+    background: #FFFDF8;
+    border: var(--sketch-border-thin);
+    border-radius: 16px;
+    padding: 10px 14px;
+    text-align: center;
+    box-shadow: none;
+}
+
+.stat-label {
+    font-family: var(--font-main);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-black);
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
+}
+
+.stat-value {
+    font-family: var(--font-main);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--text-black);
+    line-height: 1.2;
+}
+
+/* Next Bubble Box */
+.next-box {
+    padding: 8px 12px;
+}
+
+.next-preview-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.next-canvas {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: block;
+}
+
+.swap-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #FFFDF8;
+    border: 1.5px solid var(--pencil-border);
+    border-radius: 10px;
+    padding: 5px 9px;
+    font-family: var(--font-main);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-black);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.swap-btn:hover {
+    background: #F4ECE1;
+}
+
+.swap-btn:active {
+    transform: scale(0.96);
+}
+
+/* Foul / Ceiling Drop Tracker */
+.fouls-box {
+    padding: 8px 12px;
+}
+
+.foul-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.foul-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.6px solid var(--pencil-border);
+    background: transparent;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.foul-dot.active {
+    background: #F9CAD2;
+    transform: scale(1.1);
+}
+
+/* Controls Group */
+.controls-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.btn {
+    font-family: var(--font-main);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+    box-shadow: none;
+}
+
+.btn-primary {
+    background: #FFE8EC;
+    border: var(--sketch-border-thin);
+    color: #D63031;
+}
+
+.btn-primary:hover {
+    background: #FFD4DC;
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: scale(0.97);
+}
+
+/* Hint Text */
+.control-hint {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: #7A6F66;
+    line-height: 1.4;
+    padding: 4px 6px;
+}
+
+/* Center Game Board Area */
+.game-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board-outer-container {
+    background: var(--board-bg);
+    border: var(--sketch-border);
+    border-radius: 24px;
+    padding: 12px;
+    box-shadow: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas-wrapper {
+    position: relative;
+    width: var(--board-width);
+    height: var(--board-height);
+    border-radius: 18px;
+    overflow: hidden;
+    background: #FFFEFA;
+    touch-action: none;
+}
+
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+}
+
+/* Modal Overlay: Clean Beige Popups, No Shadow */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(82, 67, 56, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(2px);
+    transition: opacity 0.25s ease;
+}
+
+.modal-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-box {
+    background: var(--paper-card);
+    border: var(--sketch-border);
+    border-radius: 24px;
+    padding: 30px;
+    width: 90%;
+    max-width: 340px;
+    text-align: center;
+    box-shadow: none;
+    animation: modalPop 0.25s ease-out;
+}
+
+@keyframes modalPop {
+    from {
+        transform: scale(0.92);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-black);
+    margin-bottom: 6px;
+}
+
+.modal-subtext {
+    font-size: 13px;
+    font-weight: 500;
+    color: #6B5E52;
+    margin-bottom: 20px;
+}
+
+.modal-score-cards {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.modal-score-cards .stat-box {
+    flex: 1;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-buttons .btn {
+    flex: 1;
+}
+
+/* Responsive Mobile Layout */
+@media (max-width: 660px) {
+    body {
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .game-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .side-panel {
+        width: 100%;
+        max-width: 360px;
+        padding: 16px;
+        gap: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+            "header header"
+            "score best"
+            "next fouls"
+            "restart restart"
+            "hint hint";
+    }
+
+    .brand-header { grid-area: header; }
+    #scoreCard { grid-area: score; }
+    #highScoreCard { grid-area: best; }
+    #nextCard { grid-area: next; }
+    #foulsCard { grid-area: fouls; }
+    .controls-group { grid-area: restart; }
+    .control-hint { grid-area: hint; }
+
+    .board-outer-container {
+        padding: 8px;
+    }
+
+    .canvas-wrapper {
+        width: min(92vw, 360px);
+        height: min(138vw, 540px);
+    }
+}

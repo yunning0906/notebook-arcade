@@ -1,0 +1,12 @@
+{
+  "name": "notebook-arcade-portal",
+  "version": "1.0.0",
+  "description": "Unified Hand-Drawn Notebook Arcade Portal featuring Suika Game, 2048, Bubble Shooter, and One Line Puzzle.",
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve ."
+  },
+  "keywords": ["game", "arcade", "suika", "2048", "bubble-shooter", "puzzle"],
+  "author": "",
+  "license": "MIT"
+}

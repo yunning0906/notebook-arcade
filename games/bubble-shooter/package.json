@@ -1,0 +1,12 @@
+{
+  "name": "bubble-shooter",
+  "version": "1.0.0",
+  "description": "A kawaii pastel notebook-themed Bubble Shooter game with Web Audio synthesizer",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": ["bubble-shooter", "game", "kawaii", "web-audio", "pastel"],
+  "author": "",
+  "license": "MIT"
+}

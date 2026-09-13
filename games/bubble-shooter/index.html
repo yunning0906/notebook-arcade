@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bubble Shooter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="game-wrapper">
+        <!-- Left Side Panel: English Minimalist UI matching Suika Game & 2048 -->
+        <aside class="side-panel">
+            <!-- 1. Game Title & Sound Toggle -->
+            <div class="brand-header">
+                <h1 class="brand-title">BUBBLE</h1>
+                <button class="sound-toggle-btn" id="soundToggleBtn" aria-label="Toggle Sound" title="Sound Mute / Unmute">
+                    <svg class="sound-icon sound-on" id="soundIconOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    </svg>
+                    <svg class="sound-icon sound-off hidden" id="soundIconOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- 2. Current Score -->
+            <div class="stat-box" id="scoreCard">
+                <div class="stat-label">SCORE</div>
+                <div class="stat-value" id="currentScore">0</div>
+            </div>
+
+            <!-- 3. High Score -->
+            <div class="stat-box high-score" id="highScoreCard">
+                <div class="stat-label">BEST</div>
+                <div class="stat-value" id="highScore">0</div>
+            </div>
+
+            <!-- 4. Next Bubble Preview & Swap Button -->
+            <div class="stat-box next-box" id="nextCard">
+                <div class="stat-label">NEXT</div>
+                <div class="next-preview-wrap">
+                    <canvas id="nextBubbleCanvas" width="48" height="48" class="next-canvas"></canvas>
+                    <button class="swap-btn" id="swapBtn" title="Swap with Next Bubble [C or Click]">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7 16V4m0 0L3 8m4-4l4 4m6 4v12m0 0l4-4m-4 4l-4-4"/>
+                        </svg>
+                        <span>SWAP</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 5. Foul / Ceiling Drop Tracker -->
+            <div class="stat-box fouls-box" id="foulsCard">
+                <div class="stat-label">CEILING DROP</div>
+                <div class="foul-indicators" id="foulIndicators">
+                    <span class="foul-dot active"></span>
+                    <span class="foul-dot active"></span>
+                    <span class="foul-dot active"></span>
+                    <span class="foul-dot active"></span>
+                    <span class="foul-dot active"></span>
+                </div>
+            </div>
+
+            <!-- 6. Controls Group: Restart Button -->
+            <div class="controls-group">
+                <button class="btn btn-primary" id="restartBtn">RESTART</button>
+            </div>
+
+            <!-- Instructions Hint -->
+            <div class="control-hint">
+                <span>Swipe, Drag or Arrow Keys to Aim & Shoot<br>Tap Swap or [C] to switch bubble</span>
+            </div>
+        </aside>
+
+        <!-- Center Game Board Canvas Area -->
+        <section class="game-center">
+            <div class="board-outer-container">
+                <div class="canvas-wrapper" id="canvasWrapper">
+                    <canvas id="gameCanvas" width="360" height="540"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Game Over Modal -->
+    <div class="modal-overlay hidden" id="gameOverModal">
+        <div class="modal-box">
+            <h2 class="modal-title" id="modalTitle">GAME OVER</h2>
+            <p class="modal-subtext" id="modalSubtext">The bubbles reached the foul line!</p>
+            <div class="modal-score-cards">
+                <div class="stat-box">
+                    <div class="stat-label">SCORE</div>
+                    <div class="stat-value" id="finalScore">0</div>
+                </div>
+                <div class="stat-box high-score">
+                    <div class="stat-label">BEST</div>
+                    <div class="stat-value" id="bestScoreModal">0</div>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" id="modalRestartBtn">TRY AGAIN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/bubble.js"></script>
+    <script src="js/grid.js"></script>
+    <script src="js/shooter.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
