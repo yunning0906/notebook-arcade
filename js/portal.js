@@ -107,6 +107,84 @@ const GAME_DATA = {
                 textZh: '遇到卡關時可點選 [HINT] 查看下一步提示，或點選 [UNDO] 復原上一步。'
             }
         ]
+    },
+    block: {
+        id: 'block',
+        title: 'Block Puzzle',
+        subtitle: '方塊拼圖',
+        path: 'games/block-puzzle/index.html',
+        instructions: [
+            {
+                titleEn: 'How to Play',
+                titleZh: '玩法說明',
+                textEn: 'Drag the 3 hand-drawn geometric pieces from the bottom tray and fit them onto the graph paper grid.',
+                textZh: '將下方隨機給予的 3 個手繪幾何方塊拖曳填入方格紙棋盤中。'
+            },
+            {
+                titleEn: 'Line Clear & Arpeggio',
+                titleZh: '消除與木琴琶音',
+                textEn: 'Fill any entire row or column to clear it with crisp xylophone arpeggios (C-D-E-F-G-A-B-C) and sparkle particles.',
+                textZh: '湊滿整行或整列即可觸發消除，伴隨如同木琴琶音的連續清脆消除音與小火花紙屑。'
+            },
+            {
+                titleEn: 'Modes & Game Over',
+                titleZh: '模式與結束條件',
+                textEn: 'Switch between 10×10 and 8×8 modes. The game ends when none of the remaining hand pieces can fit anywhere.',
+                textZh: '可自由切換 10×10 經典與 8×8 緊湊模式；當底部的剩餘方塊皆無法放入棋盤時遊戲結束。'
+            }
+        ]
+    },
+    nonogram: {
+        id: 'nonogram',
+        title: 'Nonogram',
+        subtitle: '數織·像素塗色',
+        path: 'games/nonogram-puzzle/index.html',
+        instructions: [
+            {
+                titleEn: 'Clue Deduction',
+                titleZh: '線索邏輯推理',
+                textEn: 'Use the numbers at the top and left headers. Numbers indicate consecutive runs of filled cells.',
+                textZh: '根據每一行、每一列開頭的數字線索，數字代表該行列連續塗滿的格子數量。'
+            },
+            {
+                titleEn: 'Pencil & Cross Tools',
+                titleZh: '鉛筆塗色與標記',
+                textEn: 'Use pencil [1] to shade squares with authentic graphite sounds. Use cross [2] or right-click to mark empty cells.',
+                textZh: '使用鉛筆 [1] 塗黑格子並伴隨沙沙聲；使用叉叉 [2] 或滑鼠右鍵標記確定為空的方格。'
+            },
+            {
+                titleEn: 'Pastel Blossom',
+                titleZh: '通關粉彩綻放',
+                textEn: 'Complete the puzzle to see the sketch magically bloom into a soft pastel colored-pencil illustration and collect it in your sketchbook!',
+                textZh: '完成所有格子後，整幅鉛筆速寫將無縫綻放為柔和粉彩色插圖，並永久收藏於手繪畫廊！'
+            }
+        ]
+    },
+    snake: {
+        id: 'snake',
+        title: 'Doodle Snake',
+        subtitle: '手繪毛毛蟲漫步',
+        path: 'games/doodle-snake/index.html',
+        instructions: [
+            {
+                titleEn: 'Paper Stroll',
+                titleZh: '紙上漫步玩法',
+                textEn: 'Guide the pastel caterpillar across the notebook grid using Arrow keys, WASD, swipe, or on-screen D-pad buttons.',
+                textZh: '使用鍵盤方向鍵、WASD、螢幕滑動或專屬粉彩方向鍵，引導毛毛蟲在方格本上悠閒滑行漫步。'
+            },
+            {
+                titleEn: 'Delicious Fruits & Growth',
+                titleZh: '採集甜美果實',
+                textEn: 'Eat randomly dropped hand-drawn cherries and strawberries to grow longer, trigger sparkling confetti, and hear crystal bell chimes.',
+                textZh: '吃掉隨機掉落的手繪雙櫻桃與草莓讓身體逐漸變長，觸發彩色鉛筆彩屑特效與清脆鈴鐺聲。'
+            },
+            {
+                titleEn: 'Elastic Water Drop & Pacing',
+                titleZh: '水滴噗嚕音與步調選擇',
+                textEn: 'Turning emits elastic water droplet bloops! Freely choose between Stroll, Wander, or Brisk speeds, and toggle margin wrapping.',
+                textZh: '每一次轉彎都有彈性的小小水滴噗嚕音！可隨時切換散步、漫遊、踏青步調與紙張邊界規則。'
+            }
+        ]
     }
 };
 

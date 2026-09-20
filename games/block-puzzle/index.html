@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Notebook Block Puzzle - 手帳方塊拼圖</title>
+    <meta name="description" content="在手帳方格紙上擺放無黑邊莫蘭迪幾何純色方塊，享受清脆木琴琶音與治癒粒子消除體驗。">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="game-container">
+        <!-- 頂部資訊與計分區 -->
+        <header class="game-header">
+            <div class="title-group">
+                <h1 class="game-title">BLOCK PUZZLE</h1>
+                <p class="game-subtitle">Notebook 10×10 & 8×8</p>
+            </div>
+            <div class="score-board">
+                <div class="score-box">
+                    <span class="score-label">SCORE</span>
+                    <span id="currentScore" class="score-num">0</span>
+                </div>
+                <div class="score-box">
+                    <span class="score-label">BEST</span>
+                    <span id="bestScore" class="score-num">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 工具列：模式切換與快捷控制 -->
+        <section class="toolbar" aria-label="Game Controls">
+            <div class="mode-selector">
+                <button type="button" class="btn-mode active" data-size="10" title="10x10 經典手帳">10×10</button>
+                <button type="button" class="btn-mode" data-size="8" title="8x8 緊湊手帳">8×8</button>
+            </div>
+
+            <div class="action-buttons">
+                <button type="button" id="btnReroll" class="icon-btn" title="刷新這輪方塊" aria-label="Reroll shapes">
+                    🎲
+                </button>
+                <button type="button" id="btnToggleSFX" class="icon-btn active" title="木琴音效開關" aria-label="Toggle Sound Effects">
+                    🔔
+                </button>
+                <button type="button" id="btnToggleBGM" class="icon-btn" title="音樂盒背景音開關" aria-label="Toggle Music Box BGM">
+                    🎵
+                </button>
+                <button type="button" id="btnHeaderRestart" class="icon-btn" title="重新開始" aria-label="Restart Game">
+                    🔄
+                </button>
+            </div>
+        </section>
+
+        <!-- 方格紙棋盤主區域 -->
+        <div class="board-wrapper">
+            <canvas id="particleCanvas" class="particle-canvas"></canvas>
+            <div id="puzzleBoard" class="puzzle-board" role="grid" aria-label="Puzzle Grid"></div>
+        </div>
+
+        <!-- 底部手牌 3 個方塊托盤 -->
+        <section id="handSlots" class="hand-tray" aria-label="Hand shapes tray">
+            <!-- 3 slots injected dynamically -->
+        </section>
+    </main>
+
+    <!-- 遊戲結束結算彈窗 -->
+    <div id="gameOverModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
+        <div class="modal-card">
+            <h2 id="gameOverTitle" class="modal-title">GAME OVER</h2>
+            <div id="newBestBadge" class="badge-new-best" style="display: none;">✨ NEW RECORD ✨</div>
+            
+            <div class="modal-stats">
+                <div class="modal-stat-item">
+                    <span class="modal-stat-label">本次得分</span>
+                    <span id="finalScore" class="modal-stat-value">0</span>
+                </div>
+                <div class="modal-stat-item">
+                    <span class="modal-stat-label">最高紀錄</span>
+                    <span id="bestRecord" class="modal-stat-value">0</span>
+                </div>
+            </div>
+
+            <button type="button" id="btnRestart" class="btn-primary">再來一局</button>
+        </div>
+    </div>
+
+    <!-- 模組載入 -->
+    <script src="js/audio.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/shapes.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

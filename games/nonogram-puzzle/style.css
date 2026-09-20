@@ -1,0 +1,936 @@
+/* ==========================================================================
+   Nonogram / Picross - Notebook Colored Pencil Aesthetic
+   ========================================================================== */
+
+:root {
+    /* Paper & Grid Variables matching Suika Game, 2048 & One Line */
+    --paper-bg: #F7F3E9;
+    --paper-grid: rgba(185, 168, 145, 0.24);
+    --paper-card: #FFFEFA;
+    --paper-sheet: #FFFDF9;
+    --cell-empty: #FFFDF9;
+    --cell-hover: #F2ECE0;
+
+    --pencil-border: #524338;
+    --pencil-grid-thin: rgba(82, 67, 56, 0.22);
+    --pencil-grid-bold: #524338;
+    --text-pencil: #2B231D;
+    --text-muted: #7D7065;
+    --text-clue: #40342B;
+
+    --sketch-border: 2px solid var(--pencil-border);
+    --sketch-border-thin: 1.6px solid var(--pencil-border);
+
+    /* Pastel Accents */
+    --pastel-pink: #FF8A80;
+    --pastel-peach: #FFB74D;
+    --pastel-yellow: #FFF176;
+    --pastel-green: #81C784;
+    --pastel-blue: #4FC3F7;
+    --pastel-purple: #BA68C8;
+
+    --font-main: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--paper-bg);
+    background-image: 
+        linear-gradient(to right, var(--paper-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--paper-grid) 1px, transparent 1px);
+    background-size: 22px 22px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-pencil);
+    padding: 16px;
+    overflow-x: hidden;
+}
+
+/* ==========================================
+   Main Game Layout Wrapper
+   ========================================== */
+.game-wrapper {
+    display: flex;
+    gap: 20px;
+    max-width: 980px;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+/* ==========================================
+   Left Side Panel
+   ========================================== */
+.side-panel {
+    background: var(--paper-card);
+    border: var(--sketch-border);
+    border-radius: 24px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 270px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(82, 67, 56, 0.04);
+}
+
+/* Brand Header */
+.brand-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: var(--sketch-border-thin);
+    padding-bottom: 12px;
+}
+
+.brand-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: var(--pencil-border);
+    line-height: 1.1;
+}
+
+.brand-sub {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.sound-toggle-btn {
+    background: transparent;
+    border: var(--sketch-border-thin);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--pencil-border);
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.sound-toggle-btn:hover {
+    background-color: var(--cell-hover);
+    transform: scale(1.05);
+}
+
+.sound-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.sound-icon.hidden {
+    display: none;
+}
+
+/* Level Card */
+.level-card {
+    background: var(--paper-sheet);
+    border: var(--sketch-border-thin);
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.level-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.level-info-center {
+    text-align: center;
+}
+
+.level-title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--text-pencil);
+}
+
+.level-size-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--pencil-border);
+    background: rgba(185, 168, 145, 0.25);
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-top: 2px;
+}
+
+.nav-arrow-btn {
+    background: transparent;
+    border: var(--sketch-border-thin);
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--pencil-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+}
+
+.nav-arrow-btn:hover {
+    background: var(--cell-hover);
+    transform: scale(1.08);
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.stat-box {
+    background: #FFF;
+    border: 1.4px solid var(--pencil-grid-thin);
+    border-radius: 10px;
+    padding: 4px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.stat-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.stat-val {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--pencil-border);
+    font-variant-numeric: tabular-nums;
+}
+
+.gallery-btn {
+    background: #FFF;
+    border: var(--sketch-border-thin);
+    border-radius: 10px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--pencil-border);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+    flex: 1.2;
+    justify-content: center;
+}
+
+.gallery-btn:hover {
+    background: var(--cell-hover);
+    transform: translateY(-1px);
+}
+
+/* Tools Card */
+.tools-card {
+    background: var(--paper-sheet);
+    border: var(--sketch-border-thin);
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.tool-buttons-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.tool-btn {
+    background: #FFF;
+    border: var(--sketch-border-thin);
+    border-radius: 12px;
+    padding: 10px 6px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+.tool-btn:hover {
+    background: var(--cell-hover);
+}
+
+.tool-btn.active {
+    background: #FFFDF0;
+    border: 2.2px solid var(--pencil-border);
+    box-shadow: 0 2px 6px rgba(82, 67, 56, 0.15);
+}
+
+.tool-icon {
+    font-size: 1.3rem;
+}
+
+.tool-name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-pencil);
+}
+
+.shortcut-tag {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
+
+.tool-hint {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    line-height: 1.3;
+}
+
+/* Actions Group */
+.actions-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.action-btn {
+    background: var(--paper-sheet);
+    border: var(--sketch-border-thin);
+    border-radius: 12px;
+    padding: 9px 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--pencil-border);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s ease;
+}
+
+.action-btn:hover {
+    background: var(--cell-hover);
+    transform: translateY(-1px);
+}
+
+.action-btn:active {
+    transform: translateY(1px);
+}
+
+.action-reset {
+    color: #8C3B3B;
+}
+
+/* ==========================================
+   Main Nonogram Board
+   ========================================== */
+.board-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.notebook-sheet {
+    background: var(--paper-sheet);
+    border: var(--sketch-border);
+    border-radius: 24px;
+    padding: 22px;
+    box-shadow: 0 4px 18px rgba(82, 67, 56, 0.05);
+    display: inline-block;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.nonogram-board {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 0;
+    border: 2px solid var(--pencil-grid-bold);
+    background: #FFFDF9;
+}
+
+/* Corner */
+.board-corner {
+    grid-column: 1;
+    grid-row: 1;
+    border-right: 2px solid var(--pencil-grid-bold);
+    border-bottom: 2px solid var(--pencil-grid-bold);
+    background: #F8F3EA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    min-height: 60px;
+}
+
+.corner-doodle {
+    font-size: 1.1rem;
+    opacity: 0.6;
+}
+
+/* Column Clues (Top Headers) */
+.col-clues-header {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    border-bottom: 2px solid var(--pencil-grid-bold);
+    background: #FDFBF7;
+}
+
+.col-clue-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 6px 2px;
+    gap: 3px;
+    border-right: 1px solid var(--pencil-grid-thin);
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.col-clue-item:last-child {
+    border-right: none;
+}
+
+.col-clue-item.border-right-thick {
+    border-right: 2px solid var(--pencil-grid-bold);
+}
+
+.col-clue-item.completed {
+    background: rgba(185, 168, 145, 0.12);
+}
+
+.col-clue-item.completed .clue-num {
+    opacity: 0.28;
+    text-decoration: line-through;
+}
+
+/* Row Clues (Left Headers) */
+.row-clues-header {
+    grid-column: 1;
+    grid-row: 2;
+    display: grid;
+    border-right: 2px solid var(--pencil-grid-bold);
+    background: #FDFBF7;
+}
+
+.row-clue-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 2px 8px;
+    gap: 6px;
+    border-bottom: 1px solid var(--pencil-grid-thin);
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.row-clue-item:last-child {
+    border-bottom: none;
+}
+
+.row-clue-item.border-bottom-thick {
+    border-bottom: 2px solid var(--pencil-grid-bold);
+}
+
+.row-clue-item.completed {
+    background: rgba(185, 168, 145, 0.12);
+}
+
+.row-clue-item.completed .clue-num {
+    opacity: 0.28;
+    text-decoration: line-through;
+}
+
+.clue-num {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-clue);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+
+/* Grid Cells (Playable Board) */
+.grid-cells {
+    grid-column: 2;
+    grid-row: 2;
+    display: grid;
+    background: #FFFDF9;
+    touch-action: none;
+}
+
+.grid-cell {
+    width: 38px;
+    height: 38px;
+    border-right: 1px solid var(--pencil-grid-thin);
+    border-bottom: 1px solid var(--pencil-grid-thin);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: transparent;
+    transition: background-color 0.15s ease, transform 0.12s ease;
+    position: relative;
+}
+
+.grid-cells.size-10 .grid-cell {
+    width: 32px;
+    height: 32px;
+}
+
+.grid-cells.size-15 .grid-cell {
+    width: 24px;
+    height: 24px;
+}
+
+.grid-cell:hover {
+    background-color: var(--cell-hover);
+}
+
+/* 5-Block Grouping Thick Borders */
+.grid-cell.border-right-thick {
+    border-right: 2px solid var(--pencil-grid-bold);
+}
+
+.grid-cell.border-bottom-thick {
+    border-bottom: 2px solid var(--pencil-grid-bold);
+}
+
+/* Cell State: Filled with Graphite Pencil Hatching */
+.grid-cell.filled {
+    background-color: #38312B;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #312B26,
+        #312B26 2.5px,
+        #463D36 2.5px,
+        #463D36 5px
+    );
+    border-color: rgba(56, 49, 43, 0.6);
+}
+
+/* Cell State: Marked with Pencil Cross X */
+.grid-cell.crossed {
+    background-color: transparent;
+}
+
+.pencil-x {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: rgba(82, 67, 56, 0.65);
+    line-height: 1;
+    pointer-events: none;
+}
+
+.grid-cells.size-15 .pencil-x {
+    font-size: 0.8rem;
+}
+
+/* Hint Highlight Wiggle */
+.grid-cell.hint-highlight {
+    animation: hintWiggle 0.5s ease-in-out infinite;
+    background-color: rgba(255, 241, 118, 0.5) !important;
+}
+
+@keyframes hintWiggle {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+/* ==========================================
+   Pastel Blossom Transformation (通關綻放)
+   ========================================== */
+.grid-cells.blossom-active {
+    pointer-events: none;
+}
+
+.grid-cell.blossomed {
+    background-image: none !important;
+    animation: blossomPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes blossomPop {
+    0% {
+        transform: scale(0.85);
+        opacity: 0.7;
+    }
+    60% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ==========================================
+   Modal Dialogs (Victory & Gallery)
+   ========================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(43, 35, 29, 0.45);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+}
+
+.modal-overlay.hidden {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-sheet {
+    background: var(--paper-card);
+    border: var(--sketch-border);
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: 0 12px 36px rgba(43, 35, 29, 0.18);
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Victory Modal Specifics */
+.victory-sheet {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Authentic Red Stamp Badge */
+.stamp-badge {
+    position: absolute;
+    top: -16px;
+    right: 20px;
+    border: 2.5px dashed #E55353;
+    border-radius: 12px;
+    padding: 4px 12px;
+    transform: rotate(8deg);
+    background: rgba(255, 245, 245, 0.95);
+    box-shadow: 0 2px 6px rgba(229, 83, 83, 0.15);
+}
+
+.stamp-inner {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #E55353;
+    font-weight: 900;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.victory-art-container {
+    background: #FFFDF9;
+    border: var(--sketch-border-thin);
+    border-radius: 16px;
+    padding: 16px;
+    margin-top: 8px;
+    box-shadow: inset 0 2px 6px rgba(82, 67, 56, 0.05);
+}
+
+.victory-canvas {
+    display: block;
+    image-rendering: pixelated;
+    border-radius: 8px;
+}
+
+.victory-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--pencil-border);
+    margin-top: 4px;
+}
+
+.victory-subtitle {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+.victory-stats {
+    display: flex;
+    gap: 16px;
+    margin: 6px 0;
+}
+
+.v-stat-item {
+    background: var(--paper-bg);
+    border: 1.4px solid var(--pencil-grid-thin);
+    border-radius: 10px;
+    padding: 6px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.v-stat-label {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+}
+
+.v-stat-value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--pencil-border);
+}
+
+.modal-buttons-row {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: var(--sketch-border-thin);
+    transition: all 0.15s ease;
+}
+
+.primary-btn {
+    background: #FFFDF0;
+    color: var(--pencil-border);
+    border: 2.2px solid var(--pencil-border);
+}
+
+.primary-btn:hover {
+    background: #F5ECCE;
+    transform: translateY(-2px);
+}
+
+.secondary-btn {
+    background: #FFF;
+    color: var(--text-muted);
+}
+
+.secondary-btn:hover {
+    background: var(--cell-hover);
+}
+
+/* ==========================================
+   Gallery Modal Specifics
+   ========================================== */
+.gallery-sheet {
+    max-width: 720px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: var(--sketch-border-thin);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.gallery-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--pencil-border);
+}
+
+.gallery-sub {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.close-btn {
+    background: transparent;
+    border: var(--sketch-border-thin);
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--pencil-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+}
+
+.close-btn:hover {
+    background: var(--cell-hover);
+    transform: scale(1.1);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    gap: 14px;
+    overflow-y: auto;
+    padding-right: 4px;
+    max-height: 60vh;
+}
+
+.gallery-card {
+    background: #FFF;
+    border: var(--sketch-border-thin);
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.gallery-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(82, 67, 56, 0.08);
+}
+
+.gallery-card.solved {
+    border: 2px solid var(--pencil-border);
+    background: #FFFDF9;
+}
+
+.gallery-card.locked {
+    opacity: 0.65;
+    background: #F9F5EE;
+}
+
+.gallery-preview-box {
+    width: 90px;
+    height: 90px;
+    background: #FDFBF7;
+    border: 1px solid var(--pencil-grid-thin);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.gallery-preview-box canvas {
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+}
+
+.lock-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.lock-icon {
+    font-size: 1.4rem;
+}
+
+.lock-size {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.gallery-card-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-pencil);
+    text-align: center;
+}
+
+.gallery-card-sub {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+}
+
+/* ==========================================
+   Responsive Breakpoints
+   ========================================== */
+@media (max-width: 820px) {
+    body {
+        padding: 10px;
+    }
+
+    .game-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .side-panel {
+        width: 100%;
+        max-width: 520px;
+    }
+
+    .notebook-sheet {
+        padding: 14px;
+    }
+
+    .grid-cell {
+        width: 32px;
+        height: 32px;
+    }
+
+    .grid-cells.size-10 .grid-cell {
+        width: 26px;
+        height: 26px;
+    }
+
+    .grid-cells.size-15 .grid-cell {
+        width: 20px;
+        height: 20px;
+    }
+
+    .board-corner {
+        min-width: 45px;
+        min-height: 45px;
+    }
+}

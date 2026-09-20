@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NONOGRAM - 手繪鉛筆數織手帳</title>
+    <meta name="description" content="溫暖療癒的數學筆記本手繪風格數織 (Picross / Nonogram) 遊戲。依據數字線索以色鉛筆塗色，通關綻放柔和粉彩插畫！">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-wrapper">
+        <!-- Left Side Panel: Brand, Level Info, Tools, Controls -->
+        <aside class="side-panel">
+            <header class="brand-header">
+                <div class="brand-title-wrap">
+                    <h1 class="brand-title">NONOGRAM</h1>
+                    <span class="brand-sub">手繪鉛筆數織</span>
+                </div>
+                <button id="soundToggle" class="sound-toggle-btn" aria-label="切換音效">
+                    <!-- Speaker On -->
+                    <svg class="sound-icon icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    </svg>
+                    <!-- Speaker Muted -->
+                    <svg class="sound-icon icon-sound-off hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                </button>
+            </header>
+
+            <!-- Level Info Card -->
+            <div class="level-card">
+                <div class="level-header-row">
+                    <button id="prevPuzzleBtn" class="nav-arrow-btn" aria-label="上一關">◀</button>
+                    <div class="level-info-center">
+                        <div id="levelTitle" class="level-title">5×5 謎題 #1</div>
+                        <div id="levelSize" class="level-size-badge">5 × 5</div>
+                    </div>
+                    <button id="nextPuzzleBtn" class="nav-arrow-btn" aria-label="下一關">▶</button>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-box">
+                        <span class="stat-label">時間 (TIME)</span>
+                        <span id="timerValue" class="stat-val">0:00</span>
+                    </div>
+                    <button id="openGalleryBtn" class="gallery-btn" aria-label="打開手帳畫廊">
+                        <span>📖 手帳畫廊</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mode / Tool Selector -->
+            <div class="tools-card">
+                <div class="card-label">繪圖工具 (TOOLS)</div>
+                <div class="tool-buttons-group">
+                    <button id="toolPencil" class="tool-btn active" aria-label="鉛筆塗色模式">
+                        <span class="tool-icon">✏️</span>
+                        <span class="tool-name">鉛筆塗色</span>
+                        <span class="shortcut-tag">[1]</span>
+                    </button>
+                    <button id="toolCross" class="tool-btn" aria-label="標記叉叉模式">
+                        <span class="tool-icon">✖️</span>
+                        <span class="tool-name">空白標記</span>
+                        <span class="shortcut-tag">[2]</span>
+                    </button>
+                </div>
+                <div class="tool-hint">💡 電腦端支援：滑鼠左鍵塗色、右鍵標叉</div>
+            </div>
+
+            <!-- Action Buttons: Undo, Hint, Reset -->
+            <div class="actions-group">
+                <button id="undoBtn" class="action-btn" aria-label="復原上一步">
+                    <span class="btn-icon">↩</span>
+                    <span>復原 (UNDO)</span>
+                </button>
+                <button id="hintBtn" class="action-btn" aria-label="取得提示">
+                    <span class="btn-icon">💡</span>
+                    <span>提示 (HINT)</span>
+                </button>
+                <button id="resetBtn" class="action-btn action-reset" aria-label="重新開始">
+                    <span class="btn-icon">🔄</span>
+                    <span>重來 (RESET)</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Right / Center: Nonogram Notebook Board -->
+        <main class="board-wrapper">
+            <div class="notebook-sheet">
+                <!-- Board Grid Layout: Corner, Col Clues, Row Clues, Main Grid -->
+                <div id="nonogramBoard" class="nonogram-board">
+                    <!-- Top-Left Corner Doodle -->
+                    <div class="board-corner">
+                        <span class="corner-doodle">✏️</span>
+                    </div>
+
+                    <!-- Column Clues (Top) -->
+                    <div id="colClues" class="col-clues-header"></div>
+
+                    <!-- Row Clues (Left) -->
+                    <div id="rowClues" class="row-clues-header"></div>
+
+                    <!-- Main Playable Grid Cells -->
+                    <div id="gridCells" class="grid-cells"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Victory Celebration Modal (通關手帳蓋印與粉彩大圖賞析) -->
+    <div id="victoryModal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+        <div class="modal-sheet victory-sheet">
+            <div class="stamp-badge">
+                <div class="stamp-inner">
+                    <span class="stamp-star">★</span>
+                    <span class="stamp-text">COMPLETED</span>
+                    <span class="stamp-star">★</span>
+                </div>
+            </div>
+
+            <div class="victory-art-container">
+                <canvas id="victoryCanvas" class="victory-canvas"></canvas>
+            </div>
+
+            <h2 id="victoryArtName" class="victory-title">🌸 春日小花</h2>
+            <p class="victory-subtitle">完成這幅手繪色鉛筆插畫！</p>
+
+            <div class="victory-stats">
+                <div class="v-stat-item">
+                    <span class="v-stat-label">花費時間</span>
+                    <span id="victoryTime" class="v-stat-value">0:32</span>
+                </div>
+            </div>
+
+            <div class="modal-buttons-row">
+                <button id="victoryNextBtn" class="modal-btn primary-btn">
+                    <span>下一張插畫 ▶</span>
+                </button>
+                <button id="victoryGalleryBtn" class="modal-btn secondary-btn">
+                    <span>📖 查看手帳畫廊</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sketchbook Gallery Modal (手繪手帳收集冊) -->
+    <div id="galleryModal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+        <div class="modal-sheet gallery-sheet">
+            <header class="gallery-header">
+                <div class="gallery-title-wrap">
+                    <h2 class="gallery-title">📖 手繪手帳畫廊</h2>
+                    <span class="gallery-sub">點擊即可遊玩或重溫彩色插圖</span>
+                </div>
+                <button id="closeGalleryBtn" class="close-btn" aria-label="關閉畫廊">✕</button>
+            </header>
+
+            <div id="galleryGrid" class="gallery-grid">
+                <!-- Dynamically populated cards -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/puzzles.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/nonogram.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

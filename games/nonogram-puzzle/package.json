@@ -1,0 +1,11 @@
+{
+  "name": "nonogram-puzzle",
+  "version": "1.0.0",
+  "description": "Notebook Nonogram / Picross - 手繪鉛筆數織手帳",
+  "scripts": {
+    "start": "serve ."
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  }
+}
