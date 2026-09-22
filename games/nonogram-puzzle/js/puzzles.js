@@ -16,7 +16,7 @@ const PUZZLES = [
     {
         id: '5-heart',
         title: 'Sweet Heart',
-        nameZh: '❤️ 溫暖愛心',
+        nameZh: '溫暖愛心',
         size: 5,
         palette: {
             1: '#FF7597', // Rose pastel pink
@@ -33,7 +33,7 @@ const PUZZLES = [
     {
         id: '5-apple',
         title: 'Crisp Apple',
-        nameZh: '🍎 甜心蘋果',
+        nameZh: '甜心蘋果',
         size: 5,
         palette: {
             1: '#8D6E63', // Branch brown
@@ -52,7 +52,7 @@ const PUZZLES = [
     {
         id: '5-flower',
         title: 'Spring Blossom',
-        nameZh: '🌸 春日小花',
+        nameZh: '春日小花',
         size: 5,
         palette: {
             1: '#FFB6C1', // Petal pink
@@ -69,7 +69,7 @@ const PUZZLES = [
     {
         id: '5-cup',
         title: 'Warm Mug',
-        nameZh: '☕ 晨光馬克杯',
+        nameZh: '晨光馬克杯',
         size: 5,
         palette: {
             1: '#B0BEC5', // Steam grey
@@ -87,7 +87,7 @@ const PUZZLES = [
     {
         id: '5-star',
         title: 'Shining Star',
-        nameZh: '⭐ 閃爍星芒',
+        nameZh: '閃爍星芒',
         size: 5,
         palette: {
             1: '#FFD54F', // Pastel yellow
@@ -104,7 +104,7 @@ const PUZZLES = [
     {
         id: '5-cherry',
         title: 'Twin Cherries',
-        nameZh: '🍒 雙子櫻桃',
+        nameZh: '雙子櫻桃',
         size: 5,
         palette: {
             1: '#81C784', // Stem green
@@ -126,7 +126,7 @@ const PUZZLES = [
     {
         id: '10-cat',
         title: 'Sleepy Kitty',
-        nameZh: '🐱 趴窩小貓',
+        nameZh: '趴窩小貓',
         size: 10,
         palette: {
             1: '#FFA726', // Orange tabby
@@ -150,7 +150,7 @@ const PUZZLES = [
     {
         id: '10-mushroom',
         title: 'Forest Mushroom',
-        nameZh: '🍄 森林小菇',
+        nameZh: '森林小菇',
         size: 10,
         palette: {
             1: '#FF5252', // Cap red
@@ -174,7 +174,7 @@ const PUZZLES = [
     {
         id: '10-boat',
         title: 'Little Sailboat',
-        nameZh: '⛵ 乘風小船',
+        nameZh: '乘風小船',
         size: 10,
         palette: {
             1: '#90CAF9', // Main sail blue
@@ -199,7 +199,7 @@ const PUZZLES = [
     {
         id: '10-penguin',
         title: 'Baby Penguin',
-        nameZh: '🐧 企鵝寶寶',
+        nameZh: '企鵝寶寶',
         size: 10,
         palette: {
             1: '#37474F', // Dark feathers
@@ -223,7 +223,7 @@ const PUZZLES = [
     {
         id: '10-cake',
         title: 'Strawberry Cake',
-        nameZh: '🍰 草莓蛋糕',
+        nameZh: '草莓蛋糕',
         size: 10,
         palette: {
             1: '#FF5252', // Strawberry red
@@ -248,7 +248,7 @@ const PUZZLES = [
     {
         id: '10-duck',
         title: 'Spring Duckling',
-        nameZh: '🐤 暖陽小鴨',
+        nameZh: '暖陽小鴨',
         size: 10,
         palette: {
             1: '#FFEE58', // Duck yellow
@@ -272,7 +272,7 @@ const PUZZLES = [
     {
         id: '10-house',
         title: 'Cozy Cottage',
-        nameZh: '🏠 溫馨小屋',
+        nameZh: '溫馨小屋',
         size: 10,
         palette: {
             1: '#E57373', // Roof terracotta
@@ -300,7 +300,7 @@ const PUZZLES = [
     {
         id: '15-fox',
         title: 'Forest Fox',
-        nameZh: '🦊 秋日小狐',
+        nameZh: '秋日小狐',
         size: 15,
         palette: {
             1: '#FF7043', // Fox fur orange
@@ -329,7 +329,7 @@ const PUZZLES = [
     {
         id: '15-whale',
         title: 'Gentle Whale',
-        nameZh: '🐳 深海藍鯨',
+        nameZh: '深海藍鯨',
         size: 15,
         palette: {
             1: '#42A5F5', // Whale back blue
@@ -358,7 +358,7 @@ const PUZZLES = [
     {
         id: '15-owl',
         title: 'Wise Owl',
-        nameZh: '🦉 森林貓頭鷹',
+        nameZh: '森林貓頭鷹',
         size: 15,
         palette: {
             1: '#8D6E63', // Feather brown

@@ -1,6 +1,7 @@
 /**
  * Notebook Block Puzzle - Shapes & Morandi Color System
- * Defines 20+ geometric shapes, their grid matrices, and authentic Morandi color assignments.
+ * Defines geometric shapes, matrices, and authentic Morandi color assignments
+ * with hand-drawn stationery geometric icon patterns (no bitmaps/stickers).
  */
 
 const MORANDI_PALETTE = {
@@ -8,43 +9,50 @@ const MORANDI_PALETTE = {
         name: '香草黃',
         bg: '#F6D887',
         sub: '#E6C673',
-        highlight: '#FFF1B5'
+        highlight: '#FFF1B5',
+        symbolSvg: `<svg viewBox="0 0 24 24" width="13" height="13" class="block-icon"><path fill="rgba(82,67,56,0.36)" d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6Z"/></svg>`
     },
     pistachio: {
         name: '開心果綠',
         bg: '#95D5B2',
         sub: '#7DBF9C',
-        highlight: '#BCEBD2'
+        highlight: '#BCEBD2',
+        symbolSvg: `<svg viewBox="0 0 24 24" width="12" height="12" class="block-icon"><circle cx="12" cy="12" r="5.5" fill="rgba(82,67,56,0.34)"/></svg>`
     },
     rose: {
         name: '柔粉玫瑰',
         bg: '#F8B4B4',
         sub: '#E29E9E',
-        highlight: '#FED7D7'
+        highlight: '#FED7D7',
+        symbolSvg: `<svg viewBox="0 0 24 24" width="12" height="12" class="block-icon"><polygon points="12,3 21,12 12,21 3,12" fill="rgba(82,67,56,0.34)"/></svg>`
     },
     mistBlue: {
         name: '霧灰藍',
         bg: '#95B8D1',
         sub: '#7DA2BC',
-        highlight: '#BFDBEE'
+        highlight: '#BFDBEE',
+        symbolSvg: `<svg viewBox="0 0 24 24" width="12" height="12" class="block-icon"><rect x="5.5" y="5.5" width="13" height="13" rx="2" fill="rgba(82,67,56,0.34)"/></svg>`
     },
     lavender: {
         name: '薰衣草紫',
         bg: '#CDB4DB',
         sub: '#B499C4',
-        highlight: '#E8D6F2'
+        highlight: '#E8D6F2',
+        symbolSvg: `<svg viewBox="0 0 24 24" width="13" height="13" class="block-icon"><circle cx="12" cy="12" r="7" fill="none" stroke="rgba(82,67,56,0.34)" stroke-width="2.5"/><circle cx="12" cy="12" r="2.5" fill="rgba(82,67,56,0.34)"/></svg>`
     },
     apricot: {
         name: '杏桃暖橘',
         bg: '#F7B267',
         sub: '#DE984F',
-        highlight: '#FBD29E'
+        highlight: '#FBD29E',
+        symbolSvg: `<svg viewBox="0 0 24 24" width="13" height="13" class="block-icon"><polygon points="12,4 20.5,19 3.5,19" fill="rgba(82,67,56,0.34)"/></svg>`
     },
     dustyRose: {
         name: '陶土杏粉',
         bg: '#E7A99E',
         sub: '#CE9085',
-        highlight: '#F4CAC1'
+        highlight: '#F4CAC1',
+        symbolSvg: `<svg viewBox="0 0 24 24" width="12" height="12" class="block-icon"><path fill="rgba(82,67,56,0.34)" d="M10 4h4v6h6v4h-6v6h-4v-6H4v-4h6z"/></svg>`
     }
 };
 
@@ -101,18 +109,12 @@ const SHAPE_DEFINITIONS = [
         weight: 7
     },
 
-    // 1x5 and 5x1 Bars
+    // 1x5 Bar
     {
         id: 'bar_5_h',
         matrix: [[1, 1, 1, 1, 1]],
         colorKey: 'lavender',
-        weight: 5
-    },
-    {
-        id: 'bar_5_v',
-        matrix: [[1], [1], [1], [1], [1]],
-        colorKey: 'lavender',
-        weight: 5
+        weight: 4
     },
 
     // 2x2 Square
@@ -126,7 +128,7 @@ const SHAPE_DEFINITIONS = [
         weight: 9
     },
 
-    // 3x3 Square (Rare high-reward)
+    // 3x3 Square
     {
         id: 'square_3',
         matrix: [
@@ -138,7 +140,7 @@ const SHAPE_DEFINITIONS = [
         weight: 3
     },
 
-    // Mini 2x2 Corner L (3 cells)
+    // Corner L (3 cells)
     {
         id: 'corner_3_tl',
         matrix: [
@@ -176,7 +178,7 @@ const SHAPE_DEFINITIONS = [
         weight: 8
     },
 
-    // Standard Tetris L-Shapes (4 cells)
+    // Standard L-Shapes (4 cells)
     {
         id: 'L_4_0',
         matrix: [
@@ -216,48 +218,6 @@ const SHAPE_DEFINITIONS = [
         weight: 7
     },
 
-    // Big 3x3 L-Shapes (5 cells)
-    {
-        id: 'big_L_tl',
-        matrix: [
-            [1, 1, 1],
-            [1, 0, 0],
-            [1, 0, 0]
-        ],
-        colorKey: 'lavender',
-        weight: 4
-    },
-    {
-        id: 'big_L_tr',
-        matrix: [
-            [1, 1, 1],
-            [0, 0, 1],
-            [0, 0, 1]
-        ],
-        colorKey: 'lavender',
-        weight: 4
-    },
-    {
-        id: 'big_L_bl',
-        matrix: [
-            [1, 0, 0],
-            [1, 0, 0],
-            [1, 1, 1]
-        ],
-        colorKey: 'lavender',
-        weight: 4
-    },
-    {
-        id: 'big_L_br',
-        matrix: [
-            [0, 0, 1],
-            [0, 0, 1],
-            [1, 1, 1]
-        ],
-        colorKey: 'lavender',
-        weight: 4
-    },
-
     // T-Shapes (4 cells)
     {
         id: 'T_up',
@@ -273,26 +233,6 @@ const SHAPE_DEFINITIONS = [
         matrix: [
             [1, 1, 1],
             [0, 1, 0]
-        ],
-        colorKey: 'rose',
-        weight: 6
-    },
-    {
-        id: 'T_left',
-        matrix: [
-            [1, 0],
-            [1, 1],
-            [1, 0]
-        ],
-        colorKey: 'rose',
-        weight: 6
-    },
-    {
-        id: 'T_right',
-        matrix: [
-            [0, 1],
-            [1, 1],
-            [0, 1]
         ],
         colorKey: 'rose',
         weight: 6
@@ -316,47 +256,6 @@ const SHAPE_DEFINITIONS = [
         ],
         colorKey: 'pistachio',
         weight: 6
-    },
-    {
-        id: 'Z_v',
-        matrix: [
-            [0, 1],
-            [1, 1],
-            [1, 0]
-        ],
-        colorKey: 'pistachio',
-        weight: 6
-    },
-    {
-        id: 'S_v',
-        matrix: [
-            [1, 0],
-            [1, 1],
-            [0, 1]
-        ],
-        colorKey: 'pistachio',
-        weight: 6
-    },
-
-    // 2x3 and 3x2 Rectangles
-    {
-        id: 'rect_2x3',
-        matrix: [
-            [1, 1, 1],
-            [1, 1, 1]
-        ],
-        colorKey: 'apricot',
-        weight: 4
-    },
-    {
-        id: 'rect_3x2',
-        matrix: [
-            [1, 1],
-            [1, 1],
-            [1, 1]
-        ],
-        colorKey: 'apricot',
-        weight: 4
     }
 ];
 
@@ -365,19 +264,19 @@ class ShapeGenerator {
         this.totalWeight = SHAPE_DEFINITIONS.reduce((sum, s) => sum + s.weight, 0);
     }
 
-    // Pick a single random shape based on weights
     getRandomShape() {
         let r = Math.random() * this.totalWeight;
         for (const shape of SHAPE_DEFINITIONS) {
             if (r < shape.weight) {
-                // Return a fresh clone
                 const colorData = MORANDI_PALETTE[shape.colorKey];
                 return {
                     id: shape.id + '_' + Math.random().toString(36).substr(2, 4),
                     matrix: shape.matrix.map(row => [...row]),
+                    colorKey: shape.colorKey,
                     color: colorData.bg,
                     colorSub: colorData.sub,
                     colorHighlight: colorData.highlight,
+                    symbolSvg: colorData.symbolSvg,
                     width: shape.matrix[0].length,
                     height: shape.matrix.length,
                     cellCount: shape.matrix.reduce((sum, row) => sum + row.reduce((a, b) => a + b, 0), 0)
@@ -388,26 +287,25 @@ class ShapeGenerator {
         return this.getRandomShape();
     }
 
-    // Generate a set of 3 balanced shapes
     getHandOfThree() {
         const hand = [];
         for (let i = 0; i < 3; i++) {
             hand.push(this.getRandomShape());
         }
 
-        // Safety guarantee: ensure at least one small/friendly shape (< 4 cells) is present
         const hasSmall = hand.some(s => s.cellCount <= 3);
         if (!hasSmall) {
-            // Replace first shape with a friendly 1x1, 1x2, or 2x2
             const friendly = SHAPE_DEFINITIONS.filter(s => s.cellCount <= 3 || s.id.startsWith('dot') || s.id.startsWith('bar_2'));
             const pick = friendly[Math.floor(Math.random() * friendly.length)];
             const colorData = MORANDI_PALETTE[pick.colorKey];
             hand[0] = {
                 id: pick.id + '_' + Math.random().toString(36).substr(2, 4),
                 matrix: pick.matrix.map(row => [...row]),
+                colorKey: pick.colorKey,
                 color: colorData.bg,
                 colorSub: colorData.sub,
                 colorHighlight: colorData.highlight,
+                symbolSvg: colorData.symbolSvg,
                 width: pick.matrix[0].length,
                 height: pick.matrix.length,
                 cellCount: pick.matrix.reduce((sum, row) => sum + row.reduce((a, b) => a + b, 0), 0)

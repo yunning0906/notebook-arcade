@@ -47,6 +47,32 @@ class NonogramGame {
     init() {
         this.setupEventListeners();
         this.loadPuzzle(0);
+
+        if (new URLSearchParams(window.location.search).has('demo')) {
+            this.setupDemoState();
+        }
+    }
+
+    setupDemoState() {
+        this.secondsElapsed = 28;
+        if (this.timerDisplay) {
+            this.timerDisplay.textContent = '0:28';
+        }
+
+        // Partially shade cells and place crosses to show game in action
+        const shade = [[0, 1], [0, 3], [1, 0], [1, 1], [1, 3], [1, 4], [2, 0], [2, 1], [2, 3]];
+        const cross = [[0, 0], [0, 2], [0, 4], [4, 0], [4, 4]];
+
+        shade.forEach(([r, c]) => {
+            this.playerBoard[r][c] = 1;
+            this.updateCellVisual(r, c);
+        });
+        cross.forEach(([r, c]) => {
+            this.playerBoard[r][c] = 2;
+            this.updateCellVisual(r, c);
+        });
+
+        this.updateCluesStatus();
     }
 
     setupEventListeners() {

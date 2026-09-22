@@ -43,6 +43,10 @@ class Game2048 {
         this.bindUI();
         this.setupBoard(this.currentSize);
 
+        if (new URLSearchParams(window.location.search).has('demo')) {
+            this.setupDemoState();
+        }
+
         // Handle window resize to re-align tiles
         let resizeTimeout;
         window.addEventListener('resize', () => {
@@ -51,6 +55,21 @@ class Game2048 {
                 this.renderer.renderTiles(this.board.tiles, this.board.size);
             }, 100);
         });
+    }
+
+    setupDemoState() {
+        this.board.tiles = [];
+        const add = (r, c, val) => {
+            this.board.tiles.push({ id: this.board.tileCounter++, row: r, col: c, value: val });
+        };
+        add(0, 0, 128); add(0, 1, 64); add(0, 2, 32); add(0, 3, 16);
+        add(1, 0, 64);  add(1, 1, 32); add(1, 2, 16); add(1, 3, 8);
+        add(2, 0, 16);  add(2, 1, 8);  add(2, 2, 4);  add(2, 3, 2);
+        add(3, 0, 4);   add(3, 1, 2);
+
+        this.score = 2480;
+        this.scoreEl.textContent = '2480';
+        this.renderer.renderTiles(this.board.tiles, this.board.size);
     }
 
     bindUI() {

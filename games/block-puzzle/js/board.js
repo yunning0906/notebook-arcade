@@ -1,7 +1,7 @@
 /**
  * Notebook Block Puzzle - Board Logic
  * Manages grid state (10x10 / 8x8), placement validation,
- * row/column line completion checks, and clearing logic.
+ * downward gravity drop-row calculation, and clearing logic.
  */
 
 class PuzzleBoard {
@@ -16,7 +16,7 @@ class PuzzleBoard {
         for (let r = 0; r < this.size; r++) {
             const row = [];
             for (let c = 0; c < this.size; c++) {
-                row.push(null); // null = empty, or { color, colorSub, colorHighlight }
+                row.push(null); // null = empty, or { color, colorSub, colorHighlight, symbolSvg }
             }
             this.grid.push(row);
         }
@@ -27,12 +27,10 @@ class PuzzleBoard {
         this.initGrid();
     }
 
-    // Check if cell is in bounds
     isInBounds(r, c) {
         return r >= 0 && r < this.size && c >= 0 && c < this.size;
     }
 
-    // Check if a shape can be placed at (startR, startC)
     canPlaceShape(shape, startR, startC) {
         const matrix = shape.matrix;
         for (let r = 0; r < matrix.length; r++) {
@@ -41,12 +39,10 @@ class PuzzleBoard {
                     const targetR = startR + r;
                     const targetC = startC + c;
 
-                    // Out of bounds
                     if (!this.isInBounds(targetR, targetC)) {
                         return false;
                     }
 
-                    // Already occupied
                     if (this.grid[targetR][targetC] !== null) {
                         return false;
                     }
@@ -56,7 +52,35 @@ class PuzzleBoard {
         return true;
     }
 
-    // Place shape on the board
+    /**
+     * Compute the landing row when a shape drops vertically from above at column startC.
+     * Starts from row 0 and drops down until it hits an obstacle or the bottom.
+     */
+    getDropRow(shape, startC) {
+        if (startC < 0 || startC + shape.width > this.size) {
+            return null;
+        }
+
+        // Must at least be placeable at row 0 (the top entrance)
+        if (!this.canPlaceShape(shape, 0, startC)) {
+            return null; // Top is blocked
+        }
+
+        let bestRow = 0;
+        const maxRow = this.size - shape.height;
+
+        for (let r = 1; r <= maxRow; r++) {
+            if (this.canPlaceShape(shape, r, startC)) {
+                bestRow = r;
+            } else {
+                // Hit obstacle, stop here
+                break;
+            }
+        }
+
+        return bestRow;
+    }
+
     placeShape(shape, startR, startC) {
         if (!this.canPlaceShape(shape, startR, startC)) {
             return false;
@@ -73,7 +97,8 @@ class PuzzleBoard {
                     this.grid[targetR][targetC] = {
                         color: shape.color,
                         colorSub: shape.colorSub,
-                        colorHighlight: shape.colorHighlight
+                        colorHighlight: shape.colorHighlight,
+                        symbolSvg: shape.symbolSvg
                     };
                     placedCells.push({ r: targetR, c: targetC });
                 }
@@ -83,12 +108,10 @@ class PuzzleBoard {
         return placedCells;
     }
 
-    // Find all full rows and columns
     findClears() {
         const fullRows = [];
         const fullCols = [];
 
-        // Check rows
         for (let r = 0; r < this.size; r++) {
             let rowFull = true;
             for (let c = 0; c < this.size; c++) {
@@ -100,7 +123,6 @@ class PuzzleBoard {
             if (rowFull) fullRows.push(r);
         }
 
-        // Check columns
         for (let c = 0; c < this.size; c++) {
             let colFull = true;
             for (let r = 0; r < this.size; r++) {
@@ -115,7 +137,6 @@ class PuzzleBoard {
         return { rows: fullRows, cols: fullCols, totalLines: fullRows.length + fullCols.length };
     }
 
-    // Clear marked rows and columns, return list of cleared cell coordinates and their colors
     clearLines(rows, cols) {
         const clearedCells = [];
         const cellMap = new Set();
@@ -148,7 +169,6 @@ class PuzzleBoard {
             }
         });
 
-        // Set cells to null
         clearedCells.forEach(cell => {
             this.grid[cell.r][cell.c] = null;
         });
@@ -156,13 +176,10 @@ class PuzzleBoard {
         return clearedCells;
     }
 
-    // Check if the shape can fit anywhere on the current board
     canShapeFitAnywhere(shape) {
-        for (let r = 0; r <= this.size - shape.height; r++) {
-            for (let c = 0; c <= this.size - shape.width; c++) {
-                if (this.canPlaceShape(shape, r, c)) {
-                    return true;
-                }
+        for (let c = 0; c <= this.size - shape.width; c++) {
+            if (this.getDropRow(shape, c) !== null) {
+                return true;
             }
         }
         return false;

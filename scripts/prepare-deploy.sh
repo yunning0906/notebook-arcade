@@ -17,6 +17,10 @@ cp -r "$PORTAL_DIR/../bubble-shooter" "$PORTAL_DIR/games/bubble-shooter"
 cp -r "$PORTAL_DIR/../one-stroke-puzzle" "$PORTAL_DIR/games/one-stroke-puzzle"
 cp -r "$PORTAL_DIR/../block-puzzle" "$PORTAL_DIR/games/block-puzzle" 2>/dev/null || true
 cp -r "$PORTAL_DIR/../nonogram-puzzle" "$PORTAL_DIR/games/nonogram-puzzle"
+cp -r "$PORTAL_DIR/../doodle-snake" "$PORTAL_DIR/games/doodle-snake" 2>/dev/null || true
+cp -r "$PORTAL_DIR/../garden-sweeper" "$PORTAL_DIR/games/garden-sweeper" 2>/dev/null || true
+cp -r "$PORTAL_DIR/../tile-match-puzzle" "$PORTAL_DIR/games/tile-match-puzzle" 2>/dev/null || true
+cp -r "$PORTAL_DIR/../watercolor-sort" "$PORTAL_DIR/games/watercolor-sort" 2>/dev/null || true
 
 # Remove any nested .git folders from copied games to keep repo clean
 rm -rf games/*/.git

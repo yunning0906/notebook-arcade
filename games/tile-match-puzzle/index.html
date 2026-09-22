@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PAPER TILES - 手繪卡牌三消手帳</title>
+    <meta name="description" content="療癒溫暖的手繪紙質卡牌三消 / 靜態麻將連連看遊戲。桌面上交疊堆放著手繪薄卡片，點擊放進底部 7 格托盤，湊齊 3 張同款即可消除！">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="notebook-binding-strip"></div>
+
+        <!-- Header: Brand & Sound Toggle -->
+        <header class="game-header">
+            <div class="brand-wrap">
+                <div class="brand-title">
+                    PAPER TILES
+                    <span class="brand-badge">三消手帳</span>
+                </div>
+                <div class="brand-sub">桌面紙牌整理消除 · 靜態麻將連連看</div>
+            </div>
+            <div class="header-actions">
+                <button id="btnHelp" class="icon-btn" title="遊戲說明" aria-label="遊戲說明">
+                    ❓
+                </button>
+                <button id="soundToggle" class="icon-btn" title="聲音開關" aria-label="聲音開關">
+                    <svg class="sound-icon icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    </svg>
+                    <svg class="sound-icon icon-sound-off hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Dashboard & Level Selector -->
+        <div class="stats-dashboard">
+            <div class="level-navigation">
+                <button id="btnPrevLevel" class="nav-arrow-btn" aria-label="上一關">◀</button>
+                <div id="btnLevelSelect" class="level-info-wrap" title="點擊切換關卡">
+                    <div id="levelTitle" class="level-title">第 1 關 · 晨光餐桌</div>
+                    <div id="levelSub" class="level-sub">入門手繪桌布 (18 張牌)</div>
+                </div>
+                <button id="btnNextLevel" class="nav-arrow-btn" aria-label="下一關">▶</button>
+            </div>
+
+            <div class="stats-group">
+                <div class="stat-item">
+                    <span class="stat-label">剩餘牌數</span>
+                    <span class="stat-val"><span id="remainingCount">18</span> / <span id="totalCards">18</span></span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">時間</span>
+                    <span id="timerVal" class="stat-val">0:00</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">分數</span>
+                    <span id="scoreVal" class="stat-val">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-container">
+            <div id="progressBar" class="progress-bar-fill"></div>
+        </div>
+
+        <!-- Desktop Board Canvas (Stacked layered cards) -->
+        <main class="desk-board-wrapper">
+            <div id="deskBoard" class="desk-board">
+                <!-- Cards dynamically populated by game.js -->
+            </div>
+        </main>
+
+        <!-- Bookmark Extract Shelf (Temporary staging) -->
+        <div id="extractShelf" class="extract-shelf empty-shelf">
+            <span class="shelf-hint">BOOKMARK / 書籤暫存區（空）</span>
+        </div>
+
+        <!-- 7-Slot Tray Container -->
+        <section class="tray-wrapper">
+            <div class="tray-header-label">7 格收納托盤</div>
+            <div id="trayContainer" class="tray-container">
+                <!-- 7 placeholders -->
+            </div>
+        </section>
+
+        <!-- Powerups Bar -->
+        <footer class="powerups-bar">
+            <button id="btnUndo" class="powerup-btn" aria-label="回溯時光">
+                <span class="powerup-icon">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h10a5 5 0 0 1 5 5v2"></path><polyline points="7 14 3 10 7 6"></polyline></svg>
+                </span>
+                <span class="powerup-title">回溯時光</span>
+                <span id="undoCount" class="powerup-badge">3</span>
+            </button>
+            <button id="btnShuffle" class="powerup-btn" aria-label="重新整理">
+                <span class="powerup-icon">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg>
+                </span>
+                <span class="powerup-title">重新整理</span>
+                <span id="shuffleCount" class="powerup-badge">3</span>
+            </button>
+            <button id="btnExtract" class="powerup-btn" aria-label="書籤暫存">
+                <span class="powerup-icon">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                </span>
+                <span class="powerup-title">書籤暫存</span>
+                <span id="extractCount" class="powerup-badge">2</span>
+            </button>
+        </footer>
+    </div>
+
+    <!-- Victory Modal -->
+    <div id="victoryModal" class="modal-backdrop hidden">
+        <div class="modal-paper-card">
+            <div class="stamp-badge">CLEARED · 通關</div>
+            <h2 class="modal-title">桌面整理完成！</h2>
+            <p class="modal-desc">您已成功將所有手繪卡牌整齊歸位消除，桌面煥然一新！</p>
+            <div class="modal-stats-card">
+                <div class="modal-stat-box">
+                    <span class="m-stat-label">結算得分</span>
+                    <span id="winScore" class="m-stat-val">1200</span>
+                </div>
+                <div class="modal-stat-box">
+                    <span class="m-stat-label">通關用時</span>
+                    <span id="winTime" class="m-stat-val">1:25</span>
+                </div>
+            </div>
+            <div class="modal-btn-row">
+                <button id="btnReplayWin" class="btn-secondary">重整一次</button>
+                <button id="btnNextLevelWin" class="btn-primary">進入下一關</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Defeat Modal (Tray full) -->
+    <div id="defeatModal" class="modal-backdrop hidden">
+        <div class="modal-paper-card">
+            <div class="stamp-badge stamp-defeat">TRAY FULL · 槽滿</div>
+            <h2 class="modal-title">托盤放不下啦！</h2>
+            <p class="modal-desc">底部 7 格托盤已全部塞滿，無法再收納新的卡片囉。剩餘牌數：<span id="defeatRemaining">12</span> 張。</p>
+            <div class="modal-btn-row">
+                <button id="btnRetryDefeat" class="btn-secondary">重新挑戰</button>
+                <button id="btnReviveDefeat" class="btn-primary">移出 3 張牌繼續</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level Selection Modal -->
+    <div id="levelModal" class="modal-backdrop hidden">
+        <div class="modal-paper-card">
+            <h2 class="modal-title">手帳關卡選擇</h2>
+            <p class="modal-desc">挑選您想要整理的精選桌面主題：</p>
+            <div id="levelListGrid" class="level-list-grid">
+                <!-- Level list populated dynamically -->
+            </div>
+            <button id="closeLevelModal" class="btn-secondary" style="width: 100%;">返回桌面</button>
+        </div>
+    </div>
+
+    <!-- Rule / Help Modal -->
+    <div id="ruleModal" class="modal-backdrop hidden">
+        <div class="modal-paper-card">
+            <h2 class="modal-title">遊戲玩法指南</h2>
+            <ul class="rule-list">
+                <li><strong>紙牌疊層</strong>：桌面上堆疊著薄卡片，只有未被上層壓住的卡牌才可點擊拾取。</li>
+                <li><strong>7 格托盤</strong>：點選的卡牌會放入底部托盤，托盤上限 7 張。</li>
+                <li><strong>三消消除</strong>：當托盤中集齊 3 張相同圖標，自動整齊消除！</li>
+                <li><strong>文具道具</strong>：
+                    <br>· <strong>回溯時光</strong>：將最後一張卡牌退回原位。
+                    <br>· <strong>重新整理</strong>：桌面現有卡牌重新洗勻。
+                    <br>· <strong>書籤暫存</strong>：將托盤 3 張卡移至上方書籤槽暫存。
+                </li>
+            </ul>
+            <button id="closeRuleModal" class="btn-primary" style="width: 100%;">我知道了，開始整理！</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/icons.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/levels.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

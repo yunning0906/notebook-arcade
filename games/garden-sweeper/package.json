@@ -1,0 +1,11 @@
+{
+  "name": "garden-sweeper",
+  "version": "1.0.0",
+  "description": "Garden Sweeper (花園掃雷 / 溫馨掃雷) - 治癒手帳手繪風格溫和掃雷遊戲",
+  "scripts": {
+    "start": "serve ."
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  }
+}

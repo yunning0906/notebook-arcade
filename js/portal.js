@@ -185,6 +185,84 @@ const GAME_DATA = {
                 textZh: '每一次轉彎都有彈性的小小水滴噗嚕音！可隨時切換散步、漫遊、踏青步調與紙張邊界規則。'
             }
         ]
+    },
+    garden: {
+        id: 'garden',
+        title: 'Garden Sweeper',
+        subtitle: '花園掃雷',
+        path: 'games/garden-sweeper/index.html',
+        instructions: [
+            {
+                titleEn: 'How to Play',
+                titleZh: '玩法說明',
+                textEn: 'Click unrevealed dirt patches to turn the soil. Numbers indicate how many flower seedlings are hidden in the 8 neighboring cells.',
+                textZh: '點擊未翻開的泥土方格進行翻土。翻開後顯示的數字，代表其周圍相鄰 8 格中隱藏的花苗總數。'
+            },
+            {
+                titleEn: 'Seedling Flags',
+                titleZh: '標記花苗',
+                textEn: 'Right-click or toggle the Seedling Marker tool to plant a seedling tag on suspected flowers.',
+                textZh: '使用滑鼠右鍵或切換下方園藝工具，在確定埋有花苗的格子插上可愛的花苗標籤。'
+            },
+            {
+                titleEn: 'Gentle Experience',
+                titleZh: '溫馨無挫折體驗',
+                textEn: 'Accidentally hit a weed? No frustration! Gently pull the weed to continue tending your blooming garden.',
+                textZh: '點到雜草不會爆炸！可溫柔拔除雜草換上花苗籤繼續培育，直到整座花園綻放萬紫千紅！'
+            }
+        ]
+    },
+    tile: {
+        id: 'tile',
+        title: 'Paper Tiles',
+        subtitle: '卡牌收納三消',
+        path: 'games/tile-match-puzzle/index.html',
+        instructions: [
+            {
+                titleEn: 'Layered Cards',
+                titleZh: '紙牌疊層玩法',
+                textEn: 'Click free paper cards on the desk to collect them into your bottom 7-slot storage tray.',
+                textZh: '點選桌面上未被其他紙片壓住的自由卡牌，卡片會流暢飛入底部的 7 格收納托盤中。'
+            },
+            {
+                titleEn: 'Match 3 Elimination',
+                titleZh: '三消整齊收納',
+                textEn: 'When 3 cards of the same hand-drawn icon gather in the tray, they cleanly eliminate with sparkle confetti!',
+                textZh: '當托盤中集齊 3 張相同圖標的手繪卡牌時，將自動整齊消除並觸發彩色紙屑特效！'
+            },
+            {
+                titleEn: 'Tray & Power-ups',
+                titleZh: '托盤管理與文具道具',
+                textEn: 'Do not let all 7 tray slots fill up! Use Undo, Shuffle, and Bookmark Extract power-ups to clear the desk.',
+                textZh: '切記不要讓 7 格托盤完全塞滿！可善用回溯時光、重新整理與書籤暫存文具道具清空桌面。'
+            }
+        ]
+    },
+    watercolor: {
+        id: 'watercolor',
+        title: 'Watercolor Sort',
+        subtitle: '水彩試管倒水',
+        path: 'games/watercolor-sort/index.html',
+        instructions: [
+            {
+                titleEn: 'Pouring Water',
+                titleZh: '水彩傾倒規則',
+                textEn: 'Tap a test tube to lift it, then tap another tube to pour. You can only pour if the top colors match and there is room.',
+                textZh: '點擊試管提起動態傾倒，再點擊目標試管注入。只有頂層顏色相同且目標試管有足夠空間時才可倒水。'
+            },
+            {
+                titleEn: 'Color Purity',
+                titleZh: '色彩純粹收納',
+                textEn: 'Sort all watercolor layers until each tube is filled with a single, pure Morandi watercolor.',
+                textZh: '透過思考排列將所有混合的水彩色調歸類，直到每根試管都盛滿單一純淨的柔和水彩。'
+            },
+            {
+                titleEn: 'Helpful Tools',
+                titleZh: '提示與備用試管',
+                textEn: 'Stuck on a tricky palette? Use Undo to rewind steps or add an extra empty hand-drawn tube!',
+                textZh: '遇到難題時，可使用復原按鈕倒退步驟，或添置一根備用手繪試管增加調色空間！'
+            }
+        ]
     }
 };
 

@@ -52,6 +52,23 @@ class OneStrokeGame {
         this.loadSavedData();
         this.bindEvents();
         this.loadLevel(this.currentLevelIndex);
+
+        if (new URLSearchParams(window.location.search).has('demo')) {
+            this.setupDemoState();
+        }
+    }
+
+    setupDemoState() {
+        this.score = 420;
+        this.bestLevel = 6;
+        this.scoreEl.textContent = '420';
+        this.bestEl.textContent = '6';
+        
+        // Connect consecutive steps on Level 1 (3x3 grid)
+        const moves = [[0, 0], [0, 1], [0, 2], [1, 2], [1, 1], [1, 0]];
+        moves.forEach(([r, c]) => {
+            this.addStepToPath(r, c);
+        });
     }
 
     loadSavedData() {

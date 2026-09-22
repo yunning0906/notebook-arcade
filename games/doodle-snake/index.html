@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DOODLE SNAKE - 手繪毛毛蟲貪吃蛇</title>
+    <meta name="description" content="溫暖療癒的方格筆記本手繪風格毛毛蟲貪吃蛇。由粉彩圓點組成的可愛毛毛蟲在紙上漫步，品嚐甜美櫻桃與草莓，轉彎時有彈性水滴噗嚕音，吃果子時發出清脆鈴鐺聲。">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="game-container">
+        <!-- Left Panel: Info & Settings -->
+        <aside class="side-panel">
+            <header class="brand-header">
+                <div class="brand-title-wrap">
+                    <h1 class="brand-title">DOODLE SNAKE</h1>
+                    <span class="brand-sub">手繪毛毛蟲漫步</span>
+                </div>
+                <div class="audio-controls">
+                    <!-- BGM Toggle -->
+                    <button id="bgmToggle" class="icon-btn" aria-label="切換八音盒背景音樂" title="八音盒音樂">
+                        <svg class="icon-bgm-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 18V5l12-2v13"></path>
+                            <circle cx="6" cy="18" r="3"></circle>
+                            <circle cx="18" cy="16" r="3"></circle>
+                        </svg>
+                        <svg class="icon-bgm-off hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 18V5l12-2v13"></path>
+                            <circle cx="6" cy="18" r="3"></circle>
+                            <circle cx="18" cy="16" r="3"></circle>
+                            <line x1="2" y1="2" x2="22" y2="22"></line>
+                        </svg>
+                    </button>
+                    <!-- SFX Toggle -->
+                    <button id="soundToggle" class="icon-btn" aria-label="切換音效" title="水滴與鈴鐺音效">
+                        <svg class="icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                        </svg>
+                        <svg class="icon-sound-off hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <line x1="23" y1="9" x2="17" y2="15"></line>
+                            <line x1="17" y1="9" x2="23" y2="15"></line>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Score & Stats -->
+            <section class="score-card" aria-label="計分板">
+                <div class="score-row">
+                    <div class="score-box">
+                        <span class="score-label">分數 (SCORE)</span>
+                        <span id="currentScore" class="score-val">0</span>
+                    </div>
+                    <div class="score-box" style="text-align: right;">
+                        <span class="score-label">最佳 (BEST)</span>
+                        <span id="bestScore" class="score-val best-val">0</span>
+                    </div>
+                </div>
+                <div class="fruit-stats">
+                    <div class="fruit-stat-item" title="Cherries">
+                        <span class="fruit-badge">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#D9534F" stroke-width="2"><circle cx="8" cy="16" r="4" fill="#E57373"></circle><circle cx="16" cy="15" r="4" fill="#E57373"></circle><path d="M8 12c0-5 6-7 8-7"></path><path d="M16 11c0-4-3-6-6-6"></path></svg>
+                        </span>
+                        <span id="cherryCount">0</span>
+                    </div>
+                    <div class="fruit-stat-item" title="Strawberries">
+                        <span class="fruit-badge">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#D9534F" stroke-width="2"><polygon points="12,20 6,10 18,10" fill="#EF5350"></polygon><path d="M10 7c0-2 2-3 2-3s2 1 2 3"></path></svg>
+                        </span>
+                        <span id="strawberryCount">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings: Speed & Mode -->
+            <section class="settings-group">
+                <div class="setting-row">
+                    <span class="setting-title">MARGIN</span>
+                    <div class="button-pills" role="radiogroup" aria-label="邊界模式">
+                        <button class="pill-btn wall-mode-btn active" data-wrap="true">FREE / 穿牆</button>
+                        <button class="pill-btn wall-mode-btn" data-wrap="false">WALL / 邊界</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button id="btnPause" class="btn-main" aria-label="暫停遊戲">
+                    <span>PAUSE</span>
+                </button>
+                <button id="btnRestart" class="btn-main btn-restart" aria-label="重新開始">
+                    <span>RESTART</span>
+                </button>
+            </div>
+
+            <!-- Controls Guide -->
+            <div class="keyboard-guide">
+                <p>操作提示：鍵盤 <span>↑</span><span>↓</span><span>←</span><span>→</span> 或 <span>W</span><span>A</span><span>S</span><span>D</span> 控制轉彎，<span>空白鍵</span> 暫停。手機可滑動螢幕。</p>
+            </div>
+        </aside>
+
+        <!-- Center: Game Board Card -->
+        <section class="canvas-card">
+            <div class="canvas-container">
+                <canvas id="gameCanvas" width="504" height="504" aria-label="毛毛蟲遊戲畫布"></canvas>
+
+                <!-- Initial Start Hint Overlay -->
+                <div id="startHint" class="overlay-msg">
+                    <div class="hint-title">🍃 準備在紙上散步了嗎？</div>
+                    <div class="hint-sub">按任意方向鍵或點擊螢幕開始</div>
+                </div>
+
+                <!-- Pause Overlay -->
+                <div id="pauseOverlay" class="overlay-msg hidden">
+                    <div class="hint-title">☕ 休息一下</div>
+                    <div class="hint-sub">點擊繼續或按空白鍵恢復</div>
+                </div>
+
+                <!-- Game Over Memo Modal -->
+                <div id="gameOverModal" class="modal-backdrop hidden">
+                    <div class="modal-memo">
+                        <h2 class="modal-title">漫步結束囉 🌸</h2>
+                        <p id="gameOverReason" class="modal-reason">哎呀，小毛毛蟲撞到自己的身體了！</p>
+                        
+                        <div class="modal-scores">
+                            <div class="modal-score-item">
+                                <span class="lbl">本次得分</span>
+                                <span id="finalScore" class="num">0</span>
+                            </div>
+                            <div class="modal-score-item">
+                                <span class="lbl">歷史最佳</span>
+                                <span id="finalBest" class="num">0</span>
+                            </div>
+                        </div>
+
+                        <button id="btnPlayAgain" class="btn-play-again">
+                            再散步一次 🌱
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Pastel D-Pad -->
+            <nav class="dpad-container" aria-label="手繪方向鍵">
+                <button class="dpad-btn dpad-up" data-dir="up" aria-label="向上">▲</button>
+                <button class="dpad-btn dpad-left" data-dir="left" aria-label="向左">◀</button>
+                <div class="dpad-center"></div>
+                <button class="dpad-btn dpad-right" data-dir="right" aria-label="向右">▶</button>
+                <button class="dpad-btn dpad-down" data-dir="down" aria-label="向下">▼</button>
+            </nav>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/food.js"></script>
+    <script src="js/caterpillar.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

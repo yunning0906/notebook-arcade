@@ -1,0 +1,772 @@
+:root {
+    /* Morandi Palette & Notebook Theme */
+    --paper-bg: #F7F3E9;
+    --paper-grid: rgba(185, 168, 145, 0.22);
+    --paper-card: #FFFEFA;
+    --paper-card-sub: #F9F5EC;
+
+    --text-primary: #1C1917;
+    --text-pencil: #2A2421;
+    --text-muted: #786C65;
+
+    --pencil-border: #524338;
+    --pencil-border-light: rgba(82, 67, 56, 0.22);
+    --pencil-border-dark: #2C221B;
+
+    --btn-primary: #8FA87B;
+    --btn-primary-hover: #7D976A;
+    --btn-secondary: #E8A598;
+
+    --wood-shelf: #C49A6C;
+
+    --font-main: 'Segoe UI', 'Microsoft JhengHei', '微軟正黑體', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+
+    --shadow-soft: 0 4px 14px rgba(82, 67, 56, 0.08);
+    --shadow-float: 0 10px 25px rgba(82, 67, 56, 0.18);
+    --shadow-hover: 0 6px 18px rgba(82, 67, 56, 0.12);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: var(--font-main);
+    background-color: var(--paper-bg);
+    color: var(--text-primary);
+}
+
+/* Notebook Graph Paper Grid Background */
+body {
+    background-image: 
+        linear-gradient(to right, var(--paper-grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--paper-grid) 1px, transparent 1px);
+    background-size: 22px 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 12px;
+}
+
+/* Main Container */
+.game-container {
+    width: 100%;
+    max-width: 540px;
+    height: 100%;
+    max-height: 900px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 8px 12px 18px;
+}
+
+/* Header Area */
+.game-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 4px 6px;
+}
+
+.title-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.game-title {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--text-pencil);
+    line-height: 1.1;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.game-subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--paper-card);
+    border: 1.8px solid var(--pencil-border);
+    color: var(--text-pencil);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 1.5px 2px 0 var(--pencil-border);
+    transition: all 0.15s ease;
+}
+
+.icon-btn:active {
+    transform: translate(1.5px, 2px);
+    box-shadow: 0 0 0 var(--pencil-border);
+}
+
+.icon-svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--text-pencil);
+    stroke-width: 2.2;
+}
+
+/* Level Indicator Bar */
+.level-banner {
+    width: 100%;
+    background: var(--paper-card);
+    border: 1.8px solid var(--pencil-border);
+    border-radius: 12px;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 2px 2.5px 0 var(--pencil-border);
+    margin-bottom: 14px;
+}
+
+.level-badge {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-pencil);
+    letter-spacing: 0.5px;
+}
+
+.level-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* ==========================================
+ * LABORATORY DESK & TEST TUBES STAGE
+ * ========================================== */
+
+.desk-stage {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 10px 0 16px;
+    min-height: 380px;
+}
+
+/* Wooden Rack Shelf at Bottom (Solid Tone, Clean Pencil Line) */
+.wooden-rack {
+    width: 95%;
+    max-width: 480px;
+    height: 14px;
+    background: var(--wood-shelf);
+    border: 2px solid var(--pencil-border);
+    border-radius: 6px;
+    position: absolute;
+    bottom: 22px;
+    box-shadow: 2px 3px 0 var(--pencil-border), var(--shadow-soft);
+    z-index: 1;
+}
+
+/* Tubes Grid Container */
+.tubes-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 16px 20px;
+    z-index: 10;
+    position: relative;
+    padding-bottom: 24px;
+}
+
+/* Layout variations based on count */
+.tubes-container.layout-compact {
+    gap: 24px 28px;
+}
+
+.tubes-container.layout-medium {
+    gap: 18px 22px;
+}
+
+.tubes-container.layout-standard {
+    gap: 14px 16px;
+    max-width: 460px;
+}
+
+.tubes-container.layout-wide {
+    gap: 10px 12px;
+    max-width: 480px;
+}
+
+/* Single Tube Wrapper */
+.tube-wrapper {
+    position: relative;
+    width: 52px;
+    height: 180px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: top center;
+}
+
+.tubes-container.layout-wide .tube-wrapper {
+    width: 44px;
+    height: 160px;
+}
+
+.tubes-container.layout-standard .tube-wrapper {
+    width: 48px;
+    height: 170px;
+}
+
+/* Selected State: Tube lifts gracefully */
+.tube-wrapper.selected {
+    transform: translateY(-24px);
+}
+
+.tube-wrapper.selected .tube-glass {
+    box-shadow: none;
+}
+
+/* Hint Pulsing */
+.tube-wrapper.hint-pulse {
+    animation: hintPulse 0.6s ease-in-out infinite alternate;
+}
+
+.tube-wrapper.hint-pulse-target {
+    animation: hintPulseTarget 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes hintPulse {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-16px); }
+}
+
+@keyframes hintPulseTarget {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.06); }
+}
+
+/* Wobble if invalid / locked */
+.tube-wrapper.wobble {
+    animation: wobble 0.35s ease-in-out;
+}
+
+@keyframes wobble {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px) rotate(-3deg); }
+    75% { transform: translateX(6px) rotate(3deg); }
+}
+
+/* Glass Tube Body (Zero reflections, pure clean hand-drawn line art) */
+.tube-glass {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--pencil-border);
+    border-top: none;
+    border-radius: 0 0 24px 24px;
+    background: transparent;
+    overflow: hidden;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+/* Flared Tube Lip Rim (Zero white reflection) */
+.tube-rim {
+    position: absolute;
+    top: 0;
+    left: -4px;
+    right: -4px;
+    height: 7px;
+    border: 2px solid var(--pencil-border);
+    border-radius: 6px;
+    background: transparent;
+    z-index: 12;
+}
+
+/* Graduation Tick Marks (Simple pencil ticks) */
+.tube-ticks {
+    position: absolute;
+    top: 18px;
+    bottom: 30px;
+    left: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 11;
+}
+
+.tick {
+    display: block;
+    width: 6px;
+    height: 1.5px;
+    background: rgba(82, 67, 56, 0.35);
+    border-radius: 1px;
+}
+
+/* Liquid Layers Container */
+.tube-liquid-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column-reverse; /* Bottom to top */
+    position: relative;
+    border-radius: 0 0 24px 24px;
+    overflow: hidden;
+}
+
+/* Individual Liquid Segment (Flat solid color, NO gradients, NO white highlight lines) */
+.liquid-layer {
+    width: 100%;
+    height: 25%; /* 4 segments per tube */
+    position: relative;
+    transition: height 0.28s ease-out, opacity 0.25s ease-out;
+    border-top: 1px solid rgba(82, 67, 56, 0.15);
+}
+
+.liquid-layer.draining {
+    height: 0 !important;
+    opacity: 0;
+}
+
+.liquid-layer.filling {
+    height: 0 !important;
+}
+
+.liquid-layer.filled {
+    height: 25% !important;
+}
+
+/* Cork Stopper (Clean Solid Wooden Stopper) */
+.tube-cork {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-18px);
+    width: 24px;
+    height: 22px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 20;
+}
+
+.tube-cork.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.cork-body {
+    width: 24px;
+    height: 20px;
+    background: #BA8E5E;
+    border: 2px solid var(--pencil-border);
+    border-radius: 4px 4px 6px 6px;
+    box-shadow: 1px 1.5px 0 var(--pencil-border);
+}
+
+/* ==========================================
+ * WATER POUR STREAM & PARTICLE CANVAS
+ * ========================================== */
+
+.pour-stream-svg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 45;
+    display: none;
+}
+
+.stream-path {
+    fill: none;
+    stroke-width: 8px;
+    stroke-linecap: round;
+    opacity: 0.95;
+}
+
+.particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 60;
+}
+
+/* ==========================================
+ * BOTTOM RELAXATION TOOLBAR
+ * ========================================== */
+
+.toolbar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 4px 4px;
+}
+
+.tool-btn {
+    flex: 1;
+    max-width: 105px;
+    height: 48px;
+    background: var(--paper-card);
+    border: 2px solid var(--pencil-border);
+    border-radius: 12px;
+    color: var(--text-pencil);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 2px 2.5px 0 var(--pencil-border);
+    transition: all 0.12s ease;
+    position: relative;
+}
+
+.tool-btn .btn-svg {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 2px;
+    stroke: var(--text-pencil);
+    stroke-width: 2.2;
+}
+
+.tool-btn:active {
+    transform: translate(2px, 2.5px);
+    box-shadow: 0 0 0 var(--pencil-border);
+}
+
+.btn-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #E8A598;
+    border: 1.5px solid var(--pencil-border);
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 5px;
+    color: #2A2421;
+}
+
+/* ==========================================
+ * TOAST NOTIFICATIONS
+ * ========================================== */
+
+.toast-notice {
+    position: absolute;
+    top: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--paper-card);
+    border: 1.8px solid var(--pencil-border);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-pencil);
+    box-shadow: 2px 3px 0 var(--pencil-border), var(--shadow-soft);
+    z-index: 100;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+}
+
+.toast-notice.fade-out {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+/* ==========================================
+ * MODALS
+ * ========================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(42, 36, 33, 0.45);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 120;
+    padding: 16px;
+    transition: opacity 0.25s ease;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-card {
+    width: 100%;
+    max-width: 400px;
+    background: var(--paper-card);
+    border: 2.5px solid var(--pencil-border);
+    border-radius: 16px;
+    padding: 24px 20px 20px;
+    box-shadow: 4px 5px 0 var(--pencil-border), var(--shadow-float);
+    position: relative;
+    text-align: center;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--paper-card-sub);
+    border: 1.8px solid var(--pencil-border);
+    color: var(--text-pencil);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1.5px 1.5px 0 var(--pencil-border);
+}
+
+.modal-close-btn:active {
+    transform: translate(1.5px, 1.5px);
+    box-shadow: 0 0 0;
+}
+
+.modal-stamp {
+    display: inline-block;
+    border: 1.8px solid var(--pencil-border);
+    border-radius: 6px;
+    padding: 4px 14px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-pencil);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    background: var(--paper-card-sub);
+}
+
+.modal-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--text-pencil);
+    margin-bottom: 6px;
+}
+
+.modal-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 18px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.btn-primary {
+    flex: 1;
+    height: 44px;
+    background: var(--btn-primary);
+    color: #FFFEFA;
+    border: 2px solid var(--pencil-border);
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 2px 2.5px 0 var(--pencil-border);
+    transition: all 0.12s ease;
+}
+
+.btn-primary:active {
+    transform: translate(2px, 2.5px);
+    box-shadow: 0 0 0;
+}
+
+.btn-secondary {
+    flex: 1;
+    height: 44px;
+    background: var(--paper-card-sub);
+    color: var(--text-pencil);
+    border: 2px solid var(--pencil-border);
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 2px 2.5px 0 var(--pencil-border);
+    transition: all 0.12s ease;
+}
+
+.btn-secondary:active {
+    transform: translate(2px, 2.5px);
+    box-shadow: 0 0 0;
+}
+
+/* Level Grid in Modal */
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-height: 340px;
+    overflow-y: auto;
+    padding: 8px 4px;
+    margin-bottom: 14px;
+}
+
+.level-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.level-grid::-webkit-scrollbar-thumb {
+    background: rgba(82, 67, 56, 0.3);
+    border-radius: 4px;
+}
+
+.level-grid-btn {
+    height: 60px;
+    background: var(--paper-card-sub);
+    border: 1.8px solid var(--pencil-border);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 1.5px 2px 0 var(--pencil-border);
+    transition: all 0.12s ease;
+    position: relative;
+    padding: 4px;
+}
+
+.level-grid-btn:active {
+    transform: translate(1.5px, 2px);
+    box-shadow: 0 0 0;
+}
+
+.level-grid-btn.current {
+    background: #F3D28E;
+    border-width: 2.2px;
+}
+
+.level-grid-btn.completed {
+    background: #DEE8D5;
+}
+
+.lvl-num {
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--text-pencil);
+}
+
+.lvl-name {
+    font-size: 9px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: center;
+}
+
+.lvl-star {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #4A8B71;
+}
+
+/* Help List */
+.help-list {
+    text-align: left;
+    list-style: none;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-pencil);
+    margin-bottom: 16px;
+}
+
+.help-list li {
+    margin-bottom: 8px;
+    padding-left: 18px;
+    position: relative;
+}
+
+.help-list li::before {
+    content: '•';
+    position: absolute;
+    left: 2px;
+    top: -1px;
+    font-size: 16px;
+    color: var(--pencil-border);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 19px;
+    }
+    .level-banner {
+        padding: 6px 12px;
+    }
+    .tube-wrapper {
+        width: 44px;
+        height: 155px;
+    }
+    .tubes-container.layout-wide .tube-wrapper {
+        width: 38px;
+        height: 145px;
+    }
+    .tool-btn {
+        height: 44px;
+        font-size: 11px;
+    }
+}

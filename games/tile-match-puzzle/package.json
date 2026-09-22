@@ -1,0 +1,12 @@
+{
+  "name": "paper-tile-match",
+  "version": "1.0.0",
+  "description": "Paper Tile Match 3 - Hand-drawn Stationery & Notebook Aesthetic Solitaire Match Game",
+  "scripts": {
+    "dev": "npx -y serve . -l 3000",
+    "start": "npx -y serve . -l 3000"
+  },
+  "keywords": ["game", "tile-match", "hand-drawn", "puzzle"],
+  "author": "",
+  "license": "MIT"
+}
