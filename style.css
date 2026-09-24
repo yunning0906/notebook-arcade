@@ -183,32 +183,39 @@ body {
 .card-footer {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
-/* Buttons */
-.btn-rules {
+/* Identical sizing and layout for both buttons */
+.btn-rules,
+.btn-play {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #FAF6ED;
-    color: var(--text-pencil);
-    border: 2px solid var(--pencil-border);
-    padding: 8px 14px;
+    height: 38px;
+    padding: 0 18px;
     border-radius: 12px;
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 800;
+    font-family: var(--font-main);
     cursor: pointer;
-    box-shadow: 2px 2.5px 0px var(--pencil-border);
     transition: all 0.15s ease;
     white-space: nowrap;
+    border: 2px solid var(--pencil-border);
+    box-shadow: 2px 2.5px 0px var(--pencil-border);
+    box-sizing: border-box;
+}
+
+.btn-rules {
+    background: #FAF6ED;
+    color: var(--text-pencil);
 }
 
 .btn-rules:hover {
     background: #FFF9E6;
     transform: translateY(-2px);
     box-shadow: 3px 4px 0px var(--pencil-border);
-    color: #000;
+    color: #1C1917;
 }
 
 .btn-rules:active {
@@ -217,20 +224,10 @@ body {
 }
 
 .btn-play {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     background: var(--btn-primary);
+    border-color: var(--btn-primary-border);
     color: #FFFFFF;
-    border: 2px solid var(--btn-primary-border);
-    padding: 8px 18px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
     box-shadow: 2px 2.5px 0px var(--btn-primary-border);
-    transition: all 0.15s ease;
-    white-space: nowrap;
 }
 
 .btn-play:hover {
@@ -431,119 +428,58 @@ body {
     display: none !important;
 }
 
-/* Floating Dock (頂部導航列) */
-.floating-dock {
+/* Floating Back Arrow Button (回去的箭頭) */
+.btn-back-lobby {
     position: fixed;
-    top: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 200;
-    background: rgba(255, 254, 250, 0.94);
+    top: 14px;
+    left: 16px;
+    z-index: 300;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 38px;
+    padding: 0 16px;
+    background: rgba(255, 254, 250, 0.95);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 2px solid var(--pencil-border);
-    border-radius: 36px;
-    padding: 5px 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: var(--shadow-dock), 2px 3px 0px var(--pencil-border);
-    max-width: 96vw;
-    overflow-x: auto;
-    scrollbar-width: none;
-}
-
-.floating-dock::-webkit-scrollbar {
-    display: none;
-}
-
-.dock-divider {
-    width: 1.5px;
-    height: 20px;
-    background: var(--pencil-border-light);
-    margin: 0 2px;
-    flex-shrink: 0;
-}
-
-/* Dock Buttons */
-.dock-btn, .dock-tab-btn, .dock-icon-btn {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    font-family: var(--font-main);
-    font-size: 13.5px;
-    font-weight: 700;
-    color: var(--text-pencil);
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 12px;
     border-radius: 20px;
+    color: var(--text-pencil);
+    font-size: 14px;
+    font-weight: 800;
+    font-family: var(--font-main);
+    cursor: pointer;
+    box-shadow: 2px 3px 0px var(--pencil-border);
     transition: all 0.15s ease;
-    white-space: nowrap;
-    flex-shrink: 0;
 }
 
-.dock-home-btn {
-    background: #EFE7D8;
-    border: 1.5px solid var(--pencil-border);
-    box-shadow: 1px 1.5px 0px var(--pencil-border);
+.btn-back-lobby:hover {
+    background: #FFF9E6;
+    transform: translateY(-2px);
+    box-shadow: 3px 4px 0px var(--pencil-border);
+    color: #1C1917;
 }
 
-.dock-home-btn:hover {
-    background: #E5DAC6;
-    transform: translateY(-1px);
+.btn-back-lobby:active {
+    transform: translateY(1px);
+    box-shadow: 1px 1px 0px var(--pencil-border);
 }
 
-.dock-games-group {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+.btn-back-lobby svg {
+    transition: transform 0.15s ease;
 }
 
-.dock-tab-btn {
-    border: 1.5px solid transparent;
+.btn-back-lobby:hover svg {
+    transform: translateX(-3px);
 }
 
-.dock-tab-btn:hover {
-    background: rgba(82, 67, 56, 0.08);
-}
-
-.dock-tab-btn.active {
-    background: var(--pencil-border);
-    color: #FFFDF9;
-    border-color: var(--pencil-border);
-    box-shadow: 1px 1.5px 0px var(--pencil-border-dark);
-}
-
-.dock-actions-group {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.dock-icon-btn {
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1.5px solid var(--pencil-border);
-    background: #FFFEFA;
-    border-radius: 50%;
-    box-shadow: 1px 1.5px 0px var(--pencil-border);
-}
-
-.dock-icon-btn:hover {
-    background: #EFE7D8;
-    transform: translateY(-1px);
-}
-
-/* Responsive Iframe Container */
+/* Fullscreen Responsive Iframe Container */
 .iframe-container {
     width: 100vw;
     height: 100vh;
-    padding-top: 54px;
+    padding: 0;
+    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -245,45 +245,15 @@
         </div>
     </div>
 
-    <!-- 3. GAME PLAYER VIEW (Pure English Dock) -->
+    <!-- 3. GAME PLAYER VIEW (簡約純粹：單一返回大廳箭頭按鈕) -->
     <div id="gamePlayerView" class="game-player-view hidden">
-        <nav class="floating-dock" id="floatingDock">
-            <!-- Lobby -->
-            <button class="dock-btn dock-home-btn" id="btnBackToLobby" title="Back to Lobby">
-                <span>LOBBY</span>
-            </button>
-
-            <span class="dock-divider"></span>
-
-            <!-- Game Tabs: Pure English -->
-            <div class="dock-games-group">
-                <button class="dock-tab-btn" data-game="suika">SUIKA</button>
-                <button class="dock-tab-btn" data-game="2048">2048</button>
-                <button class="dock-tab-btn" data-game="bubble">BUBBLE</button>
-                <button class="dock-tab-btn" data-game="oneline">ONE LINE</button>
-                <button class="dock-tab-btn" data-game="block">BLOCK</button>
-                <button class="dock-tab-btn" data-game="nonogram">NONOGRAM</button>
-                <button class="dock-tab-btn" data-game="snake">SNAKE</button>
-                <button class="dock-tab-btn" data-game="garden">GARDEN</button>
-                <button class="dock-tab-btn" data-game="tile">TILES</button>
-                <button class="dock-tab-btn" data-game="watercolor">WATERCOLOR</button>
-            </div>
-
-            <span class="dock-divider"></span>
-
-            <!-- Actions: Rules (Bilingual) & Fullscreen -->
-            <div class="dock-actions-group">
-                <button class="dock-tab-btn" id="btnShowRulesInGame" title="Rules / 說明">RULES</button>
-                <button class="dock-icon-btn" id="btnFullscreen" title="Toggle Fullscreen">
-                    <svg class="icon-expand" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
-                    </svg>
-                    <svg class="icon-compress hidden" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
-                    </svg>
-                </button>
-            </div>
-        </nav>
+        <!-- Floating Back Arrow (回去的箭頭) -->
+        <button class="btn-back-lobby" id="btnBackToLobby" title="返回遊戲大廳" aria-label="返回遊戲大廳">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            <span>返回大廳</span>
+        </button>
 
         <!-- Main Iframe Container -->
         <div class="iframe-container">
