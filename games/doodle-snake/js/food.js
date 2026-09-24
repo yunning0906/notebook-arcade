@@ -122,93 +122,63 @@ class FoodManager {
     }
 
     /**
-     * 繪製手繪雙櫻桃 (Cherries)
+     * 繪製像 Suika Game 一樣的手繪櫻桃 (Cherry)
+     * 純手繪色鉛筆質感、棕色果梗、橘子墨綠色葉片與小黑點五官，完全無貼圖
      */
     _renderCherry(ctx) {
-        const r = this.gridSize * 0.28;
-        const stemTopX = 0;
-        const stemTopY = -r * 1.5;
-        const leftX = -r * 0.72;
-        const leftY = r * 0.45;
-        const rightX = r * 0.75;
-        const rightY = r * 0.2;
+        const r = this.gridSize * 0.36;
 
-        // 1. 綠色果梗與小嫩葉
-        ctx.strokeStyle = '#558B2F';
+        ctx.save();
+        ctx.translate(0, r * 0.2);
+
+        // 1. 手繪櫻桃果肉本體 (Suika Game 溫潤粉彩紅，無黑粗框)
+        ctx.fillStyle = '#FF6B7A';
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 柔和微光高光
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+        ctx.beginPath();
+        ctx.ellipse(-r * 0.35, -r * 0.35, r * 0.28, r * 0.16, -Math.PI / 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 2. 棕色手繪果梗
+        ctx.strokeStyle = '#524338';
         ctx.lineWidth = 2.2;
         ctx.lineCap = 'round';
-
-        // 左梗 (自然弧線)
         ctx.beginPath();
-        ctx.moveTo(stemTopX, stemTopY);
-        ctx.quadraticCurveTo(-r * 0.3, -r * 0.5, leftX, leftY - r * 0.5);
+        ctx.moveTo(0, -r * 0.85);
+        ctx.quadraticCurveTo(r * 0.35, -r * 1.45, r * 0.25, -r * 1.65);
         ctx.stroke();
 
-        // 右梗
+        // 3. 橘子墨綠色小嫩葉 (Suika Game 經典墨綠葉片)
+        ctx.fillStyle = '#1E4D2B';
         ctx.beginPath();
-        ctx.moveTo(stemTopX, stemTopY);
-        ctx.quadraticCurveTo(r * 0.5, -r * 0.4, rightX, rightY - r * 0.5);
-        ctx.stroke();
-
-        // 梗頂端連接點
-        ctx.beginPath();
-        ctx.arc(stemTopX, stemTopY, 2, 0, Math.PI * 2);
-        ctx.fillStyle = '#33691E';
+        ctx.ellipse(r * 0.32, -r * 1.55, r * 0.34, r * 0.17, -Math.PI / 6, 0, Math.PI * 2);
         ctx.fill();
 
-        // 小綠葉 (手繪粉彩葉片)
-        ctx.save();
-        ctx.translate(stemTopX + 2, stemTopY + 2);
-        ctx.rotate(0.35);
+        // 4. Suika Game 經典可愛手繪小黑圓點雙眼與微笑
+        const eyeOffsetX = r * 0.32;
+        const eyeOffsetY = r * 0.06;
+        const eyeRadius = Math.max(1.6, r * 0.08);
+        const pencilLead = '#222222';
+
+        // 雙眼
+        ctx.fillStyle = pencilLead;
         ctx.beginPath();
-        ctx.ellipse(6, -2, 7, 3.8, 0.2, 0, Math.PI * 2);
-        ctx.fillStyle = '#81C784';
-        ctx.fill();
-        ctx.strokeStyle = '#33691E';
-        ctx.lineWidth = 1.2;
-        ctx.stroke();
-        ctx.restore();
-
-        // 2. 左櫻桃主體
-        this._drawCherryGlobe(ctx, leftX, leftY, r);
-
-        // 3. 右櫻桃主體
-        this._drawCherryGlobe(ctx, rightX, rightY, r);
-    }
-
-    _drawCherryGlobe(ctx, cx, cy, r) {
-        ctx.save();
-        // 柔和粉彩紅底色
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.fillStyle = '#FF5252';
+        ctx.arc(-eyeOffsetX, eyeOffsetY, eyeRadius, 0, Math.PI * 2);
+        ctx.arc(eyeOffsetX, eyeOffsetY, eyeRadius, 0, Math.PI * 2);
         ctx.fill();
 
-        // 頂部小凹槽
-        ctx.beginPath();
-        ctx.arc(cx, cy - r * 0.85, 2.5, 0, Math.PI);
-        ctx.strokeStyle = '#7f0000';
-        ctx.lineWidth = 1.2;
-        ctx.stroke();
-
-        // 柔亮高光 (Watercolor Shine)
-        ctx.beginPath();
-        ctx.arc(cx - r * 0.35, cy - r * 0.35, r * 0.32, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
-        ctx.fill();
-
-        // 第二小高光點
-        ctx.beginPath();
-        ctx.arc(cx - r * 0.15, cy - r * 0.5, r * 0.14, 0, Math.PI * 2);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill();
-
-        // 手繪鉛筆邊框
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.strokeStyle = '#524338';
+        // 可愛微彎手繪笑臉
+        ctx.strokeStyle = pencilLead;
         ctx.lineWidth = 1.6;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.arc(0, eyeOffsetY + r * 0.12, r * 0.14, 0.25, Math.PI - 0.25);
         ctx.stroke();
+
         ctx.restore();
     }
 

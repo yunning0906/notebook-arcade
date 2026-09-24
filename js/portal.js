@@ -169,20 +169,20 @@ const GAME_DATA = {
             {
                 titleEn: 'Paper Stroll',
                 titleZh: '紙上漫步玩法',
-                textEn: 'Guide the pastel caterpillar across the notebook grid using Arrow keys, WASD, swipe, or on-screen D-pad buttons.',
-                textZh: '使用鍵盤方向鍵、WASD、螢幕滑動或專屬粉彩方向鍵，引導毛毛蟲在方格本上悠閒滑行漫步。'
+                textEn: 'Guide the pastel caterpillar across the notebook grid peacefully.',
+                textZh: '引導小毛毛蟲在溫暖的方格本上悠閒漫步，享受安靜舒心的紙上探索。'
             },
             {
                 titleEn: 'Delicious Fruits & Growth',
                 titleZh: '採集甜美果實',
                 textEn: 'Eat randomly dropped hand-drawn cherries and strawberries to grow longer, trigger sparkling confetti, and hear crystal bell chimes.',
-                textZh: '吃掉隨機掉落的手繪雙櫻桃與草莓讓身體逐漸變長，觸發彩色鉛筆彩屑特效與清脆鈴鐺聲。'
+                textZh: '品嚐隨機出現的手繪櫻桃與草莓讓身體逐漸變長，觸發彩色鉛筆彩屑特效與清脆鈴鐺聲。'
             },
             {
                 titleEn: 'Elastic Water Drop & Pacing',
-                titleZh: '水滴噗嚕音與步調選擇',
-                textEn: 'Turning emits elastic water droplet bloops! Freely choose between Stroll, Wander, or Brisk speeds, and toggle margin wrapping.',
-                textZh: '每一次轉彎都有彈性的小小水滴噗嚕音！可隨時切換散步、漫遊、踏青步調與紙張邊界規則。'
+                titleZh: '水滴噗嚕音與邊界規則',
+                textEn: 'Turning emits elastic water droplet bloops! Freely choose between margin wrapping or wall collision.',
+                textZh: '每一次轉動都有彈性的小小水滴噗嚕音，並可自由切換邊界穿牆或紙張邊界規則。'
             }
         ]
     },

@@ -217,9 +217,10 @@ body {
 
 .score-val {
     font-size: 26px;
-    font-weight: 900;
+    font-weight: 800;
     color: var(--text-pencil);
-    font-family: monospace, sans-serif;
+    font-family: var(--font-main);
+    font-variant-numeric: normal;
     line-height: 1.1;
 }
 

@@ -62,13 +62,22 @@
                 <div class="fruit-stats">
                     <div class="fruit-stat-item" title="Cherries">
                         <span class="fruit-badge">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#D9534F" stroke-width="2"><circle cx="8" cy="16" r="4" fill="#E57373"></circle><circle cx="16" cy="15" r="4" fill="#E57373"></circle><path d="M8 12c0-5 6-7 8-7"></path><path d="M16 11c0-4-3-6-6-6"></path></svg>
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+                                <circle cx="11" cy="14" r="6" fill="#FF6B7A"></circle>
+                                <path d="M11 8 Q15 3 13 2" stroke="#524338" stroke-width="1.8" stroke-linecap="round"></path>
+                                <ellipse cx="14" cy="3.5" rx="3.5" ry="1.8" fill="#1E4D2B" transform="rotate(-20 14 3.5)"></ellipse>
+                                <circle cx="9" cy="13.5" r="0.8" fill="#222"></circle>
+                                <circle cx="13" cy="13.5" r="0.8" fill="#222"></circle>
+                            </svg>
                         </span>
                         <span id="cherryCount">0</span>
                     </div>
                     <div class="fruit-stat-item" title="Strawberries">
                         <span class="fruit-badge">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#D9534F" stroke-width="2"><polygon points="12,20 6,10 18,10" fill="#EF5350"></polygon><path d="M10 7c0-2 2-3 2-3s2 1 2 3"></path></svg>
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+                                <path d="M12 20 C6 14 6 8 12 7 C18 8 18 14 12 20 Z" fill="#FF5E6C"></path>
+                                <path d="M9 7 Q12 5 15 7" fill="#1E4D2B"></path>
+                            </svg>
                         </span>
                         <span id="strawberryCount">0</span>
                     </div>
@@ -95,11 +104,6 @@
                     <span>RESTART</span>
                 </button>
             </div>
-
-            <!-- Controls Guide -->
-            <div class="keyboard-guide">
-                <p>操作提示：鍵盤 <span>↑</span><span>↓</span><span>←</span><span>→</span> 或 <span>W</span><span>A</span><span>S</span><span>D</span> 控制轉彎，<span>空白鍵</span> 暫停。手機可滑動螢幕。</p>
-            </div>
         </aside>
 
         <!-- Center: Game Board Card -->
@@ -109,21 +113,21 @@
 
                 <!-- Initial Start Hint Overlay -->
                 <div id="startHint" class="overlay-msg">
-                    <div class="hint-title">🍃 準備在紙上散步了嗎？</div>
-                    <div class="hint-sub">按任意方向鍵或點擊螢幕開始</div>
+                    <div class="hint-title">準備散步</div>
+                    <div class="hint-sub">點擊開始</div>
                 </div>
 
                 <!-- Pause Overlay -->
                 <div id="pauseOverlay" class="overlay-msg hidden">
-                    <div class="hint-title">☕ 休息一下</div>
-                    <div class="hint-sub">點擊繼續或按空白鍵恢復</div>
+                    <div class="hint-title">暫停中</div>
+                    <div class="hint-sub">點擊繼續</div>
                 </div>
 
                 <!-- Game Over Memo Modal -->
                 <div id="gameOverModal" class="modal-backdrop hidden">
                     <div class="modal-memo">
-                        <h2 class="modal-title">漫步結束囉 🌸</h2>
-                        <p id="gameOverReason" class="modal-reason">哎呀，小毛毛蟲撞到自己的身體了！</p>
+                        <h2 class="modal-title">漫步結束</h2>
+                        <p id="gameOverReason" class="modal-reason">毛毛蟲撞到了！</p>
                         
                         <div class="modal-scores">
                             <div class="modal-score-item">
@@ -137,7 +141,7 @@
                         </div>
 
                         <button id="btnPlayAgain" class="btn-play-again">
-                            再散步一次 🌱
+                            再散步一次
                         </button>
                     </div>
                 </div>
