@@ -99,7 +99,12 @@ class WatercolorGame {
         // Case 1: No tube currently selected
         if (this.selectedTubeIndex === null) {
             if (tube.length === 0) {
-                // Cannot pick an empty tube
+                // Clicked an empty tube without selecting a source tube first!
+                if (this.ui) {
+                    this.ui.wobbleTube(tubeIndex);
+                    this.ui.showNotification("請先點選有水彩的試管，再點空試管倒水");
+                }
+                this.audio.playGlassClink(false);
                 return;
             }
 
@@ -192,61 +197,75 @@ class WatercolorGame {
         this.isBusy = true;
         this.selectedTubeIndex = null;
 
-        // 1. Save history snapshot for Undo
-        this.history.push({
-            tubes: this.tubes.map(t => [...t]),
-            fromIdx: fromIdx,
-            toIdx: toIdx,
-            count: count,
-            color: color
-        });
-
-        // 2. Play realistic "glug-glug" water stream sound
-        const pourDurationMs = 600 + count * 180;
-        this.audio.startPouringStream(pourDurationMs);
-
-        // 3. Trigger fluid pouring animation in UI
-        if (this.ui) {
-            await this.ui.animatePour(fromIdx, toIdx, count, color, pourDurationMs);
-        }
-
-        // 4. Update tubes data model
-        for (let i = 0; i < count; i++) {
-            this.tubes[fromIdx].pop();
-            this.tubes[toIdx].push(color);
-        }
-
-        // 5. Check if target tube is now fully completed
-        const toTube = this.tubes[toIdx];
-        const isTargetCompleted = (toTube.length === TUBE_CAPACITY && toTube.every(c => c === color));
-        if (isTargetCompleted) {
-            this.audio.playCorkPop();
-            if (this.ui) {
-                this.ui.sealTubeWithCork(toIdx, color);
-            }
-        }
-
-        // 6. Update UI controls (Undo available)
-        if (this.ui) {
-            this.ui.updateControls({
-                canUndo: this.history.length > 0,
-                extraTubesLeft: this.maxExtraTubes - this.extraTubesAdded,
-                levelNum: this.currentLevel
+        try {
+            // 1. Save history snapshot for Undo
+            this.history.push({
+                tubes: this.tubes.map(t => [...t]),
+                fromIdx: fromIdx,
+                toIdx: toIdx,
+                count: count,
+                color: color
             });
-        }
 
-        // 7. Check for Level Victory
-        const won = isBoardSolved(this.tubes, TUBE_CAPACITY);
-        if (won) {
-            this.completedLevels.add(this.currentLevel);
-            this._saveProgress();
-            this.audio.playVictory();
+            // 2. Play realistic "glug-glug" water stream sound
+            const pourDurationMs = 600 + count * 180;
+            this.audio.startPouringStream(pourDurationMs);
+
+            // 3. Trigger fluid pouring animation in UI
             if (this.ui) {
-                await this.ui.showVictoryModal(this.currentLevel);
+                await this.ui.animatePour(fromIdx, toIdx, count, color, pourDurationMs);
             }
-        }
 
-        this.isBusy = false;
+            // 4. Update tubes data model
+            for (let i = 0; i < count; i++) {
+                this.tubes[fromIdx].pop();
+                this.tubes[toIdx].push(color);
+            }
+
+            // Guarantee 100% accurate DOM synchronization
+            if (this.ui) {
+                this.ui.syncTube(fromIdx, this.tubes[fromIdx]);
+                this.ui.syncTube(toIdx, this.tubes[toIdx]);
+            }
+
+            // 5. Check if target tube is now fully completed
+            const toTube = this.tubes[toIdx];
+            const isTargetCompleted = (toTube.length === TUBE_CAPACITY && toTube.every(c => c === color));
+            if (isTargetCompleted) {
+                this.audio.playCorkPop();
+                if (this.ui) {
+                    this.ui.sealTubeWithCork(toIdx, color);
+                }
+            }
+
+            // 6. Update UI controls (Undo available)
+            if (this.ui) {
+                this.ui.updateControls({
+                    canUndo: this.history.length > 0,
+                    extraTubesLeft: this.maxExtraTubes - this.extraTubesAdded,
+                    levelNum: this.currentLevel
+                });
+            }
+
+            // 7. Check for Level Victory
+            const won = isBoardSolved(this.tubes, TUBE_CAPACITY);
+            if (won) {
+                this.completedLevels.add(this.currentLevel);
+                this._saveProgress();
+                this.audio.playVictory();
+                if (this.ui) {
+                    await this.ui.showVictoryModal(this.currentLevel);
+                }
+            }
+        } catch (err) {
+            console.error('Error during executePour:', err);
+            if (this.ui) {
+                this.ui.syncTube(fromIdx, this.tubes[fromIdx]);
+                this.ui.syncTube(toIdx, this.tubes[toIdx]);
+            }
+        } finally {
+            this.isBusy = false;
+        }
     }
 
     /**
@@ -258,20 +277,22 @@ class WatercolorGame {
         this.isBusy = true;
         this.audio.playUndo();
 
-        const lastState = this.history.pop();
-        this.tubes = lastState.tubes.map(t => [...t]);
-        this.selectedTubeIndex = null;
+        try {
+            const lastState = this.history.pop();
+            this.tubes = lastState.tubes.map(t => [...t]);
+            this.selectedTubeIndex = null;
 
-        if (this.ui) {
-            this.ui.renderBoard(this.tubes, CURATED_LEVELS[this.currentLevel - 1]);
-            this.ui.updateControls({
-                canUndo: this.history.length > 0,
-                extraTubesLeft: this.maxExtraTubes - this.extraTubesAdded,
-                levelNum: this.currentLevel
-            });
+            if (this.ui) {
+                this.ui.renderBoard(this.tubes, CURATED_LEVELS[this.currentLevel - 1]);
+                this.ui.updateControls({
+                    canUndo: this.history.length > 0,
+                    extraTubesLeft: this.maxExtraTubes - this.extraTubesAdded,
+                    levelNum: this.currentLevel
+                });
+            }
+        } finally {
+            this.isBusy = false;
         }
-
-        this.isBusy = false;
     }
 
     /**

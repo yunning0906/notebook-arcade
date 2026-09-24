@@ -177,9 +177,14 @@ class PuzzleBoard {
     }
 
     canShapeFitAnywhere(shape) {
-        for (let c = 0; c <= this.size - shape.width; c++) {
-            if (this.getDropRow(shape, c) !== null) {
-                return true;
+        if (!shape) return false;
+        const maxR = this.size - shape.height;
+        const maxC = this.size - shape.width;
+        for (let r = 0; r <= maxR; r++) {
+            for (let c = 0; c <= maxC; c++) {
+                if (this.canPlaceShape(shape, r, c)) {
+                    return true;
+                }
             }
         }
         return false;

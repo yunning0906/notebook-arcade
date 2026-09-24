@@ -299,13 +299,12 @@ class PaperTileGame {
             el.style.top = `${top}px`;
             el.style.zIndex = card.layer * 10;
 
-            // Card Inner styling (paper card bevel, icon SVG, subtle tint)
+            // Card Inner styling (Sweet Card Game 3D aesthetic)
             el.innerHTML = `
-                <div class="card-inner" style="background-color: ${iconData.bg}; border-color: ${iconData.color};">
+                <div class="card-inner">
                     <div class="card-icon-wrap">
                         ${iconData.svg}
                     </div>
-                    <span class="card-label">${iconData.name}</span>
                 </div>
                 <div class="card-shadow-layer"></div>
             `;
@@ -522,7 +521,7 @@ class PaperTileGame {
                 cardEl.id = `tray_${card.id}`;
                 cardEl.dataset.icon = card.iconKey;
                 cardEl.innerHTML = `
-                    <div class="card-inner" style="background-color: ${iconData.bg}; border-color: ${iconData.color};">
+                    <div class="card-inner">
                         <div class="card-icon-wrap">
                             ${iconData.svg}
                         </div>
@@ -673,11 +672,10 @@ class PaperTileGame {
         el.style.zIndex = card.layer * 10;
 
         el.innerHTML = `
-            <div class="card-inner" style="background-color: ${iconData.bg}; border-color: ${iconData.color};">
+            <div class="card-inner">
                 <div class="card-icon-wrap">
                     ${iconData.svg}
                 </div>
-                <span class="card-label">${iconData.name}</span>
             </div>
             <div class="card-shadow-layer"></div>
         `;
@@ -724,11 +722,10 @@ class PaperTileGame {
                 card.el.classList.add('shuffle-flipping');
                 setTimeout(() => {
                     card.el.innerHTML = `
-                        <div class="card-inner" style="background-color: ${iconData.bg}; border-color: ${iconData.color};">
+                        <div class="card-inner">
                             <div class="card-icon-wrap">
                                 ${iconData.svg}
                             </div>
-                            <span class="card-label">${iconData.name}</span>
                         </div>
                         <div class="card-shadow-layer"></div>
                     `;
@@ -779,7 +776,7 @@ class PaperTileGame {
             const item = document.createElement('div');
             item.className = 'shelf-card';
             item.innerHTML = `
-                <div class="card-inner" style="background-color: ${iconData.bg}; border-color: ${iconData.color};">
+                <div class="card-inner">
                     <div class="card-icon-wrap">${iconData.svg}</div>
                 </div>
             `;

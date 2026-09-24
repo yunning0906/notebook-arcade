@@ -315,15 +315,16 @@ body {
     position: absolute;
     width: 54px;
     height: 64px;
-    border-radius: 9px;
-    background: var(--paper-card);
-    border: var(--sketch-border-thin);
+    border-radius: 12px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF9 85%, #F5EFE6 100%);
+    border: 1.5px solid #E8DFD0;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: transform 0.18s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.18s ease, filter 0.25s ease;
+    box-shadow: 0 4px 0 #D5C8AF, 0 6px 12px rgba(82, 67, 56, 0.14);
+    transition: transform 0.16s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.16s ease, filter 0.2s ease;
     user-select: none;
     -webkit-user-select: none;
 }
@@ -331,19 +332,20 @@ body {
 .card-inner {
     width: 100%;
     height: 100%;
-    border-radius: 7px;
+    border-radius: 11px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 3px;
+    padding: 0;
     position: relative;
-    border: 1px solid transparent;
+    background: transparent;
+    border: none;
 }
 
 .card-icon-wrap {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -352,48 +354,37 @@ body {
 .tile-svg {
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 1px 2px rgba(82, 67, 56, 0.12));
+    filter: drop-shadow(0 2px 3px rgba(82, 67, 56, 0.14));
 }
 
 .card-label {
-    font-size: 9px;
-    font-weight: 700;
-    color: var(--text-pencil);
-    margin-top: 1px;
-    line-height: 1;
-    white-space: nowrap;
-    opacity: 0.9;
+    display: none !important;
 }
 
 /* FREE (Unblocked) Card State */
 .desk-card.is-free {
     cursor: pointer;
-    box-shadow: 
-        0 4px 10px rgba(82, 67, 56, 0.18),
-        0 1px 3px rgba(82, 67, 56, 0.12);
-    filter: brightness(1) contrast(1);
+    box-shadow: 0 4px 0 #D5C8AF, 0 6px 12px rgba(82, 67, 56, 0.15);
+    filter: brightness(1);
 }
 
 .desk-card.is-free:hover {
-    transform: translateY(-3px) scale(1.04);
-    box-shadow: 
-        0 8px 18px rgba(82, 67, 56, 0.25),
-        0 2px 6px rgba(82, 67, 56, 0.15);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 7px 0 #D5C8AF, 0 10px 18px rgba(82, 67, 56, 0.2);
     z-index: 999 !important;
 }
 
 .desk-card.is-free:active {
-    transform: translateY(-1px) scale(0.98);
+    transform: translateY(2px) scale(0.99);
+    box-shadow: 0 2px 0 #D5C8AF, 0 3px 6px rgba(82, 67, 56, 0.15);
 }
 
 /* BLOCKED (Covered) Card State */
 .desk-card.is-blocked {
     cursor: not-allowed;
-    filter: brightness(0.68) contrast(0.92) saturate(0.85);
-    box-shadow: 
-        0 2px 4px rgba(82, 67, 56, 0.12),
-        inset 0 0 0 1000px rgba(70, 55, 40, 0.16);
-    pointer-events: auto; /* Catch clicks for wiggle */
+    filter: brightness(0.72) contrast(0.92) saturate(0.85);
+    box-shadow: 0 3px 0 #C4B89F, 0 4px 8px rgba(82, 67, 56, 0.1);
+    pointer-events: auto;
 }
 
 /* Subtle downward cast shadow on blocked cards */
@@ -403,8 +394,8 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    border-radius: 7px;
-    background: linear-gradient(180deg, rgba(60, 45, 30, 0.22) 0%, transparent 60%);
+    border-radius: 11px;
+    background: linear-gradient(180deg, rgba(60, 45, 30, 0.18) 0%, transparent 60%);
     pointer-events: none;
 }
 
@@ -530,9 +521,9 @@ body {
     flex: 1;
     height: 64px;
     max-width: 54px;
-    background: rgba(210, 198, 180, 0.4);
-    border: 1.5px dashed rgba(82, 67, 56, 0.35);
-    border-radius: 9px;
+    background: rgba(210, 198, 180, 0.35);
+    border: 1.5px dashed rgba(82, 67, 56, 0.3);
+    border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -543,13 +534,13 @@ body {
 .tray-card {
     width: 100%;
     height: 100%;
-    border-radius: 9px;
-    background: var(--paper-card);
-    border: var(--sketch-border-thin);
+    border-radius: 12px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF9 85%, #F5EFE6 100%);
+    border: 1.5px solid #E8DFD0;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 3px 7px rgba(82, 67, 56, 0.16);
+    box-shadow: 0 3px 0 #D5C8AF, 0 4px 8px rgba(82, 67, 56, 0.14);
     transition: transform 0.2s ease, opacity 0.2s ease;
     animation: trayInsertPop 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }

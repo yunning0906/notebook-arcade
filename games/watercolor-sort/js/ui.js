@@ -300,12 +300,10 @@ class WatercolorUI {
         // 3. Remove poured layers from fromLiquidContainer and add to toLiquidContainer smoothly
         const pourDuration = durationMs - 400;
 
-        // Drain from source
-        for (let i = 0; i < count; i++) {
-            if (fromLiquidContainer.lastElementChild) {
-                fromLiquidContainer.lastElementChild.classList.add('draining');
-            }
-        }
+        // Drain from source (correctly slice the exact top count layers)
+        const fromLayers = Array.from(fromLiquidContainer.children);
+        const layersToDrain = fromLayers.slice(-count);
+        layersToDrain.forEach(layer => layer.classList.add('draining'));
 
         // Fill target tube with flat solid liquid
         for (let i = 0; i < count; i++) {
@@ -327,10 +325,7 @@ class WatercolorUI {
         this._stopStream();
 
         // 5. Remove drained elements from fromTube
-        for (let i = 0; i < count; i++) {
-            const draining = fromLiquidContainer.querySelector('.draining');
-            if (draining) draining.remove();
-        }
+        layersToDrain.forEach(layer => layer.remove());
 
         // 6. Return source tube to rest position
         fromGlass.style.transition = 'transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1)';
@@ -341,6 +336,25 @@ class WatercolorUI {
         fromWrap.style.zIndex = '1';
         fromGlass.style.transition = '';
         fromGlass.style.transform = '';
+    }
+
+    /**
+     * Resynchronize the liquid DOM layers of a tube with data model
+     */
+    syncTube(index, colors) {
+        const liquidContainer = document.getElementById(`liquidContainer-${index}`);
+        if (!liquidContainer) return;
+        liquidContainer.innerHTML = '';
+        colors.forEach((colorId, layerIdx) => {
+            const layerEl = this._createLiquidLayerElement(colorId, layerIdx, colors.length);
+            layerEl.classList.add('filled');
+            liquidContainer.appendChild(layerEl);
+        });
+        const cork = document.getElementById(`tubeCork-${index}`);
+        const isComplete = (colors.length === TUBE_CAPACITY && colors.every(c => c === colors[0]));
+        if (cork) {
+            cork.className = `tube-cork ${isComplete ? 'visible' : ''}`;
+        }
     }
 
     _startStream(fromRect, toRect, isRight, color) {

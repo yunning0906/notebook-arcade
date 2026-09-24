@@ -28,6 +28,9 @@
                             <h2 class="card-title">Suika Game</h2>
                         </div>
                         <div class="card-footer">
+                            <button class="btn-rules" data-target="suika" aria-label="西瓜遊戲 遊戲規則">
+                                <span>遊戲規則</span>
+                            </button>
                             <button class="btn-play" data-target="suika" aria-label="Play Suika Game">
                                 <span>PLAY</span>
                             </button>
@@ -45,6 +48,9 @@
                             <h2 class="card-title">2048</h2>
                         </div>
                         <div class="card-footer">
+                            <button class="btn-rules" data-target="2048" aria-label="2048 遊戲規則">
+                                <span>遊戲規則</span>
+                            </button>
                             <button class="btn-play" data-target="2048" aria-label="Play 2048">
                                 <span>PLAY</span>
                             </button>
@@ -62,6 +68,9 @@
                             <h2 class="card-title">Bubble Shooter</h2>
                         </div>
                         <div class="card-footer">
+                            <button class="btn-rules" data-target="bubble" aria-label="泡泡射擊 遊戲規則">
+                                <span>遊戲規則</span>
+                            </button>
                             <button class="btn-play" data-target="bubble" aria-label="Play Bubble Shooter">
                                 <span>PLAY</span>
                             </button>
@@ -79,6 +88,9 @@
                             <h2 class="card-title">One Line</h2>
                         </div>
                         <div class="card-footer">
+                            <button class="btn-rules" data-target="oneline" aria-label="一筆畫 遊戲規則">
+                                <span>遊戲規則</span>
+                            </button>
                             <button class="btn-play" data-target="oneline" aria-label="Play One Line">
                                 <span>PLAY</span>
                             </button>
@@ -96,6 +108,9 @@
                             <h2 class="card-title">Block Puzzle</h2>
                         </div>
                         <div class="card-footer">
+                            <button class="btn-rules" data-target="block" aria-label="方塊拼圖 遊戲規則">
+                                <span>遊戲規則</span>
+                            </button>
                             <button class="btn-play" data-target="block" aria-label="Play Block Puzzle">
                                 <span>PLAY</span>
                             </button>
@@ -113,6 +128,9 @@
                             <h2 class="card-title">Nonogram</h2>
                         </div>
                         <div class="card-footer">
+                            <button class="btn-rules" data-target="nonogram" aria-label="數織 遊戲規則">
+                                <span>遊戲規則</span>
+                            </button>
                             <button class="btn-play" data-target="nonogram" aria-label="Play Nonogram">
                                 <span>PLAY</span>
                             </button>
@@ -130,6 +148,9 @@
                             <h2 class="card-title">Doodle Snake</h2>
                         </div>
                         <div class="card-footer">
+                            <button class="btn-rules" data-target="snake" aria-label="手繪毛毛蟲 遊戲規則">
+                                <span>遊戲規則</span>
+                            </button>
                             <button class="btn-play" data-target="snake" aria-label="Play Doodle Snake">
                                 <span>PLAY</span>
                             </button>
@@ -147,6 +168,9 @@
                             <h2 class="card-title">Garden Sweeper</h2>
                         </div>
                         <div class="card-footer">
+                            <button class="btn-rules" data-target="garden" aria-label="花園掃雷 遊戲規則">
+                                <span>遊戲規則</span>
+                            </button>
                             <button class="btn-play" data-target="garden" aria-label="Play Garden Sweeper">
                                 <span>PLAY</span>
                             </button>
@@ -164,6 +188,9 @@
                             <h2 class="card-title">Paper Tiles</h2>
                         </div>
                         <div class="card-footer">
+                            <button class="btn-rules" data-target="tile" aria-label="卡牌三消 遊戲規則">
+                                <span>遊戲規則</span>
+                            </button>
                             <button class="btn-play" data-target="tile" aria-label="Play Paper Tiles">
                                 <span>PLAY</span>
                             </button>
@@ -181,6 +208,9 @@
                             <h2 class="card-title">Watercolor Sort</h2>
                         </div>
                         <div class="card-footer">
+                            <button class="btn-rules" data-target="watercolor" aria-label="水彩試管 遊戲規則">
+                                <span>遊戲規則</span>
+                            </button>
                             <button class="btn-play" data-target="watercolor" aria-label="Play Watercolor Sort">
                                 <span>PLAY</span>
                             </button>
@@ -191,26 +221,25 @@
         </div>
     </div>
 
-    <!-- 2. INSTRUCTION MODAL (Bilingual: English & Chinese) -->
+    <!-- 2. 遊戲規則彈窗 (純繁體中文，無英文) -->
     <div id="instructionModal" class="modal-overlay hidden">
         <div class="modal-box">
             <div class="modal-header">
                 <div class="modal-title-wrap">
-                    <h3 class="modal-game-title" id="modalGameTitle">GAME TITLE</h3>
-                    <span class="modal-game-subtitle" id="modalGameSubtitle">遊戲名稱</span>
+                    <h3 class="modal-game-title" id="modalGameTitle">遊戲規則</h3>
                 </div>
             </div>
             
             <div class="modal-body" id="modalGameContent">
-                <!-- Dynamically injected bilingual instructions -->
+                <!-- 動態注入純中文遊戲說明 -->
             </div>
 
             <div class="modal-actions">
                 <button class="btn btn-secondary" id="btnCancelModal">
-                    <span>Back / 返回大廳</span>
+                    <span>關閉</span>
                 </button>
                 <button class="btn btn-primary" id="btnConfirmStart">
-                    <span>Play Now / 開始遊玩</span>
+                    <span>開始遊玩</span>
                 </button>
             </div>
         </div>

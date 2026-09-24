@@ -298,18 +298,31 @@ class PortalController {
     }
 
     setupEventListeners() {
-        // Lobby Card Clicks
+        // Lobby Card Clicks -> Direct Play
         document.querySelectorAll('.game-card').forEach(card => {
-            card.addEventListener('click', () => {
+            card.addEventListener('click', (e) => {
+                // If user clicked the rules button, let btn-rules handler handle it
+                if (e.target.closest('.btn-rules')) return;
                 const gameKey = card.getAttribute('data-game');
                 if (gameKey && GAME_DATA[gameKey]) {
-                    this.showInstructions(gameKey);
+                    window.location.hash = gameKey;
                 }
             });
         });
 
-        // Lobby Play Button Clicks
+        // Lobby Play Button Clicks -> Direct Play
         document.querySelectorAll('.btn-play').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const gameKey = btn.getAttribute('data-target');
+                if (gameKey && GAME_DATA[gameKey]) {
+                    window.location.hash = gameKey;
+                }
+            });
+        });
+
+        // Lobby Rules Button Clicks -> Show Chinese Instructions
+        document.querySelectorAll('.btn-rules').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const gameKey = btn.getAttribute('data-target');
@@ -319,7 +332,7 @@ class PortalController {
             });
         });
 
-        // Modal Action: Cancel
+        // Modal Action: Cancel / Close
         if (this.btnCancelModal) {
             this.btnCancelModal.addEventListener('click', () => {
                 this.hideInstructions();
@@ -353,17 +366,17 @@ class PortalController {
             });
         }
 
-        // Floating Dock: Switch Games (shows instruction first)
+        // Floating Dock: Switch Games directly
         this.dockTabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const gameKey = btn.getAttribute('data-game');
                 if (gameKey && GAME_DATA[gameKey] && gameKey !== this.currentGame) {
-                    this.showInstructions(gameKey);
+                    window.location.hash = gameKey;
                 }
             });
         });
 
-        // Floating Dock: Show Rules of current game
+        // Floating Dock: Show Rules of current game (Pure Chinese)
         if (this.btnShowRulesInGame) {
             this.btnShowRulesInGame.addEventListener('click', () => {
                 if (this.currentGame && GAME_DATA[this.currentGame]) {
@@ -406,20 +419,18 @@ class PortalController {
         if (!game) return;
 
         this.pendingGameKey = gameKey;
-        this.modalGameTitle.textContent = game.title.toUpperCase();
+        // Pure Traditional Chinese title
+        this.modalGameTitle.textContent = `${game.subtitle || game.title} · 遊戲規則`;
         if (this.modalGameSubtitle) {
-            this.modalGameSubtitle.textContent = game.subtitle;
+            this.modalGameSubtitle.textContent = '';
         }
 
-        // Populate bilingual sections
+        // Populate pure Chinese sections (NO English text)
         this.modalGameContent.innerHTML = game.instructions.map(item => `
             <div class="instruction-section">
                 <div class="instruction-section-title">
-                    <span class="sec-title-en">${item.titleEn}</span>
-                    <span class="sec-title-divider">/</span>
                     <span class="sec-title-zh">${item.titleZh}</span>
                 </div>
-                <p class="instruction-section-text-en">${item.textEn}</p>
                 <p class="instruction-section-text-zh">${item.textZh}</p>
             </div>
         `).join('');

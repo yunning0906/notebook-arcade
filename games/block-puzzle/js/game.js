@@ -365,68 +365,56 @@ class BlockPuzzleGame {
     }
 
     /**
-     * Compute downward gravity drop landing position
-     * When block is positioned above any grid columns, calculate the lowest valid drop row.
+     * Compute 2D placement position
+     * Any piece can be placed at ANY empty valid position on the grid.
      */
     updateSnapPreview(posX, posY) {
         const boardRect = this.domBoard.getBoundingClientRect();
         const cellSize = this.getBoardCellSize();
 
-        // Calculate horizontal alignment to find target column
+        // Calculate target row and column based on shape center
         const shapeWidthPx = this.dragShape.width * cellSize;
+        const shapeHeightPx = this.dragShape.height * cellSize;
         const shapeTopLeftX = posX - (shapeWidthPx / 2);
+        const shapeTopLeftY = posY - (shapeHeightPx / 2);
 
         const col = Math.round((shapeTopLeftX - boardRect.left) / cellSize);
+        const row = Math.round((shapeTopLeftY - boardRect.top) / cellSize);
 
         this.clearGhostPreview();
 
-        // Check if pointer is in or directly above the board horizontally
-        const isInHorizontalReach = col >= 0 && col <= (this.boardSize - this.dragShape.width);
-        const isNearBoardVertically = posY >= (boardRect.top - 180) && posY <= (boardRect.bottom + 80);
+        const isInBounds = row >= 0 && (row + this.dragShape.height) <= this.boardSize &&
+                           col >= 0 && (col + this.dragShape.width) <= this.boardSize;
 
-        if (isInHorizontalReach && isNearBoardVertically) {
-            const dropRow = this.board.getDropRow(this.dragShape, col);
-
-            if (dropRow !== null) {
+        if (isInBounds) {
+            const canPlace = this.board.canPlaceShape(this.dragShape, row, col);
+            if (canPlace) {
                 this.activeSnap = {
-                    r: dropRow,
+                    r: row,
                     c: col,
                     valid: true
                 };
-                this.renderDropPreview(this.dragShape, dropRow, col);
+                this.renderDropPreview(this.dragShape, row, col);
             } else {
-                // Column is completely full at top
                 this.activeSnap = {
-                    r: 0,
+                    r: row,
                     c: col,
                     valid: false
                 };
-                this.renderInvalidPreview(this.dragShape, 0, col);
+                this.renderInvalidPreview(this.dragShape, row, col);
             }
         } else {
             this.activeSnap = null;
         }
     }
 
-    renderDropPreview(shape, dropRow, startC) {
+    renderDropPreview(shape, startR, startC) {
         const matrix = shape.matrix;
 
-        // 1. Highlight vertical guide beam through the columns
-        for (let c = 0; c < shape.width; c++) {
-            const beamC = startC + c;
-            for (let r = 0; r <= dropRow; r++) {
-                const cell = this.domBoard.querySelector(`[data-r="${r}"][data-c="${beamC}"]`);
-                if (cell && !cell.classList.contains('occupied')) {
-                    cell.classList.add('drop-beam');
-                }
-            }
-        }
-
-        // 2. Render bottom landing ghost
         for (let r = 0; r < matrix.length; r++) {
             for (let c = 0; c < matrix[r].length; c++) {
                 if (matrix[r][c] === 1) {
-                    const targetR = dropRow + r;
+                    const targetR = startR + r;
                     const targetC = startC + c;
 
                     const cell = this.domBoard.querySelector(`[data-r="${targetR}"][data-c="${targetC}"]`);
@@ -441,11 +429,17 @@ class BlockPuzzleGame {
     }
 
     renderInvalidPreview(shape, startR, startC) {
-        for (let c = 0; c < shape.width; c++) {
-            const targetC = startC + c;
-            if (targetC >= 0 && targetC < this.boardSize) {
-                const cell = this.domBoard.querySelector(`[data-r="0"][data-c="${targetC}"]`);
-                if (cell) cell.classList.add('ghost-invalid');
+        const matrix = shape.matrix;
+        for (let r = 0; r < matrix.length; r++) {
+            for (let c = 0; c < matrix[r].length; c++) {
+                if (matrix[r][c] === 1) {
+                    const targetR = startR + r;
+                    const targetC = startC + c;
+                    const cell = this.domBoard.querySelector(`[data-r="${targetR}"][data-c="${targetC}"]`);
+                    if (cell) {
+                        cell.classList.add('ghost-invalid');
+                    }
+                }
             }
         }
     }
@@ -472,7 +466,7 @@ class BlockPuzzleGame {
         this.clearGhostPreview();
 
         if (snap && snap.valid) {
-            // Animate shape dropping vertically down into landing target!
+            // Animate shape snapping cleanly into target row and column!
             this.animateDropAndPlace(shape, snap.r, snap.c, slotIndex, ghostElement);
         } else {
             // Snap back
@@ -494,17 +488,17 @@ class BlockPuzzleGame {
     }
 
     /**
-     * Animate shape dropping vertically down into landing row (方塊落下去)
+     * Animate shape snapping into target row and column
      */
-    animateDropAndPlace(shape, dropRow, startC, slotIndex, floatingEl) {
+    animateDropAndPlace(shape, targetR, targetC, slotIndex, floatingEl) {
         const boardRect = this.domBoard.getBoundingClientRect();
         const cellSize = this.getBoardCellSize();
 
-        const targetX = boardRect.left + (startC * cellSize) + (shape.width * cellSize) / 2;
-        const targetY = boardRect.top + (dropRow * cellSize) + (shape.height * cellSize) / 2;
+        const targetX = boardRect.left + (targetC * cellSize) + (shape.width * cellSize) / 2;
+        const targetY = boardRect.top + (targetR * cellSize) + (shape.height * cellSize) / 2;
 
         if (floatingEl) {
-            floatingEl.style.transition = 'top 0.16s cubic-bezier(0.55, 0.055, 0.675, 0.19), left 0.16s ease, transform 0.16s ease';
+            floatingEl.style.transition = 'top 0.14s cubic-bezier(0.2, 0.8, 0.2, 1), left 0.14s ease, transform 0.14s ease';
             floatingEl.style.left = `${targetX}px`;
             floatingEl.style.top = `${targetY}px`;
             floatingEl.style.transform = 'translate(-50%, -50%) scale(1)';
@@ -513,8 +507,8 @@ class BlockPuzzleGame {
         setTimeout(() => {
             if (floatingEl) floatingEl.remove();
             this.dragGhostElement = null;
-            this.executePlacement(shape, dropRow, startC, slotIndex);
-        }, 150);
+            this.executePlacement(shape, targetR, targetC, slotIndex);
+        }, 130);
     }
 
     handleBoardClick(e) {
@@ -523,15 +517,19 @@ class BlockPuzzleGame {
         const cell = e.target.closest('.grid-cell');
         if (!cell) return;
 
+        const r = parseInt(cell.dataset.r, 10);
         const c = parseInt(cell.dataset.c, 10);
         const shape = this.handShapes[this.selectedHandIndex];
 
         if (shape) {
-            const dropRow = this.board.getDropRow(shape, c);
-            if (dropRow !== null) {
-                this.executePlacement(shape, dropRow, c, this.selectedHandIndex);
+            if (this.board.canPlaceShape(shape, r, c)) {
+                this.executePlacement(shape, r, c, this.selectedHandIndex);
                 this.selectedHandIndex = null;
                 document.querySelectorAll('.hand-slot').forEach(s => s.classList.remove('selected'));
+            } else {
+                this.audio.playInvalidBounce();
+                cell.classList.add('ghost-invalid');
+                setTimeout(() => cell.classList.remove('ghost-invalid'), 300);
             }
         }
     }

@@ -180,7 +180,42 @@ body {
     color: var(--text-muted);
 }
 
-/* Button */
+.card-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Buttons */
+.btn-rules {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #FAF6ED;
+    color: var(--text-pencil);
+    border: 2px solid var(--pencil-border);
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 2px 2.5px 0px var(--pencil-border);
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.btn-rules:hover {
+    background: #FFF9E6;
+    transform: translateY(-2px);
+    box-shadow: 3px 4px 0px var(--pencil-border);
+    color: #000;
+}
+
+.btn-rules:active {
+    transform: translateY(1px);
+    box-shadow: 1px 1px 0px var(--pencil-border);
+}
+
 .btn-play {
     display: inline-flex;
     align-items: center;
@@ -188,13 +223,14 @@ body {
     background: var(--btn-primary);
     color: #FFFFFF;
     border: 2px solid var(--btn-primary-border);
-    padding: 9px 20px;
+    padding: 8px 18px;
     border-radius: 12px;
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     box-shadow: 2px 2.5px 0px var(--btn-primary-border);
     transition: all 0.15s ease;
+    white-space: nowrap;
 }
 
 .btn-play:hover {
