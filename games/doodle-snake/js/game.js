@@ -26,12 +26,13 @@ class DoodleSnakeGame {
         this.strawberriesCount = 0;
 
         // 步調與速度控制 (溫暖慢速紙上漫步)
-        // 'stroll': 220ms, 'wander': 165ms, 'brisk': 120ms
+        // 'stroll': 240ms, 'wander': 170ms, 'brisk': 115ms, 'sprint': 75ms
         this.speedMode = 'wander';
         this.speedIntervals = {
-            stroll: 230,
+            stroll: 240,
             wander: 170,
-            brisk: 125
+            brisk: 115,
+            sprint: 75
         };
         this.stepInterval = this.speedIntervals[this.speedMode];
 
@@ -427,6 +428,10 @@ class DoodleSnakeGame {
         this.elGameOverModal.classList.add('hidden');
         this.elPauseOverlay.classList.add('hidden');
         this.elStartHint.classList.remove('hidden');
+        if (this.elBtnPause) {
+            const span = this.elBtnPause.querySelector('span');
+            if (span) span.textContent = '暫停';
+        }
     }
 
     startGame() {
@@ -445,11 +450,17 @@ class DoodleSnakeGame {
         if (this.state === 'playing') {
             this.state = 'paused';
             this.elPauseOverlay.classList.remove('hidden');
-            this.elBtnPause.querySelector('span').textContent = '繼續 (RESUME)';
+            if (this.elBtnPause) {
+                const span = this.elBtnPause.querySelector('span');
+                if (span) span.textContent = '繼續';
+            }
         } else if (this.state === 'paused') {
             this.state = 'playing';
             this.elPauseOverlay.classList.add('hidden');
-            this.elBtnPause.querySelector('span').textContent = '暫停 (PAUSE)';
+            if (this.elBtnPause) {
+                const span = this.elBtnPause.querySelector('span');
+                if (span) span.textContent = '暫停';
+            }
         }
     }
 

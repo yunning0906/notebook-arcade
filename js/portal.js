@@ -179,10 +179,10 @@ const GAME_DATA = {
                 textZh: '品嚐隨機出現的手繪櫻桃與草莓讓身體逐漸變長，觸發彩色鉛筆彩屑特效與清脆鈴鐺聲。'
             },
             {
-                titleEn: 'Elastic Water Drop & Pacing',
-                titleZh: '水滴噗嚕音與邊界規則',
-                textEn: 'Turning emits elastic water droplet bloops! Freely choose between margin wrapping or wall collision.',
-                textZh: '每一次轉動都有彈性的小小水滴噗嚕音，並可自由切換邊界穿牆或紙張邊界規則。'
+                titleEn: 'Elastic Water Drop & Speed Choice',
+                titleZh: '水滴噗嚕音與速度選擇',
+                textEn: 'Turning emits elastic water droplet bloops! Freely choose between 4 speeds (slow, normal, brisk, sprint) and margin wrapping or wall collision.',
+                textZh: '每一次轉動都有彈性的小小水滴噗嚕音，並可在控制面板中自由選擇慢速、普通、快速、極速四種速度與穿牆邊界模式。'
             }
         ]
     },

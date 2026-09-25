@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DOODLE SNAKE - 手繪毛毛蟲貪吃蛇</title>
+    <title>手繪毛毛蟲漫步 - DOODLE SNAKE</title>
     <meta name="description" content="溫暖療癒的方格筆記本手繪風格毛毛蟲貪吃蛇。由粉彩圓點組成的可愛毛毛蟲在紙上漫步，品嚐甜美櫻桃與草莓，轉彎時有彈性水滴噗嚕音，吃果子時發出清脆鈴鐺聲。">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260925_speed">
 </head>
 <body>
     <main class="game-container">
@@ -13,8 +13,8 @@
         <aside class="side-panel">
             <header class="brand-header">
                 <div class="brand-title-wrap">
-                    <h1 class="brand-title">DOODLE SNAKE</h1>
-                    <span class="brand-sub">手繪毛毛蟲漫步</span>
+                    <h1 class="brand-title">手繪毛毛蟲漫步</h1>
+                    <span class="brand-sub">DOODLE SNAKE</span>
                 </div>
                 <div class="audio-controls">
                     <!-- BGM Toggle -->
@@ -51,16 +51,16 @@
             <section class="score-card" aria-label="計分板">
                 <div class="score-row">
                     <div class="score-box">
-                        <span class="score-label">分數 (SCORE)</span>
+                        <span class="score-label">當前分數</span>
                         <span id="currentScore" class="score-val">0</span>
                     </div>
                     <div class="score-box" style="text-align: right;">
-                        <span class="score-label">最佳 (BEST)</span>
+                        <span class="score-label">最高紀錄</span>
                         <span id="bestScore" class="score-val best-val">0</span>
                     </div>
                 </div>
                 <div class="fruit-stats">
-                    <div class="fruit-stat-item" title="Cherries">
+                    <div class="fruit-stat-item" title="櫻桃">
                         <span class="fruit-badge">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
                                 <circle cx="11" cy="14" r="6" fill="#FF6B7A"></circle>
@@ -72,7 +72,7 @@
                         </span>
                         <span id="cherryCount">0</span>
                     </div>
-                    <div class="fruit-stat-item" title="Strawberries">
+                    <div class="fruit-stat-item" title="草莓">
                         <span class="fruit-badge">
                             <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
                                 <path d="M12 20 C6 14 6 8 12 7 C18 8 18 14 12 20 Z" fill="#FF5E6C"></path>
@@ -87,10 +87,19 @@
             <!-- Settings: Speed & Mode -->
             <section class="settings-group">
                 <div class="setting-row">
-                    <span class="setting-title">MARGIN</span>
+                    <span class="setting-title">移動速度</span>
+                    <div class="button-pills" role="radiogroup" aria-label="移動速度">
+                        <button class="pill-btn speed-btn" data-speed="stroll">慢速</button>
+                        <button class="pill-btn speed-btn active" data-speed="wander">普通</button>
+                        <button class="pill-btn speed-btn" data-speed="brisk">快速</button>
+                        <button class="pill-btn speed-btn" data-speed="sprint">極速</button>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <span class="setting-title">邊界模式</span>
                     <div class="button-pills" role="radiogroup" aria-label="邊界模式">
-                        <button class="pill-btn wall-mode-btn active" data-wrap="true">FREE / 穿牆</button>
-                        <button class="pill-btn wall-mode-btn" data-wrap="false">WALL / 邊界</button>
+                        <button class="pill-btn wall-mode-btn active" data-wrap="true">穿牆模式</button>
+                        <button class="pill-btn wall-mode-btn" data-wrap="false">撞牆模式</button>
                     </div>
                 </div>
             </section>
@@ -98,10 +107,10 @@
             <!-- Action Buttons -->
             <div class="action-buttons">
                 <button id="btnPause" class="btn-main" aria-label="暫停遊戲">
-                    <span>PAUSE</span>
+                    <span>暫停</span>
                 </button>
                 <button id="btnRestart" class="btn-main btn-restart" aria-label="重新開始">
-                    <span>RESTART</span>
+                    <span>重新開始</span>
                 </button>
             </div>
         </aside>
@@ -159,10 +168,10 @@
     </main>
 
     <!-- Scripts -->
-    <script src="js/audio.js"></script>
-    <script src="js/particles.js"></script>
-    <script src="js/food.js"></script>
-    <script src="js/caterpillar.js"></script>
-    <script src="js/game.js"></script>
+    <script src="js/audio.js?v=20260925_speed"></script>
+    <script src="js/particles.js?v=20260925_speed"></script>
+    <script src="js/food.js?v=20260925_speed"></script>
+    <script src="js/caterpillar.js?v=20260925_speed"></script>
+    <script src="js/game.js?v=20260925_speed"></script>
 </body>
 </html>
