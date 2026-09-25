@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ONE LINE - Minimalist Notebook Puzzle Game</title>
-    <meta name="description" content="A warm, relaxing one-stroke line puzzle game in a hand-drawn colored-pencil notebook aesthetic. Connect all squares in a single stroke!">
-    <link rel="stylesheet" href="style.css">
+    <title>ONE LINE - 手繪筆記一筆畫連線</title>
+    <meta name="description" content="療癒溫暖的手繪筆記本一筆畫謎題。一筆到底不中斷，將盤面所有格子填滿！">
+    <link rel="stylesheet" href="style.css?v=20260925_hard">
 </head>
 <body>
     <div class="game-wrapper">
@@ -13,7 +13,7 @@
         <aside class="side-panel">
             <header class="brand-header">
                 <h1 class="brand-title">ONE LINE</h1>
-                <button id="soundToggle" class="sound-toggle-btn" aria-label="Toggle Sound">
+                <button id="soundToggle" class="sound-toggle-btn" aria-label="切換音效">
                     <!-- Speaker On -->
                     <svg class="sound-icon icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -32,11 +32,11 @@
             <!-- Score & Best Boxes -->
             <div class="stat-row-mobile">
                 <div class="stat-box">
-                    <div class="stat-label">SCORE</div>
+                    <div class="stat-label">得分</div>
                     <div id="scoreValue" class="stat-value">0</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-label">BEST</div>
+                    <div class="stat-label">最高</div>
                     <div id="bestValue" class="stat-value">1</div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                         <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="1 4 1 10 7 10"></polyline>
                             <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-                        </svg> UNDO
+                        </svg> 復原
                     </button>
                     <button id="hintBtn" class="btn btn-accent" style="flex: 1;">
                         <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -56,14 +56,14 @@
                             <path d="M10 21h4"></path>
                             <path d="M12 2a7 7 0 0 0-7 7c0 2.4 1.2 4.5 3 5.7V17c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-2.3c1.8-1.2 3-3.3 3-5.7a7 7 0 0 0-7-7z"></path>
                             <line x1="12" y1="6" x2="12" y2="9"></line>
-                        </svg> HINT
+                        </svg> 提示
                     </button>
                 </div>
                 <button id="restartBtn" class="btn btn-primary">
                     <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="23 4 23 10 17 10"></polyline>
                         <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-                    </svg> RESTART
+                    </svg> 重設
                 </button>
                 <button id="levelsBtn" class="btn">
                     <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -71,22 +71,22 @@
                         <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
                         <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
                         <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
-                    </svg> LEVELS
+                    </svg> 關卡列表
                 </button>
             </div>
 
-            <p class="side-hint">Drag through all active blocks in a single continuous stroke!</p>
+            <p class="side-hint">一筆到底不中斷，將盤面上所有格子全部填滿！</p>
         </aside>
 
         <!-- Main Game Center -->
         <main class="game-center">
             <div class="level-bar">
                 <div class="level-info">
-                    <h2 id="levelTitle" class="level-title">LEVEL 1</h2>
-                    <span id="packTag" class="pack-tag">BEGINNER • First Steps</span>
+                    <h2 id="levelTitle" class="level-title">第 1 / 36 關 · 十字迴廊</h2>
+                    <span id="packTag" class="pack-tag">進階迷宮 • 5×5 迷宮</span>
                 </div>
                 <div class="progress-container">
-                    <span id="progressText" class="progress-text">0 / 9</span>
+                    <span id="progressText" class="progress-text">0 / 20</span>
                     <div class="progress-bar-bg">
                         <div id="progressBarFill" class="progress-bar-fill"></div>
                     </div>
@@ -110,36 +110,37 @@
     <!-- Victory Modal -->
     <div id="winModal" class="modal-overlay">
         <div class="modal-card">
-            <h2 id="winTitle" class="modal-title">LEVEL CLEAR!</h2>
+            <h2 id="winTitle" class="modal-title">一筆通關！</h2>
             <div id="winStarsContainer" class="stars-row">
                 <span class="star-icon filled">★</span>
                 <span class="star-icon filled">★</span>
                 <span class="star-icon filled">★</span>
             </div>
-            <p id="winScoreText" class="modal-subtitle">+190 PTS • 9 MOVES</p>
+            <p id="winScoreText" class="modal-subtitle">+190 分 • 20 步完成</p>
             <div class="modal-actions">
-                <button id="replayLevelBtn" class="btn">REPLAY</button>
-                <button id="nextLevelBtn" class="btn btn-primary">NEXT LEVEL</button>
+                <button id="replayLevelBtn" class="btn">重新挑戰</button>
+                <button id="nextLevelBtn" class="btn btn-primary">下一關</button>
             </div>
         </div>
     </div>
 
     <!-- Levels Selector Modal -->
     <div id="levelSelectModal" class="modal-overlay">
-        <div class="modal-card" style="max-width: 500px;">
-            <button id="closeModalBtn" class="modal-close-btn" aria-label="Close modal">✕</button>
-            <h2 class="modal-title">SELECT LEVEL</h2>
+        <div class="modal-card" style="max-width: 540px;">
+            <button id="closeModalBtn" class="modal-close-btn" aria-label="關閉彈窗">✕</button>
+            <h2 class="modal-title">選擇挑戰關卡（共 36 關）</h2>
+            <p style="font-size: 13px; color: var(--pencil-muted); margin-bottom: 12px; text-align: center;">包含進階迷宮、雙通交錯、蟲洞星門與 8×8 大師殿堂：</p>
             <div class="levels-grid-container">
                 <div id="levelsGrid" class="levels-grid"></div>
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="js/audio.js"></script>
-    <script src="js/levels.js"></script>
-    <script src="js/solver.js"></script>
-    <script src="js/renderer.js"></script>
-    <script src="js/game.js"></script>
+    <!-- Scripts with Cache-Buster -->
+    <script src="js/audio.js?v=20260925_hard"></script>
+    <script src="js/levels.js?v=20260925_hard"></script>
+    <script src="js/solver.js?v=20260925_hard"></script>
+    <script src="js/renderer.js?v=20260925_hard"></script>
+    <script src="js/game.js?v=20260925_hard"></script>
 </body>
 </html>

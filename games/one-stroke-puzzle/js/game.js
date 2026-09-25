@@ -211,10 +211,10 @@ class OneStrokeGame {
 
         // Update Level Labels
         if (this.levelTitleEl) {
-            this.levelTitleEl.textContent = `LEVEL ${this.level.id}`;
+            this.levelTitleEl.textContent = `第 ${this.level.id} / ${this.levels.length} 關 · ${this.level.name}`;
         }
         if (this.packTagEl) {
-            this.packTagEl.textContent = `${this.level.pack} • ${this.level.name}`;
+            this.packTagEl.textContent = `${this.level.pack} • ${this.level.cols}×${this.level.rows} 迷宮`;
         }
         this.updateProgressUI();
 
@@ -589,8 +589,8 @@ class OneStrokeGame {
         const winScore = document.getElementById('winScoreText');
         const winStars = document.getElementById('winStarsContainer');
 
-        if (winTitle) winTitle.textContent = `LEVEL ${this.level.id} CLEAR!`;
-        if (winScore) winScore.textContent = `+${points} PTS • ${this.moves} MOVES`;
+        if (winTitle) winTitle.textContent = `第 ${this.level.id} 關 一筆通關！`;
+        if (winScore) winScore.textContent = `+${points} 分 • ${this.moves} 步完成`;
 
         if (winStars) {
             winStars.innerHTML = '';
@@ -632,11 +632,11 @@ class OneStrokeGame {
 
         this.levels.forEach((lvl, idx) => {
             const card = document.createElement('button');
-            const isUnlocked = lvl.id <= this.bestLevel;
+            const isUnlocked = true; // 解鎖全部關卡，讓玩家可隨時挑戰高難度關卡
             const isCurrent = !this.isInfiniteMode && idx === this.currentLevelIndex;
             const starCount = this.stars[lvl.id] || 0;
 
-            card.className = `level-card ${isUnlocked ? 'unlocked' : 'locked'} ${isCurrent ? 'current' : ''}`;
+            card.className = `level-card unlocked ${isCurrent ? 'current' : ''}`;
             
             let starsHtml = '';
             if (starCount > 0) {
@@ -666,7 +666,7 @@ class OneStrokeGame {
         infiniteBtn.className = `level-card infinite-card ${this.isInfiniteMode ? 'current' : ''}`;
         infiniteBtn.innerHTML = `
             <span class="level-card-num">∞</span>
-            <span class="level-card-name">Infinite Endless</span>
+            <span class="level-card-name">無盡隨機</span>
         `;
         infiniteBtn.addEventListener('click', () => {
             window.soundEngine.playClick();
