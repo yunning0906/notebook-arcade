@@ -766,7 +766,7 @@ class PaperTileGame {
         this.extractShelf.innerHTML = '';
         if (this.extractedCards.length === 0) {
             this.extractShelf.classList.add('empty-shelf');
-            this.extractShelf.innerHTML = '<span class="shelf-hint">BOOKMARK / 書籤暫存區（空）</span>';
+            this.extractShelf.innerHTML = '<span class="shelf-hint">書籤暫存區（空）</span>';
             return;
         }
 

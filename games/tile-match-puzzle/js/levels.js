@@ -1,234 +1,4296 @@
 /**
- * Paper Tile Match 3 - Level Definitions & Solvable Level Generator
+ * Paper Tile Match 3 - 12 Curated Handcrafted Levels & Solvable Level Generator
  * 全部採用 Suika Game 水果圖標系列：
  * 櫻桃 (cherry)、草莓 (strawberry)、葡萄 (grape)、凸頂柑 (dekopon)、
  * 柿子 (persimmon)、蘋果 (apple)、梨子 (pear)、桃子 (peach)、
  * 鳳梨 (pineapple)、哈密瓜 (melon)、大西瓜 (watermelon)。
  * 
  * Grid Coordinate Convention:
- * Center of desk is around (x: 4.5, y: 4.5).
+ * Center of desk is around (x: 4.2, y: 3.8).
  * Card unit width ~ 1.0 unit, height ~ 1.15 units.
  * Overlap threshold: |dx| < 0.82 && |dy| < 0.85
- * All card totals are guaranteed multiples of 3.
+ * All card totals are mathematically guaranteed multiples of 3.
  */
 
 const LEVELS = [
     {
-        id: 1,
-        name: '晨光果園',
-        subtitle: '手繪水果入學 (18 張牌)',
-        iconsCount: 4, // 4 types * [3, 3, 6, 6] = 18 cards
-        icons: ['cherry', 'strawberry', 'grape', 'apple'],
-        cardPositions: [
-            // Layer 0 (Base Layer, 12 cards)
-            { x: 2.0, y: 1.5, layer: 0 },
-            { x: 3.2, y: 1.5, layer: 0 },
-            { x: 4.4, y: 1.5, layer: 0 },
-            { x: 5.6, y: 1.5, layer: 0 },
-
-            { x: 2.0, y: 3.0, layer: 0 },
-            { x: 3.2, y: 3.0, layer: 0 },
-            { x: 4.4, y: 3.0, layer: 0 },
-            { x: 5.6, y: 3.0, layer: 0 },
-
-            { x: 2.0, y: 4.5, layer: 0 },
-            { x: 3.2, y: 4.5, layer: 0 },
-            { x: 4.4, y: 4.5, layer: 0 },
-            { x: 5.6, y: 4.5, layer: 0 },
-
-            // Layer 1 (Top Layer, 6 cards partially overlapping)
-            { x: 2.6, y: 2.2, layer: 1 },
-            { x: 3.8, y: 2.2, layer: 1 },
-            { x: 5.0, y: 2.2, layer: 1 },
-
-            { x: 2.6, y: 3.7, layer: 1 },
-            { x: 3.8, y: 3.7, layer: 1 },
-            { x: 5.0, y: 3.7, layer: 1 }
+        "id": 1,
+        "name": "晨光果園",
+        "subtitle": "手繪水果入學 (18 張牌)",
+        "iconsCount": 4,
+        "icons": [
+            "cherry",
+            "strawberry",
+            "grape",
+            "apple"
+        ],
+        "cardPositions": [
+            {
+                "x": 2.0,
+                "y": 1.5,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 1.5,
+                "layer": 0
+            },
+            {
+                "x": 4.4,
+                "y": 1.5,
+                "layer": 0
+            },
+            {
+                "x": 5.6,
+                "y": 1.5,
+                "layer": 0
+            },
+            {
+                "x": 2.0,
+                "y": 3.0,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 3.0,
+                "layer": 0
+            },
+            {
+                "x": 4.4,
+                "y": 3.0,
+                "layer": 0
+            },
+            {
+                "x": 5.6,
+                "y": 3.0,
+                "layer": 0
+            },
+            {
+                "x": 2.0,
+                "y": 4.5,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 4.5,
+                "layer": 0
+            },
+            {
+                "x": 4.4,
+                "y": 4.5,
+                "layer": 0
+            },
+            {
+                "x": 5.6,
+                "y": 4.5,
+                "layer": 0
+            },
+            {
+                "x": 2.6,
+                "y": 2.2,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 2.2,
+                "layer": 1
+            },
+            {
+                "x": 5.0,
+                "y": 2.2,
+                "layer": 1
+            },
+            {
+                "x": 2.6,
+                "y": 3.7,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 3.7,
+                "layer": 1
+            },
+            {
+                "x": 5.0,
+                "y": 3.7,
+                "layer": 1
+            }
         ]
     },
     {
-        id: 2,
-        name: '午後甜心',
-        subtitle: '經典愛心果盤 (36 張牌)',
-        iconsCount: 6, // 6 types * 6 = 36 cards
-        icons: ['cherry', 'strawberry', 'grape', 'dekopon', 'apple', 'peach'],
-        cardPositions: [
-            // Layer 0: Heart Outline (16 cards)
-            { x: 2.0, y: 1.0, layer: 0 },
-            { x: 3.2, y: 0.8, layer: 0 },
-            { x: 4.4, y: 0.8, layer: 0 },
-            { x: 5.6, y: 1.0, layer: 0 },
-
-            { x: 1.5, y: 2.2, layer: 0 },
-            { x: 2.7, y: 2.2, layer: 0 },
-            { x: 4.9, y: 2.2, layer: 0 },
-            { x: 6.1, y: 2.2, layer: 0 },
-
-            { x: 2.0, y: 3.5, layer: 0 },
-            { x: 3.2, y: 3.5, layer: 0 },
-            { x: 4.4, y: 3.5, layer: 0 },
-            { x: 5.6, y: 3.5, layer: 0 },
-
-            { x: 2.6, y: 4.8, layer: 0 },
-            { x: 3.8, y: 4.8, layer: 0 },
-            { x: 5.0, y: 4.8, layer: 0 },
-            { x: 3.8, y: 6.0, layer: 0 },
-
-            // Layer 1: Intermediate stacks (14 cards)
-            { x: 2.6, y: 1.5, layer: 1 },
-            { x: 3.8, y: 1.5, layer: 1 },
-            { x: 5.0, y: 1.5, layer: 1 },
-
-            { x: 2.0, y: 2.8, layer: 1 },
-            { x: 3.2, y: 2.8, layer: 1 },
-            { x: 4.4, y: 2.8, layer: 1 },
-            { x: 5.6, y: 2.8, layer: 1 },
-
-            { x: 2.6, y: 4.0, layer: 1 },
-            { x: 3.8, y: 4.0, layer: 1 },
-            { x: 5.0, y: 4.0, layer: 1 },
-
-            { x: 3.2, y: 5.2, layer: 1 },
-            { x: 4.4, y: 5.2, layer: 1 },
-
-            // Wing tabs
-            { x: 0.9, y: 2.8, layer: 1 },
-            { x: 6.7, y: 2.8, layer: 1 },
-
-            // Layer 2: Topmost gems (6 cards)
-            { x: 3.2, y: 2.1, layer: 2 },
-            { x: 4.4, y: 2.1, layer: 2 },
-            { x: 2.9, y: 3.4, layer: 2 },
-            { x: 4.1, y: 3.4, layer: 2 },
-            { x: 3.5, y: 4.6, layer: 2 },
-            { x: 4.7, y: 4.6, layer: 2 }
+        "id": 2,
+        "name": "雙星交織",
+        "subtitle": "對稱星芒夾層 (27 張牌)",
+        "iconsCount": 4,
+        "icons": [
+            "cherry",
+            "strawberry",
+            "grape",
+            "dekopon"
+        ],
+        "cardPositions": [
+            {
+                "x": 1.2,
+                "y": 1.2,
+                "layer": 0
+            },
+            {
+                "x": 2.4,
+                "y": 1.2,
+                "layer": 0
+            },
+            {
+                "x": 3.6,
+                "y": 1.2,
+                "layer": 0
+            },
+            {
+                "x": 1.2,
+                "y": 2.6,
+                "layer": 0
+            },
+            {
+                "x": 2.4,
+                "y": 2.6,
+                "layer": 0
+            },
+            {
+                "x": 3.6,
+                "y": 2.6,
+                "layer": 0
+            },
+            {
+                "x": 1.2,
+                "y": 4.0,
+                "layer": 0
+            },
+            {
+                "x": 2.4,
+                "y": 4.0,
+                "layer": 0
+            },
+            {
+                "x": 3.6,
+                "y": 4.0,
+                "layer": 0
+            },
+            {
+                "x": 4.8,
+                "y": 1.8,
+                "layer": 0
+            },
+            {
+                "x": 6.0,
+                "y": 1.8,
+                "layer": 0
+            },
+            {
+                "x": 7.2,
+                "y": 1.8,
+                "layer": 0
+            },
+            {
+                "x": 4.8,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 6.0,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 7.2,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 4.8,
+                "y": 4.6,
+                "layer": 0
+            },
+            {
+                "x": 6.0,
+                "y": 4.6,
+                "layer": 0
+            },
+            {
+                "x": 7.2,
+                "y": 4.6,
+                "layer": 0
+            },
+            {
+                "x": 3.0,
+                "y": 1.9,
+                "layer": 1
+            },
+            {
+                "x": 4.2,
+                "y": 1.9,
+                "layer": 1
+            },
+            {
+                "x": 5.4,
+                "y": 1.9,
+                "layer": 1
+            },
+            {
+                "x": 3.0,
+                "y": 3.3,
+                "layer": 1
+            },
+            {
+                "x": 4.2,
+                "y": 3.3,
+                "layer": 1
+            },
+            {
+                "x": 5.4,
+                "y": 3.3,
+                "layer": 1
+            },
+            {
+                "x": 3.6,
+                "y": 2.6,
+                "layer": 2
+            },
+            {
+                "x": 4.8,
+                "y": 2.6,
+                "layer": 2
+            },
+            {
+                "x": 4.2,
+                "y": 3.9,
+                "layer": 2
+            }
         ]
     },
     {
-        id: 3,
-        name: '歡樂果物階梯',
-        subtitle: '四重階梯水果疊層 (54 張牌)',
-        iconsCount: 7, // 18 sets of 3 = 54
-        icons: ['cherry', 'strawberry', 'grape', 'dekopon', 'persimmon', 'apple', 'pear'],
-        cardPositions: [
-            // Layer 0: Diamond Base (24 cards)
-            { x: 3.8, y: 0.6, layer: 0 },
-            { x: 3.0, y: 1.6, layer: 0 }, { x: 4.6, y: 1.6, layer: 0 },
-            { x: 2.2, y: 2.6, layer: 0 }, { x: 3.8, y: 2.6, layer: 0 }, { x: 5.4, y: 2.6, layer: 0 },
-            { x: 1.4, y: 3.6, layer: 0 }, { x: 3.0, y: 3.6, layer: 0 }, { x: 4.6, y: 3.6, layer: 0 }, { x: 6.2, y: 3.6, layer: 0 },
-            { x: 0.6, y: 4.6, layer: 0 }, { x: 2.2, y: 4.6, layer: 0 }, { x: 3.8, y: 4.6, layer: 0 }, { x: 5.4, y: 4.6, layer: 0 }, { x: 7.0, y: 4.6, layer: 0 },
-            { x: 1.4, y: 5.6, layer: 0 }, { x: 3.0, y: 5.6, layer: 0 }, { x: 4.6, y: 5.6, layer: 0 }, { x: 6.2, y: 5.6, layer: 0 },
-            { x: 2.2, y: 6.6, layer: 0 }, { x: 3.8, y: 6.6, layer: 0 }, { x: 5.4, y: 6.6, layer: 0 },
-            { x: 3.0, y: 7.4, layer: 0 }, { x: 4.6, y: 7.4, layer: 0 },
-
-            // Layer 1: Inner diamond (16 cards)
-            { x: 3.8, y: 1.6, layer: 1 },
-            { x: 3.0, y: 2.6, layer: 1 }, { x: 4.6, y: 2.6, layer: 1 },
-            { x: 2.2, y: 3.6, layer: 1 }, { x: 3.8, y: 3.6, layer: 1 }, { x: 5.4, y: 3.6, layer: 1 },
-            { x: 1.4, y: 4.6, layer: 1 }, { x: 3.0, y: 4.6, layer: 1 }, { x: 4.6, y: 4.6, layer: 1 }, { x: 6.2, y: 4.6, layer: 1 },
-            { x: 2.2, y: 5.6, layer: 1 }, { x: 3.8, y: 5.6, layer: 1 }, { x: 5.4, y: 5.6, layer: 1 },
-            { x: 3.0, y: 6.6, layer: 1 }, { x: 4.6, y: 6.6, layer: 1 },
-            { x: 3.8, y: 7.2, layer: 1 },
-
-            // Layer 2: Core pyramid (10 cards)
-            { x: 3.4, y: 2.3, layer: 2 }, { x: 4.2, y: 2.3, layer: 2 },
-            { x: 2.6, y: 3.4, layer: 2 }, { x: 3.8, y: 3.4, layer: 2 }, { x: 5.0, y: 3.4, layer: 2 },
-            { x: 2.6, y: 4.8, layer: 2 }, { x: 3.8, y: 4.8, layer: 2 }, { x: 5.0, y: 4.8, layer: 2 },
-            { x: 3.4, y: 5.9, layer: 2 }, { x: 4.2, y: 5.9, layer: 2 },
-
-            // Layer 3: Crown Peak (4 cards)
-            { x: 3.8, y: 3.0, layer: 3 },
-            { x: 3.2, y: 4.1, layer: 3 },
-            { x: 4.4, y: 4.1, layer: 3 },
-            { x: 3.8, y: 5.2, layer: 3 }
+        "id": 3,
+        "name": "甜蜜心願",
+        "subtitle": "經典愛心果盤 (36 張牌)",
+        "iconsCount": 6,
+        "icons": [
+            "cherry",
+            "strawberry",
+            "grape",
+            "dekopon",
+            "apple",
+            "peach"
+        ],
+        "cardPositions": [
+            {
+                "x": 2.0,
+                "y": 1.0,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 4.4,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 5.6,
+                "y": 1.0,
+                "layer": 0
+            },
+            {
+                "x": 1.5,
+                "y": 2.2,
+                "layer": 0
+            },
+            {
+                "x": 2.7,
+                "y": 2.2,
+                "layer": 0
+            },
+            {
+                "x": 4.9,
+                "y": 2.2,
+                "layer": 0
+            },
+            {
+                "x": 6.1,
+                "y": 2.2,
+                "layer": 0
+            },
+            {
+                "x": 2.0,
+                "y": 3.5,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 3.5,
+                "layer": 0
+            },
+            {
+                "x": 4.4,
+                "y": 3.5,
+                "layer": 0
+            },
+            {
+                "x": 5.6,
+                "y": 3.5,
+                "layer": 0
+            },
+            {
+                "x": 2.6,
+                "y": 4.8,
+                "layer": 0
+            },
+            {
+                "x": 3.8,
+                "y": 4.8,
+                "layer": 0
+            },
+            {
+                "x": 5.0,
+                "y": 4.8,
+                "layer": 0
+            },
+            {
+                "x": 3.8,
+                "y": 6.0,
+                "layer": 0
+            },
+            {
+                "x": 2.6,
+                "y": 1.5,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 1.5,
+                "layer": 1
+            },
+            {
+                "x": 5.0,
+                "y": 1.5,
+                "layer": 1
+            },
+            {
+                "x": 2.0,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 3.2,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 4.4,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 5.6,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 2.6,
+                "y": 4.0,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 4.0,
+                "layer": 1
+            },
+            {
+                "x": 5.0,
+                "y": 4.0,
+                "layer": 1
+            },
+            {
+                "x": 3.2,
+                "y": 5.2,
+                "layer": 1
+            },
+            {
+                "x": 4.4,
+                "y": 5.2,
+                "layer": 1
+            },
+            {
+                "x": 0.9,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 6.7,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 3.2,
+                "y": 2.1,
+                "layer": 2
+            },
+            {
+                "x": 4.4,
+                "y": 2.1,
+                "layer": 2
+            },
+            {
+                "x": 2.9,
+                "y": 3.4,
+                "layer": 2
+            },
+            {
+                "x": 4.1,
+                "y": 3.4,
+                "layer": 2
+            },
+            {
+                "x": 3.5,
+                "y": 4.6,
+                "layer": 2
+            },
+            {
+                "x": 4.7,
+                "y": 4.6,
+                "layer": 2
+            }
         ]
     },
     {
-        id: 4,
-        name: '繽紛果園派對',
-        subtitle: '交錯水果筆記 (72 張牌)',
-        iconsCount: 9,
-        icons: ['cherry', 'strawberry', 'grape', 'dekopon', 'persimmon', 'apple', 'pear', 'peach', 'watermelon'],
-        cardPositions: [
-            // Layer 0: Quad-cluster desks (30 cards)
-            // Cluster Top-Left
-            { x: 1.2, y: 0.8, layer: 0 }, { x: 2.4, y: 0.8, layer: 0 }, { x: 3.6, y: 0.8, layer: 0 },
-            { x: 1.2, y: 2.1, layer: 0 }, { x: 2.4, y: 2.1, layer: 0 }, { x: 3.6, y: 2.1, layer: 0 },
-            // Cluster Top-Right
-            { x: 4.8, y: 0.8, layer: 0 }, { x: 6.0, y: 0.8, layer: 0 }, { x: 7.2, y: 0.8, layer: 0 },
-            { x: 4.8, y: 2.1, layer: 0 }, { x: 6.0, y: 2.1, layer: 0 }, { x: 7.2, y: 2.1, layer: 0 },
-            // Center Belt
-            { x: 2.4, y: 3.4, layer: 0 }, { x: 3.6, y: 3.4, layer: 0 }, { x: 4.8, y: 3.4, layer: 0 }, { x: 6.0, y: 3.4, layer: 0 },
-            // Cluster Bottom-Left
-            { x: 1.2, y: 4.7, layer: 0 }, { x: 2.4, y: 4.7, layer: 0 }, { x: 3.6, y: 4.7, layer: 0 },
-            { x: 1.2, y: 6.0, layer: 0 }, { x: 2.4, y: 6.0, layer: 0 }, { x: 3.6, y: 6.0, layer: 0 },
-            // Cluster Bottom-Right
-            { x: 4.8, y: 4.7, layer: 0 }, { x: 6.0, y: 4.7, layer: 0 }, { x: 7.2, y: 4.7, layer: 0 },
-            { x: 4.8, y: 6.0, layer: 0 }, { x: 6.0, y: 6.0, layer: 0 }, { x: 7.2, y: 6.0, layer: 0 },
-            // Edge bookmarks
-            { x: 0.5, y: 3.4, layer: 0 }, { x: 7.9, y: 3.4, layer: 0 },
-
-            // Layer 1: Interlocking bridge (22 cards)
-            { x: 1.8, y: 1.4, layer: 1 }, { x: 3.0, y: 1.4, layer: 1 }, { x: 5.4, y: 1.4, layer: 1 }, { x: 6.6, y: 1.4, layer: 1 },
-            { x: 1.8, y: 2.7, layer: 1 }, { x: 3.0, y: 2.7, layer: 1 }, { x: 4.2, y: 2.7, layer: 1 }, { x: 5.4, y: 2.7, layer: 1 }, { x: 6.6, y: 2.7, layer: 1 },
-            { x: 3.0, y: 4.0, layer: 1 }, { x: 4.2, y: 4.0, layer: 1 }, { x: 5.4, y: 4.0, layer: 1 },
-            { x: 1.8, y: 5.3, layer: 1 }, { x: 3.0, y: 5.3, layer: 1 }, { x: 4.2, y: 5.3, layer: 1 }, { x: 5.4, y: 5.3, layer: 1 }, { x: 6.6, y: 5.3, layer: 1 },
-            { x: 1.8, y: 6.5, layer: 1 }, { x: 3.0, y: 6.5, layer: 1 }, { x: 5.4, y: 6.5, layer: 1 }, { x: 6.6, y: 6.5, layer: 1 },
-
-            // Layer 2: High overlap central pillar (14 cards)
-            { x: 2.5, y: 2.0, layer: 2 }, { x: 3.7, y: 2.0, layer: 2 }, { x: 4.9, y: 2.0, layer: 2 }, { x: 6.1, y: 2.0, layer: 2 },
-            { x: 3.1, y: 3.2, layer: 2 }, { x: 4.3, y: 3.2, layer: 2 }, { x: 5.5, y: 3.2, layer: 2 },
-            { x: 3.1, y: 4.5, layer: 2 }, { x: 4.3, y: 4.5, layer: 2 }, { x: 5.5, y: 4.5, layer: 2 },
-            { x: 2.5, y: 5.7, layer: 2 }, { x: 3.7, y: 5.7, layer: 2 }, { x: 4.9, y: 5.7, layer: 2 }, { x: 6.1, y: 5.7, layer: 2 },
-
-            // Layer 3: Floating toppers (6 cards)
-            { x: 3.7, y: 2.7, layer: 3 }, { x: 4.9, y: 2.7, layer: 3 },
-            { x: 4.3, y: 3.8, layer: 3 },
-            { x: 3.7, y: 4.9, layer: 3 }, { x: 4.9, y: 4.9, layer: 3 },
-            { x: 4.3, y: 5.5, layer: 3 }
+        "id": 4,
+        "name": "幸運四葉草",
+        "subtitle": "四瓣聚祥花序 (45 張牌)",
+        "iconsCount": 6,
+        "icons": [
+            "strawberry",
+            "grape",
+            "dekopon",
+            "persimmon",
+            "apple",
+            "pear"
+        ],
+        "cardPositions": [
+            {
+                "x": 3.6,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 4.8,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 3.0,
+                "y": 1.7,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 1.7,
+                "layer": 0
+            },
+            {
+                "x": 5.4,
+                "y": 1.7,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 2.8,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 4.8,
+                "layer": 0
+            },
+            {
+                "x": 3.0,
+                "y": 5.9,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 5.9,
+                "layer": 0
+            },
+            {
+                "x": 5.4,
+                "y": 5.9,
+                "layer": 0
+            },
+            {
+                "x": 3.6,
+                "y": 7.0,
+                "layer": 0
+            },
+            {
+                "x": 4.8,
+                "y": 7.0,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 2.1,
+                "y": 2.4,
+                "layer": 0
+            },
+            {
+                "x": 2.1,
+                "y": 4.0,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 2.4,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 4.0,
+                "layer": 0
+            },
+            {
+                "x": 2.1,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 5.2,
+                "y": 2.4,
+                "layer": 0
+            },
+            {
+                "x": 5.2,
+                "y": 4.0,
+                "layer": 0
+            },
+            {
+                "x": 6.3,
+                "y": 2.4,
+                "layer": 0
+            },
+            {
+                "x": 6.3,
+                "y": 4.0,
+                "layer": 0
+            },
+            {
+                "x": 6.3,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 7.4,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 3.6,
+                "y": 1.7,
+                "layer": 1
+            },
+            {
+                "x": 4.8,
+                "y": 1.7,
+                "layer": 1
+            },
+            {
+                "x": 2.1,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 3.2,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 5.2,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 6.3,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 2.1,
+                "y": 4.6,
+                "layer": 1
+            },
+            {
+                "x": 3.2,
+                "y": 4.6,
+                "layer": 1
+            },
+            {
+                "x": 5.2,
+                "y": 4.6,
+                "layer": 1
+            },
+            {
+                "x": 6.3,
+                "y": 4.6,
+                "layer": 1
+            },
+            {
+                "x": 3.6,
+                "y": 5.7,
+                "layer": 1
+            },
+            {
+                "x": 4.8,
+                "y": 5.7,
+                "layer": 1
+            },
+            {
+                "x": 3.6,
+                "y": 3.2,
+                "layer": 1
+            },
+            {
+                "x": 4.8,
+                "y": 3.2,
+                "layer": 1
+            },
+            {
+                "x": 4.2,
+                "y": 4.2,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 2.9,
+                "layer": 2
+            },
+            {
+                "x": 4.6,
+                "y": 2.9,
+                "layer": 2
+            },
+            {
+                "x": 3.2,
+                "y": 3.8,
+                "layer": 2
+            },
+            {
+                "x": 5.2,
+                "y": 3.8,
+                "layer": 2
+            },
+            {
+                "x": 3.8,
+                "y": 4.6,
+                "layer": 2
+            },
+            {
+                "x": 4.6,
+                "y": 4.6,
+                "layer": 2
+            }
         ]
     },
     {
-        id: 5,
-        name: '大西瓜手帳大師',
-        subtitle: '全屏千層果香宏大交錯 (90 張牌)',
-        iconsCount: 10,
-        icons: ['cherry', 'strawberry', 'grape', 'dekopon', 'persimmon', 'apple', 'pear', 'peach', 'pineapple', 'watermelon'],
-        cardPositions: [
-            // Generate dense concentric multi-tier pyramid with 90 cards
-            // Layer 0: 36 cards
-            { x: 1.0, y: 0.5, layer: 0 }, { x: 2.1, y: 0.5, layer: 0 }, { x: 3.2, y: 0.5, layer: 0 }, { x: 4.3, y: 0.5, layer: 0 }, { x: 5.4, y: 0.5, layer: 0 }, { x: 6.5, y: 0.5, layer: 0 }, { x: 7.6, y: 0.5, layer: 0 },
-            { x: 1.0, y: 1.7, layer: 0 }, { x: 2.1, y: 1.7, layer: 0 }, { x: 3.2, y: 1.7, layer: 0 }, { x: 4.3, y: 1.7, layer: 0 }, { x: 5.4, y: 1.7, layer: 0 }, { x: 6.5, y: 1.7, layer: 0 }, { x: 7.6, y: 1.7, layer: 0 },
-            { x: 1.0, y: 2.9, layer: 0 }, { x: 2.1, y: 2.9, layer: 0 }, { x: 3.2, y: 2.9, layer: 0 }, { x: 4.3, y: 2.9, layer: 0 }, { x: 5.4, y: 2.9, layer: 0 }, { x: 6.5, y: 2.9, layer: 0 }, { x: 7.6, y: 2.9, layer: 0 },
-            { x: 1.0, y: 4.1, layer: 0 }, { x: 2.1, y: 4.1, layer: 0 }, { x: 3.2, y: 4.1, layer: 0 }, { x: 4.3, y: 4.1, layer: 0 }, { x: 5.4, y: 4.1, layer: 0 }, { x: 6.5, y: 4.1, layer: 0 }, { x: 7.6, y: 4.1, layer: 0 },
-            { x: 1.0, y: 5.3, layer: 0 }, { x: 2.1, y: 5.3, layer: 0 }, { x: 3.2, y: 5.3, layer: 0 }, { x: 4.3, y: 5.3, layer: 0 }, { x: 5.4, y: 5.3, layer: 0 }, { x: 6.5, y: 5.3, layer: 0 }, { x: 7.6, y: 5.3, layer: 0 },
-            { x: 4.3, y: 6.5, layer: 0 },
-
-            // Layer 1: 26 cards
-            { x: 1.6, y: 1.1, layer: 1 }, { x: 2.7, y: 1.1, layer: 1 }, { x: 3.8, y: 1.1, layer: 1 }, { x: 4.9, y: 1.1, layer: 1 }, { x: 6.0, y: 1.1, layer: 1 }, { x: 7.1, y: 1.1, layer: 1 },
-            { x: 1.6, y: 2.3, layer: 1 }, { x: 2.7, y: 2.3, layer: 1 }, { x: 3.8, y: 2.3, layer: 1 }, { x: 4.9, y: 2.3, layer: 1 }, { x: 6.0, y: 2.3, layer: 1 }, { x: 7.1, y: 2.3, layer: 1 },
-            { x: 1.6, y: 3.5, layer: 1 }, { x: 2.7, y: 3.5, layer: 1 }, { x: 3.8, y: 3.5, layer: 1 }, { x: 4.9, y: 3.5, layer: 1 }, { x: 6.0, y: 3.5, layer: 1 }, { x: 7.1, y: 3.5, layer: 1 },
-            { x: 2.7, y: 4.7, layer: 1 }, { x: 3.8, y: 4.7, layer: 1 }, { x: 4.9, y: 4.7, layer: 1 }, { x: 6.0, y: 4.7, layer: 1 },
-            { x: 3.3, y: 5.8, layer: 1 }, { x: 4.4, y: 5.8, layer: 1 }, { x: 5.5, y: 5.8, layer: 1 },
-            { x: 4.4, y: 6.8, layer: 1 },
-
-            // Layer 2: 18 cards
-            { x: 2.2, y: 1.7, layer: 2 }, { x: 3.3, y: 1.7, layer: 2 }, { x: 4.4, y: 1.7, layer: 2 }, { x: 5.5, y: 1.7, layer: 2 }, { x: 6.6, y: 1.7, layer: 2 },
-            { x: 2.2, y: 2.9, layer: 2 }, { x: 3.3, y: 2.9, layer: 2 }, { x: 4.4, y: 2.9, layer: 2 }, { x: 5.5, y: 2.9, layer: 2 }, { x: 6.6, y: 2.9, layer: 2 },
-            { x: 2.7, y: 4.1, layer: 2 }, { x: 3.8, y: 4.1, layer: 2 }, { x: 4.9, y: 4.1, layer: 2 }, { x: 6.0, y: 4.1, layer: 2 },
-            { x: 3.3, y: 5.1, layer: 2 }, { x: 4.4, y: 5.1, layer: 2 }, { x: 5.5, y: 5.1, layer: 2 },
-            { x: 4.4, y: 6.1, layer: 2 },
-
-            // Layer 3: 7 cards
-            { x: 3.3, y: 2.3, layer: 3 }, { x: 4.4, y: 2.3, layer: 3 }, { x: 5.5, y: 2.3, layer: 3 },
-            { x: 3.8, y: 3.5, layer: 3 }, { x: 4.9, y: 3.5, layer: 3 },
-            { x: 4.4, y: 4.5, layer: 3 },
-            { x: 4.4, y: 5.4, layer: 3 },
-
-            // Layer 4: 3 crown cards
-            { x: 3.9, y: 2.8, layer: 4 },
-            { x: 4.9, y: 2.8, layer: 4 },
-            { x: 4.4, y: 3.9, layer: 4 }
+        "id": 5,
+        "name": "歡樂階梯金字塔",
+        "subtitle": "四重階梯水果疊層 (54 張牌)",
+        "iconsCount": 7,
+        "icons": [
+            "cherry",
+            "strawberry",
+            "grape",
+            "dekopon",
+            "persimmon",
+            "apple",
+            "pear"
+        ],
+        "cardPositions": [
+            {
+                "x": 3.8,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 3.0,
+                "y": 1.6,
+                "layer": 0
+            },
+            {
+                "x": 4.6,
+                "y": 1.6,
+                "layer": 0
+            },
+            {
+                "x": 2.2,
+                "y": 2.6,
+                "layer": 0
+            },
+            {
+                "x": 3.8,
+                "y": 2.6,
+                "layer": 0
+            },
+            {
+                "x": 5.4,
+                "y": 2.6,
+                "layer": 0
+            },
+            {
+                "x": 1.4,
+                "y": 3.6,
+                "layer": 0
+            },
+            {
+                "x": 3.0,
+                "y": 3.6,
+                "layer": 0
+            },
+            {
+                "x": 4.6,
+                "y": 3.6,
+                "layer": 0
+            },
+            {
+                "x": 6.2,
+                "y": 3.6,
+                "layer": 0
+            },
+            {
+                "x": 0.6,
+                "y": 4.6,
+                "layer": 0
+            },
+            {
+                "x": 2.2,
+                "y": 4.6,
+                "layer": 0
+            },
+            {
+                "x": 3.8,
+                "y": 4.6,
+                "layer": 0
+            },
+            {
+                "x": 5.4,
+                "y": 4.6,
+                "layer": 0
+            },
+            {
+                "x": 7.0,
+                "y": 4.6,
+                "layer": 0
+            },
+            {
+                "x": 1.4,
+                "y": 5.6,
+                "layer": 0
+            },
+            {
+                "x": 3.0,
+                "y": 5.6,
+                "layer": 0
+            },
+            {
+                "x": 4.6,
+                "y": 5.6,
+                "layer": 0
+            },
+            {
+                "x": 6.2,
+                "y": 5.6,
+                "layer": 0
+            },
+            {
+                "x": 2.2,
+                "y": 6.6,
+                "layer": 0
+            },
+            {
+                "x": 3.8,
+                "y": 6.6,
+                "layer": 0
+            },
+            {
+                "x": 5.4,
+                "y": 6.6,
+                "layer": 0
+            },
+            {
+                "x": 3.0,
+                "y": 7.4,
+                "layer": 0
+            },
+            {
+                "x": 4.6,
+                "y": 7.4,
+                "layer": 0
+            },
+            {
+                "x": 3.8,
+                "y": 1.6,
+                "layer": 1
+            },
+            {
+                "x": 3.0,
+                "y": 2.6,
+                "layer": 1
+            },
+            {
+                "x": 4.6,
+                "y": 2.6,
+                "layer": 1
+            },
+            {
+                "x": 2.2,
+                "y": 3.6,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 3.6,
+                "layer": 1
+            },
+            {
+                "x": 5.4,
+                "y": 3.6,
+                "layer": 1
+            },
+            {
+                "x": 1.4,
+                "y": 4.6,
+                "layer": 1
+            },
+            {
+                "x": 3.0,
+                "y": 4.6,
+                "layer": 1
+            },
+            {
+                "x": 4.6,
+                "y": 4.6,
+                "layer": 1
+            },
+            {
+                "x": 6.2,
+                "y": 4.6,
+                "layer": 1
+            },
+            {
+                "x": 2.2,
+                "y": 5.6,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 5.6,
+                "layer": 1
+            },
+            {
+                "x": 5.4,
+                "y": 5.6,
+                "layer": 1
+            },
+            {
+                "x": 3.0,
+                "y": 6.6,
+                "layer": 1
+            },
+            {
+                "x": 4.6,
+                "y": 6.6,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 7.2,
+                "layer": 1
+            },
+            {
+                "x": 3.4,
+                "y": 2.3,
+                "layer": 2
+            },
+            {
+                "x": 4.2,
+                "y": 2.3,
+                "layer": 2
+            },
+            {
+                "x": 2.6,
+                "y": 3.4,
+                "layer": 2
+            },
+            {
+                "x": 3.8,
+                "y": 3.4,
+                "layer": 2
+            },
+            {
+                "x": 5.0,
+                "y": 3.4,
+                "layer": 2
+            },
+            {
+                "x": 2.6,
+                "y": 4.8,
+                "layer": 2
+            },
+            {
+                "x": 3.8,
+                "y": 4.8,
+                "layer": 2
+            },
+            {
+                "x": 5.0,
+                "y": 4.8,
+                "layer": 2
+            },
+            {
+                "x": 3.4,
+                "y": 5.9,
+                "layer": 2
+            },
+            {
+                "x": 4.2,
+                "y": 5.9,
+                "layer": 2
+            },
+            {
+                "x": 3.8,
+                "y": 3.0,
+                "layer": 3
+            },
+            {
+                "x": 3.2,
+                "y": 4.1,
+                "layer": 3
+            },
+            {
+                "x": 4.4,
+                "y": 4.1,
+                "layer": 3
+            },
+            {
+                "x": 3.8,
+                "y": 5.2,
+                "layer": 3
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "舞動彩蝶",
+        "subtitle": "展翅雙翼層疊 (63 張牌)",
+        "iconsCount": 7,
+        "icons": [
+            "cherry",
+            "strawberry",
+            "grape",
+            "dekopon",
+            "apple",
+            "pear",
+            "peach"
+        ],
+        "cardPositions": [
+            {
+                "x": 1.0,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 2.1,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 0.7,
+                "y": 2.0,
+                "layer": 0
+            },
+            {
+                "x": 1.8,
+                "y": 2.0,
+                "layer": 0
+            },
+            {
+                "x": 2.9,
+                "y": 2.0,
+                "layer": 0
+            },
+            {
+                "x": 0.7,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 1.8,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 2.9,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 4.4,
+                "layer": 0
+            },
+            {
+                "x": 2.1,
+                "y": 4.4,
+                "layer": 0
+            },
+            {
+                "x": 1.2,
+                "y": 5.6,
+                "layer": 0
+            },
+            {
+                "x": 2.3,
+                "y": 5.6,
+                "layer": 0
+            },
+            {
+                "x": 1.8,
+                "y": 6.7,
+                "layer": 0
+            },
+            {
+                "x": 5.2,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 6.3,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 7.4,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 5.5,
+                "y": 2.0,
+                "layer": 0
+            },
+            {
+                "x": 6.6,
+                "y": 2.0,
+                "layer": 0
+            },
+            {
+                "x": 7.7,
+                "y": 2.0,
+                "layer": 0
+            },
+            {
+                "x": 5.5,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 6.6,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 7.7,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 6.3,
+                "y": 4.4,
+                "layer": 0
+            },
+            {
+                "x": 7.4,
+                "y": 4.4,
+                "layer": 0
+            },
+            {
+                "x": 6.1,
+                "y": 5.6,
+                "layer": 0
+            },
+            {
+                "x": 7.2,
+                "y": 5.6,
+                "layer": 0
+            },
+            {
+                "x": 6.6,
+                "y": 6.7,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 1.4,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 2.8,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 4.2,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 5.6,
+                "layer": 0
+            },
+            {
+                "x": 1.6,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 2.7,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 1.3,
+                "y": 2.6,
+                "layer": 1
+            },
+            {
+                "x": 2.4,
+                "y": 2.6,
+                "layer": 1
+            },
+            {
+                "x": 1.6,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 2.7,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 1.8,
+                "y": 5.0,
+                "layer": 1
+            },
+            {
+                "x": 2.4,
+                "y": 6.1,
+                "layer": 1
+            },
+            {
+                "x": 5.7,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 6.8,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 6.0,
+                "y": 2.6,
+                "layer": 1
+            },
+            {
+                "x": 7.1,
+                "y": 2.6,
+                "layer": 1
+            },
+            {
+                "x": 5.7,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 6.8,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 6.6,
+                "y": 5.0,
+                "layer": 1
+            },
+            {
+                "x": 6.0,
+                "y": 6.1,
+                "layer": 1
+            },
+            {
+                "x": 3.6,
+                "y": 2.1,
+                "layer": 1
+            },
+            {
+                "x": 4.8,
+                "y": 2.1,
+                "layer": 1
+            },
+            {
+                "x": 3.6,
+                "y": 4.9,
+                "layer": 1
+            },
+            {
+                "x": 4.8,
+                "y": 4.9,
+                "layer": 1
+            },
+            {
+                "x": 2.0,
+                "y": 2.2,
+                "layer": 2
+            },
+            {
+                "x": 2.0,
+                "y": 3.4,
+                "layer": 2
+            },
+            {
+                "x": 6.4,
+                "y": 2.2,
+                "layer": 2
+            },
+            {
+                "x": 6.4,
+                "y": 3.4,
+                "layer": 2
+            },
+            {
+                "x": 3.7,
+                "y": 3.1,
+                "layer": 2
+            },
+            {
+                "x": 4.7,
+                "y": 3.1,
+                "layer": 2
+            },
+            {
+                "x": 3.7,
+                "y": 4.1,
+                "layer": 2
+            },
+            {
+                "x": 4.7,
+                "y": 4.1,
+                "layer": 2
+            },
+            {
+                "x": 3.6,
+                "y": 1.0,
+                "layer": 3
+            },
+            {
+                "x": 4.8,
+                "y": 1.0,
+                "layer": 3
+            },
+            {
+                "x": 4.2,
+                "y": 3.6,
+                "layer": 3
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "繽紛果園派對",
+        "subtitle": "交錯水果筆記 (72 張牌)",
+        "iconsCount": 9,
+        "icons": [
+            "cherry",
+            "strawberry",
+            "grape",
+            "dekopon",
+            "persimmon",
+            "apple",
+            "pear",
+            "peach",
+            "watermelon"
+        ],
+        "cardPositions": [
+            {
+                "x": 1.2,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 2.4,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 3.6,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 1.2,
+                "y": 2.1,
+                "layer": 0
+            },
+            {
+                "x": 2.4,
+                "y": 2.1,
+                "layer": 0
+            },
+            {
+                "x": 3.6,
+                "y": 2.1,
+                "layer": 0
+            },
+            {
+                "x": 4.8,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 6.0,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 7.2,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 4.8,
+                "y": 2.1,
+                "layer": 0
+            },
+            {
+                "x": 6.0,
+                "y": 2.1,
+                "layer": 0
+            },
+            {
+                "x": 7.2,
+                "y": 2.1,
+                "layer": 0
+            },
+            {
+                "x": 2.4,
+                "y": 3.4,
+                "layer": 0
+            },
+            {
+                "x": 3.6,
+                "y": 3.4,
+                "layer": 0
+            },
+            {
+                "x": 4.8,
+                "y": 3.4,
+                "layer": 0
+            },
+            {
+                "x": 6.0,
+                "y": 3.4,
+                "layer": 0
+            },
+            {
+                "x": 1.2,
+                "y": 4.7,
+                "layer": 0
+            },
+            {
+                "x": 2.4,
+                "y": 4.7,
+                "layer": 0
+            },
+            {
+                "x": 3.6,
+                "y": 4.7,
+                "layer": 0
+            },
+            {
+                "x": 1.2,
+                "y": 6.0,
+                "layer": 0
+            },
+            {
+                "x": 2.4,
+                "y": 6.0,
+                "layer": 0
+            },
+            {
+                "x": 3.6,
+                "y": 6.0,
+                "layer": 0
+            },
+            {
+                "x": 4.8,
+                "y": 4.7,
+                "layer": 0
+            },
+            {
+                "x": 6.0,
+                "y": 4.7,
+                "layer": 0
+            },
+            {
+                "x": 7.2,
+                "y": 4.7,
+                "layer": 0
+            },
+            {
+                "x": 4.8,
+                "y": 6.0,
+                "layer": 0
+            },
+            {
+                "x": 6.0,
+                "y": 6.0,
+                "layer": 0
+            },
+            {
+                "x": 7.2,
+                "y": 6.0,
+                "layer": 0
+            },
+            {
+                "x": 0.5,
+                "y": 3.4,
+                "layer": 0
+            },
+            {
+                "x": 7.9,
+                "y": 3.4,
+                "layer": 0
+            },
+            {
+                "x": 1.8,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 3.0,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 4.2,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 5.4,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 6.6,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 1.8,
+                "y": 2.7,
+                "layer": 1
+            },
+            {
+                "x": 3.0,
+                "y": 2.7,
+                "layer": 1
+            },
+            {
+                "x": 4.2,
+                "y": 2.7,
+                "layer": 1
+            },
+            {
+                "x": 5.4,
+                "y": 2.7,
+                "layer": 1
+            },
+            {
+                "x": 6.6,
+                "y": 2.7,
+                "layer": 1
+            },
+            {
+                "x": 3.0,
+                "y": 4.0,
+                "layer": 1
+            },
+            {
+                "x": 4.2,
+                "y": 4.0,
+                "layer": 1
+            },
+            {
+                "x": 5.4,
+                "y": 4.0,
+                "layer": 1
+            },
+            {
+                "x": 1.8,
+                "y": 5.3,
+                "layer": 1
+            },
+            {
+                "x": 3.0,
+                "y": 5.3,
+                "layer": 1
+            },
+            {
+                "x": 4.2,
+                "y": 5.3,
+                "layer": 1
+            },
+            {
+                "x": 5.4,
+                "y": 5.3,
+                "layer": 1
+            },
+            {
+                "x": 6.6,
+                "y": 5.3,
+                "layer": 1
+            },
+            {
+                "x": 1.8,
+                "y": 6.5,
+                "layer": 1
+            },
+            {
+                "x": 3.0,
+                "y": 6.5,
+                "layer": 1
+            },
+            {
+                "x": 5.4,
+                "y": 6.5,
+                "layer": 1
+            },
+            {
+                "x": 6.6,
+                "y": 6.5,
+                "layer": 1
+            },
+            {
+                "x": 2.5,
+                "y": 2.0,
+                "layer": 2
+            },
+            {
+                "x": 3.7,
+                "y": 2.0,
+                "layer": 2
+            },
+            {
+                "x": 4.9,
+                "y": 2.0,
+                "layer": 2
+            },
+            {
+                "x": 6.1,
+                "y": 2.0,
+                "layer": 2
+            },
+            {
+                "x": 3.1,
+                "y": 3.2,
+                "layer": 2
+            },
+            {
+                "x": 4.3,
+                "y": 3.2,
+                "layer": 2
+            },
+            {
+                "x": 5.5,
+                "y": 3.2,
+                "layer": 2
+            },
+            {
+                "x": 3.1,
+                "y": 4.5,
+                "layer": 2
+            },
+            {
+                "x": 4.3,
+                "y": 4.5,
+                "layer": 2
+            },
+            {
+                "x": 5.5,
+                "y": 4.5,
+                "layer": 2
+            },
+            {
+                "x": 2.5,
+                "y": 5.7,
+                "layer": 2
+            },
+            {
+                "x": 3.7,
+                "y": 5.7,
+                "layer": 2
+            },
+            {
+                "x": 4.9,
+                "y": 5.7,
+                "layer": 2
+            },
+            {
+                "x": 6.1,
+                "y": 5.7,
+                "layer": 2
+            },
+            {
+                "x": 3.7,
+                "y": 2.7,
+                "layer": 3
+            },
+            {
+                "x": 4.9,
+                "y": 2.7,
+                "layer": 3
+            },
+            {
+                "x": 4.3,
+                "y": 3.8,
+                "layer": 3
+            },
+            {
+                "x": 3.7,
+                "y": 4.9,
+                "layer": 3
+            },
+            {
+                "x": 4.9,
+                "y": 4.9,
+                "layer": 3
+            },
+            {
+                "x": 4.3,
+                "y": 5.5,
+                "layer": 3
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "向日葵螺旋",
+        "subtitle": "旋渦向心交疊 (81 張牌)",
+        "iconsCount": 9,
+        "icons": [
+            "strawberry",
+            "grape",
+            "dekopon",
+            "persimmon",
+            "apple",
+            "pear",
+            "peach",
+            "pineapple",
+            "melon"
+        ],
+        "cardPositions": [
+            {
+                "x": 1.0,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 1.72,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 2.44,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 3.16,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 3.88,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 4.6,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 5.32,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 6.04,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 6.76,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 7.48,
+                "y": 0.6,
+                "layer": 0
+            },
+            {
+                "x": 7.5,
+                "y": 1.5,
+                "layer": 0
+            },
+            {
+                "x": 7.5,
+                "y": 2.25,
+                "layer": 0
+            },
+            {
+                "x": 7.5,
+                "y": 3.0,
+                "layer": 0
+            },
+            {
+                "x": 7.5,
+                "y": 3.75,
+                "layer": 0
+            },
+            {
+                "x": 7.5,
+                "y": 4.5,
+                "layer": 0
+            },
+            {
+                "x": 7.5,
+                "y": 5.25,
+                "layer": 0
+            },
+            {
+                "x": 7.5,
+                "y": 6.0,
+                "layer": 0
+            },
+            {
+                "x": 7.5,
+                "y": 6.75,
+                "layer": 0
+            },
+            {
+                "x": 7.5,
+                "y": 6.8,
+                "layer": 0
+            },
+            {
+                "x": 6.78,
+                "y": 6.8,
+                "layer": 0
+            },
+            {
+                "x": 6.06,
+                "y": 6.8,
+                "layer": 0
+            },
+            {
+                "x": 5.34,
+                "y": 6.8,
+                "layer": 0
+            },
+            {
+                "x": 4.62,
+                "y": 6.8,
+                "layer": 0
+            },
+            {
+                "x": 3.9,
+                "y": 6.8,
+                "layer": 0
+            },
+            {
+                "x": 3.18,
+                "y": 6.8,
+                "layer": 0
+            },
+            {
+                "x": 2.46,
+                "y": 6.8,
+                "layer": 0
+            },
+            {
+                "x": 1.74,
+                "y": 6.8,
+                "layer": 0
+            },
+            {
+                "x": 1.02,
+                "y": 6.8,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 6.0,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 5.25,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 4.5,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 3.75,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 3.0,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 2.25,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 1.5,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 0.75,
+                "layer": 0
+            },
+            {
+                "x": 1.8,
+                "y": 1.6,
+                "layer": 1
+            },
+            {
+                "x": 2.48,
+                "y": 1.6,
+                "layer": 1
+            },
+            {
+                "x": 3.16,
+                "y": 1.6,
+                "layer": 1
+            },
+            {
+                "x": 3.84,
+                "y": 1.6,
+                "layer": 1
+            },
+            {
+                "x": 4.52,
+                "y": 1.6,
+                "layer": 1
+            },
+            {
+                "x": 5.2,
+                "y": 1.6,
+                "layer": 1
+            },
+            {
+                "x": 5.88,
+                "y": 1.6,
+                "layer": 1
+            },
+            {
+                "x": 6.56,
+                "y": 1.6,
+                "layer": 1
+            },
+            {
+                "x": 6.6,
+                "y": 2.4,
+                "layer": 1
+            },
+            {
+                "x": 6.6,
+                "y": 3.1,
+                "layer": 1
+            },
+            {
+                "x": 6.6,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 6.6,
+                "y": 4.5,
+                "layer": 1
+            },
+            {
+                "x": 6.6,
+                "y": 5.2,
+                "layer": 1
+            },
+            {
+                "x": 6.6,
+                "y": 5.9,
+                "layer": 1
+            },
+            {
+                "x": 6.6,
+                "y": 5.9,
+                "layer": 1
+            },
+            {
+                "x": 5.92,
+                "y": 5.9,
+                "layer": 1
+            },
+            {
+                "x": 5.24,
+                "y": 5.9,
+                "layer": 1
+            },
+            {
+                "x": 4.56,
+                "y": 5.9,
+                "layer": 1
+            },
+            {
+                "x": 3.88,
+                "y": 5.9,
+                "layer": 1
+            },
+            {
+                "x": 3.2,
+                "y": 5.9,
+                "layer": 1
+            },
+            {
+                "x": 2.52,
+                "y": 5.9,
+                "layer": 1
+            },
+            {
+                "x": 1.84,
+                "y": 5.9,
+                "layer": 1
+            },
+            {
+                "x": 1.8,
+                "y": 5.2,
+                "layer": 1
+            },
+            {
+                "x": 1.8,
+                "y": 4.5,
+                "layer": 1
+            },
+            {
+                "x": 1.8,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 1.8,
+                "y": 3.1,
+                "layer": 1
+            },
+            {
+                "x": 1.8,
+                "y": 2.4,
+                "layer": 1
+            },
+            {
+                "x": 2.6,
+                "y": 2.7,
+                "layer": 2
+            },
+            {
+                "x": 3.35,
+                "y": 2.7,
+                "layer": 2
+            },
+            {
+                "x": 4.1,
+                "y": 2.7,
+                "layer": 2
+            },
+            {
+                "x": 4.85,
+                "y": 2.7,
+                "layer": 2
+            },
+            {
+                "x": 5.6,
+                "y": 2.7,
+                "layer": 2
+            },
+            {
+                "x": 5.6,
+                "y": 3.5,
+                "layer": 2
+            },
+            {
+                "x": 5.6,
+                "y": 4.2,
+                "layer": 2
+            },
+            {
+                "x": 5.6,
+                "y": 4.9,
+                "layer": 2
+            },
+            {
+                "x": 5.6,
+                "y": 5.6,
+                "layer": 2
+            },
+            {
+                "x": 4.8,
+                "y": 5.0,
+                "layer": 2
+            },
+            {
+                "x": 4.05,
+                "y": 5.0,
+                "layer": 2
+            },
+            {
+                "x": 3.3,
+                "y": 5.0,
+                "layer": 2
+            },
+            {
+                "x": 2.55,
+                "y": 5.0,
+                "layer": 2
+            },
+            {
+                "x": 2.6,
+                "y": 4.2,
+                "layer": 2
+            },
+            {
+                "x": 2.6,
+                "y": 3.5,
+                "layer": 2
+            },
+            {
+                "x": 3.6,
+                "y": 3.8,
+                "layer": 3
+            },
+            {
+                "x": 4.8,
+                "y": 3.8,
+                "layer": 3
+            },
+            {
+                "x": 4.2,
+                "y": 4.3,
+                "layer": 3
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "大西瓜手帳大師",
+        "subtitle": "全屏千層果香宏大交錯 (90 張牌)",
+        "iconsCount": 10,
+        "icons": [
+            "cherry",
+            "strawberry",
+            "grape",
+            "dekopon",
+            "persimmon",
+            "apple",
+            "pear",
+            "peach",
+            "pineapple",
+            "watermelon"
+        ],
+        "cardPositions": [
+            {
+                "x": 1.0,
+                "y": 0.5,
+                "layer": 0
+            },
+            {
+                "x": 2.1,
+                "y": 0.5,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 0.5,
+                "layer": 0
+            },
+            {
+                "x": 4.3,
+                "y": 0.5,
+                "layer": 0
+            },
+            {
+                "x": 5.4,
+                "y": 0.5,
+                "layer": 0
+            },
+            {
+                "x": 6.5,
+                "y": 0.5,
+                "layer": 0
+            },
+            {
+                "x": 7.6,
+                "y": 0.5,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 1.7,
+                "layer": 0
+            },
+            {
+                "x": 2.1,
+                "y": 1.7,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 1.7,
+                "layer": 0
+            },
+            {
+                "x": 4.3,
+                "y": 1.7,
+                "layer": 0
+            },
+            {
+                "x": 5.4,
+                "y": 1.7,
+                "layer": 0
+            },
+            {
+                "x": 6.5,
+                "y": 1.7,
+                "layer": 0
+            },
+            {
+                "x": 7.6,
+                "y": 1.7,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 2.9,
+                "layer": 0
+            },
+            {
+                "x": 2.1,
+                "y": 2.9,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 2.9,
+                "layer": 0
+            },
+            {
+                "x": 4.3,
+                "y": 2.9,
+                "layer": 0
+            },
+            {
+                "x": 5.4,
+                "y": 2.9,
+                "layer": 0
+            },
+            {
+                "x": 6.5,
+                "y": 2.9,
+                "layer": 0
+            },
+            {
+                "x": 7.6,
+                "y": 2.9,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 4.1,
+                "layer": 0
+            },
+            {
+                "x": 2.1,
+                "y": 4.1,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 4.1,
+                "layer": 0
+            },
+            {
+                "x": 4.3,
+                "y": 4.1,
+                "layer": 0
+            },
+            {
+                "x": 5.4,
+                "y": 4.1,
+                "layer": 0
+            },
+            {
+                "x": 6.5,
+                "y": 4.1,
+                "layer": 0
+            },
+            {
+                "x": 7.6,
+                "y": 4.1,
+                "layer": 0
+            },
+            {
+                "x": 1.0,
+                "y": 5.3,
+                "layer": 0
+            },
+            {
+                "x": 2.1,
+                "y": 5.3,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 5.3,
+                "layer": 0
+            },
+            {
+                "x": 4.3,
+                "y": 5.3,
+                "layer": 0
+            },
+            {
+                "x": 5.4,
+                "y": 5.3,
+                "layer": 0
+            },
+            {
+                "x": 6.5,
+                "y": 5.3,
+                "layer": 0
+            },
+            {
+                "x": 7.6,
+                "y": 5.3,
+                "layer": 0
+            },
+            {
+                "x": 4.3,
+                "y": 6.5,
+                "layer": 0
+            },
+            {
+                "x": 1.6,
+                "y": 1.1,
+                "layer": 1
+            },
+            {
+                "x": 2.7,
+                "y": 1.1,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 1.1,
+                "layer": 1
+            },
+            {
+                "x": 4.9,
+                "y": 1.1,
+                "layer": 1
+            },
+            {
+                "x": 6.0,
+                "y": 1.1,
+                "layer": 1
+            },
+            {
+                "x": 7.1,
+                "y": 1.1,
+                "layer": 1
+            },
+            {
+                "x": 1.6,
+                "y": 2.3,
+                "layer": 1
+            },
+            {
+                "x": 2.7,
+                "y": 2.3,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 2.3,
+                "layer": 1
+            },
+            {
+                "x": 4.9,
+                "y": 2.3,
+                "layer": 1
+            },
+            {
+                "x": 6.0,
+                "y": 2.3,
+                "layer": 1
+            },
+            {
+                "x": 7.1,
+                "y": 2.3,
+                "layer": 1
+            },
+            {
+                "x": 1.6,
+                "y": 3.5,
+                "layer": 1
+            },
+            {
+                "x": 2.7,
+                "y": 3.5,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 3.5,
+                "layer": 1
+            },
+            {
+                "x": 4.9,
+                "y": 3.5,
+                "layer": 1
+            },
+            {
+                "x": 6.0,
+                "y": 3.5,
+                "layer": 1
+            },
+            {
+                "x": 7.1,
+                "y": 3.5,
+                "layer": 1
+            },
+            {
+                "x": 2.7,
+                "y": 4.7,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 4.7,
+                "layer": 1
+            },
+            {
+                "x": 4.9,
+                "y": 4.7,
+                "layer": 1
+            },
+            {
+                "x": 6.0,
+                "y": 4.7,
+                "layer": 1
+            },
+            {
+                "x": 3.3,
+                "y": 5.8,
+                "layer": 1
+            },
+            {
+                "x": 4.4,
+                "y": 5.8,
+                "layer": 1
+            },
+            {
+                "x": 5.5,
+                "y": 5.8,
+                "layer": 1
+            },
+            {
+                "x": 4.4,
+                "y": 6.8,
+                "layer": 1
+            },
+            {
+                "x": 2.2,
+                "y": 1.7,
+                "layer": 2
+            },
+            {
+                "x": 3.3,
+                "y": 1.7,
+                "layer": 2
+            },
+            {
+                "x": 4.4,
+                "y": 1.7,
+                "layer": 2
+            },
+            {
+                "x": 5.5,
+                "y": 1.7,
+                "layer": 2
+            },
+            {
+                "x": 6.6,
+                "y": 1.7,
+                "layer": 2
+            },
+            {
+                "x": 2.2,
+                "y": 2.9,
+                "layer": 2
+            },
+            {
+                "x": 3.3,
+                "y": 2.9,
+                "layer": 2
+            },
+            {
+                "x": 4.4,
+                "y": 2.9,
+                "layer": 2
+            },
+            {
+                "x": 5.5,
+                "y": 2.9,
+                "layer": 2
+            },
+            {
+                "x": 6.6,
+                "y": 2.9,
+                "layer": 2
+            },
+            {
+                "x": 2.7,
+                "y": 4.1,
+                "layer": 2
+            },
+            {
+                "x": 3.8,
+                "y": 4.1,
+                "layer": 2
+            },
+            {
+                "x": 4.9,
+                "y": 4.1,
+                "layer": 2
+            },
+            {
+                "x": 6.0,
+                "y": 4.1,
+                "layer": 2
+            },
+            {
+                "x": 3.3,
+                "y": 5.1,
+                "layer": 2
+            },
+            {
+                "x": 4.4,
+                "y": 5.1,
+                "layer": 2
+            },
+            {
+                "x": 5.5,
+                "y": 5.1,
+                "layer": 2
+            },
+            {
+                "x": 4.4,
+                "y": 6.1,
+                "layer": 2
+            },
+            {
+                "x": 3.3,
+                "y": 2.3,
+                "layer": 3
+            },
+            {
+                "x": 4.4,
+                "y": 2.3,
+                "layer": 3
+            },
+            {
+                "x": 5.5,
+                "y": 2.3,
+                "layer": 3
+            },
+            {
+                "x": 3.8,
+                "y": 3.5,
+                "layer": 3
+            },
+            {
+                "x": 4.9,
+                "y": 3.5,
+                "layer": 3
+            },
+            {
+                "x": 4.4,
+                "y": 4.5,
+                "layer": 3
+            },
+            {
+                "x": 4.4,
+                "y": 5.4,
+                "layer": 3
+            },
+            {
+                "x": 3.9,
+                "y": 2.8,
+                "layer": 4
+            },
+            {
+                "x": 4.9,
+                "y": 2.8,
+                "layer": 4
+            },
+            {
+                "x": 4.4,
+                "y": 3.9,
+                "layer": 4
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "name": "三重皇冠慶典",
+        "subtitle": "帝王加冕崇高牌陣 (99 張牌)",
+        "iconsCount": 11,
+        "icons": [
+            "cherry",
+            "strawberry",
+            "grape",
+            "dekopon",
+            "persimmon",
+            "apple",
+            "pear",
+            "peach",
+            "pineapple",
+            "melon",
+            "watermelon"
+        ],
+        "cardPositions": [
+            {
+                "x": 1.2,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 2.15,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 3.1,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 4.05,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 5.0,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 5.95,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 6.9,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 1.2,
+                "y": 4.35,
+                "layer": 0
+            },
+            {
+                "x": 2.15,
+                "y": 4.35,
+                "layer": 0
+            },
+            {
+                "x": 3.1,
+                "y": 4.35,
+                "layer": 0
+            },
+            {
+                "x": 4.05,
+                "y": 4.35,
+                "layer": 0
+            },
+            {
+                "x": 5.0,
+                "y": 4.35,
+                "layer": 0
+            },
+            {
+                "x": 5.95,
+                "y": 4.35,
+                "layer": 0
+            },
+            {
+                "x": 6.9,
+                "y": 4.35,
+                "layer": 0
+            },
+            {
+                "x": 1.2,
+                "y": 5.5,
+                "layer": 0
+            },
+            {
+                "x": 2.15,
+                "y": 5.5,
+                "layer": 0
+            },
+            {
+                "x": 3.1,
+                "y": 5.5,
+                "layer": 0
+            },
+            {
+                "x": 4.05,
+                "y": 5.5,
+                "layer": 0
+            },
+            {
+                "x": 5.0,
+                "y": 5.5,
+                "layer": 0
+            },
+            {
+                "x": 5.95,
+                "y": 5.5,
+                "layer": 0
+            },
+            {
+                "x": 6.9,
+                "y": 5.5,
+                "layer": 0
+            },
+            {
+                "x": 1.2,
+                "y": 6.65,
+                "layer": 0
+            },
+            {
+                "x": 2.15,
+                "y": 6.65,
+                "layer": 0
+            },
+            {
+                "x": 3.1,
+                "y": 6.65,
+                "layer": 0
+            },
+            {
+                "x": 4.05,
+                "y": 6.65,
+                "layer": 0
+            },
+            {
+                "x": 5.0,
+                "y": 6.65,
+                "layer": 0
+            },
+            {
+                "x": 5.95,
+                "y": 6.65,
+                "layer": 0
+            },
+            {
+                "x": 6.9,
+                "y": 6.65,
+                "layer": 0
+            },
+            {
+                "x": 1.2,
+                "y": 2.0,
+                "layer": 0
+            },
+            {
+                "x": 2.1,
+                "y": 2.0,
+                "layer": 0
+            },
+            {
+                "x": 1.2,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 2.1,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 3.6,
+                "y": 2.0,
+                "layer": 0
+            },
+            {
+                "x": 4.6,
+                "y": 2.0,
+                "layer": 0
+            },
+            {
+                "x": 3.6,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 4.6,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 4.1,
+                "y": 0.0,
+                "layer": 0
+            },
+            {
+                "x": 4.1,
+                "y": 1.4,
+                "layer": 0
+            },
+            {
+                "x": 6.1,
+                "y": 2.0,
+                "layer": 0
+            },
+            {
+                "x": 7.0,
+                "y": 2.0,
+                "layer": 0
+            },
+            {
+                "x": 6.1,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 7.0,
+                "y": 0.8,
+                "layer": 0
+            },
+            {
+                "x": 1.7,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 2.65,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 3.6,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 4.55,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 5.5,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 6.45,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 1.7,
+                "y": 4.95,
+                "layer": 1
+            },
+            {
+                "x": 2.65,
+                "y": 4.95,
+                "layer": 1
+            },
+            {
+                "x": 3.6,
+                "y": 4.95,
+                "layer": 1
+            },
+            {
+                "x": 4.55,
+                "y": 4.95,
+                "layer": 1
+            },
+            {
+                "x": 5.5,
+                "y": 4.95,
+                "layer": 1
+            },
+            {
+                "x": 6.45,
+                "y": 4.95,
+                "layer": 1
+            },
+            {
+                "x": 1.7,
+                "y": 6.1,
+                "layer": 1
+            },
+            {
+                "x": 2.65,
+                "y": 6.1,
+                "layer": 1
+            },
+            {
+                "x": 3.6,
+                "y": 6.1,
+                "layer": 1
+            },
+            {
+                "x": 4.55,
+                "y": 6.1,
+                "layer": 1
+            },
+            {
+                "x": 5.5,
+                "y": 6.1,
+                "layer": 1
+            },
+            {
+                "x": 6.45,
+                "y": 6.1,
+                "layer": 1
+            },
+            {
+                "x": 1.6,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 1.6,
+                "y": 2.5,
+                "layer": 1
+            },
+            {
+                "x": 2.5,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 2.5,
+                "y": 2.5,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 1.2,
+                "layer": 1
+            },
+            {
+                "x": 4.8,
+                "y": 1.2,
+                "layer": 1
+            },
+            {
+                "x": 3.8,
+                "y": 2.4,
+                "layer": 1
+            },
+            {
+                "x": 4.8,
+                "y": 2.4,
+                "layer": 1
+            },
+            {
+                "x": 6.2,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 6.2,
+                "y": 2.5,
+                "layer": 1
+            },
+            {
+                "x": 7.1,
+                "y": 1.4,
+                "layer": 1
+            },
+            {
+                "x": 7.1,
+                "y": 2.5,
+                "layer": 1
+            },
+            {
+                "x": 2.2,
+                "y": 4.2,
+                "layer": 2
+            },
+            {
+                "x": 3.15,
+                "y": 4.2,
+                "layer": 2
+            },
+            {
+                "x": 4.1,
+                "y": 4.2,
+                "layer": 2
+            },
+            {
+                "x": 5.05,
+                "y": 4.2,
+                "layer": 2
+            },
+            {
+                "x": 6.0,
+                "y": 4.2,
+                "layer": 2
+            },
+            {
+                "x": 2.2,
+                "y": 5.35,
+                "layer": 2
+            },
+            {
+                "x": 3.15,
+                "y": 5.35,
+                "layer": 2
+            },
+            {
+                "x": 4.1,
+                "y": 5.35,
+                "layer": 2
+            },
+            {
+                "x": 5.05,
+                "y": 5.35,
+                "layer": 2
+            },
+            {
+                "x": 6.0,
+                "y": 5.35,
+                "layer": 2
+            },
+            {
+                "x": 1.9,
+                "y": 1.8,
+                "layer": 2
+            },
+            {
+                "x": 1.9,
+                "y": 2.8,
+                "layer": 2
+            },
+            {
+                "x": 4.2,
+                "y": 1.6,
+                "layer": 2
+            },
+            {
+                "x": 4.2,
+                "y": 2.7,
+                "layer": 2
+            },
+            {
+                "x": 3.6,
+                "y": 2.1,
+                "layer": 2
+            },
+            {
+                "x": 4.8,
+                "y": 2.1,
+                "layer": 2
+            },
+            {
+                "x": 6.5,
+                "y": 1.8,
+                "layer": 2
+            },
+            {
+                "x": 6.5,
+                "y": 2.8,
+                "layer": 2
+            },
+            {
+                "x": 1.9,
+                "y": 0.9,
+                "layer": 3
+            },
+            {
+                "x": 1.5,
+                "y": 1.9,
+                "layer": 3
+            },
+            {
+                "x": 2.3,
+                "y": 1.9,
+                "layer": 3
+            },
+            {
+                "x": 4.2,
+                "y": 0.6,
+                "layer": 3
+            },
+            {
+                "x": 3.8,
+                "y": 1.7,
+                "layer": 3
+            },
+            {
+                "x": 4.6,
+                "y": 1.7,
+                "layer": 3
+            },
+            {
+                "x": 6.5,
+                "y": 0.9,
+                "layer": 3
+            },
+            {
+                "x": 6.1,
+                "y": 1.9,
+                "layer": 3
+            },
+            {
+                "x": 6.9,
+                "y": 1.9,
+                "layer": 3
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "name": "雙環連理",
+        "subtitle": "奧林匹克雙環交錯 (108 張牌)",
+        "iconsCount": 11,
+        "icons": [
+            "cherry",
+            "strawberry",
+            "grape",
+            "dekopon",
+            "persimmon",
+            "apple",
+            "pear",
+            "peach",
+            "pineapple",
+            "melon",
+            "watermelon"
+        ],
+        "cardPositions": [
+            {
+                "x": 4.8,
+                "y": 3.8,
+                "layer": 0
+            },
+            {
+                "x": 7.2,
+                "y": 3.8,
+                "layer": 0
+            },
+            {
+                "x": 4.73,
+                "y": 4.4,
+                "layer": 0
+            },
+            {
+                "x": 7.13,
+                "y": 4.4,
+                "layer": 0
+            },
+            {
+                "x": 4.53,
+                "y": 4.95,
+                "layer": 0
+            },
+            {
+                "x": 6.93,
+                "y": 4.95,
+                "layer": 0
+            },
+            {
+                "x": 4.21,
+                "y": 5.43,
+                "layer": 0
+            },
+            {
+                "x": 6.61,
+                "y": 5.43,
+                "layer": 0
+            },
+            {
+                "x": 3.8,
+                "y": 5.79,
+                "layer": 0
+            },
+            {
+                "x": 6.2,
+                "y": 5.79,
+                "layer": 0
+            },
+            {
+                "x": 3.32,
+                "y": 6.02,
+                "layer": 0
+            },
+            {
+                "x": 5.72,
+                "y": 6.02,
+                "layer": 0
+            },
+            {
+                "x": 2.8,
+                "y": 6.1,
+                "layer": 0
+            },
+            {
+                "x": 5.2,
+                "y": 6.1,
+                "layer": 0
+            },
+            {
+                "x": 2.28,
+                "y": 6.02,
+                "layer": 0
+            },
+            {
+                "x": 4.68,
+                "y": 6.02,
+                "layer": 0
+            },
+            {
+                "x": 1.8,
+                "y": 5.79,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 5.79,
+                "layer": 0
+            },
+            {
+                "x": 1.39,
+                "y": 5.43,
+                "layer": 0
+            },
+            {
+                "x": 3.79,
+                "y": 5.43,
+                "layer": 0
+            },
+            {
+                "x": 1.07,
+                "y": 4.95,
+                "layer": 0
+            },
+            {
+                "x": 3.47,
+                "y": 4.95,
+                "layer": 0
+            },
+            {
+                "x": 0.87,
+                "y": 4.4,
+                "layer": 0
+            },
+            {
+                "x": 3.27,
+                "y": 4.4,
+                "layer": 0
+            },
+            {
+                "x": 0.8,
+                "y": 3.8,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 3.8,
+                "layer": 0
+            },
+            {
+                "x": 0.87,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 3.27,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 1.07,
+                "y": 2.65,
+                "layer": 0
+            },
+            {
+                "x": 3.47,
+                "y": 2.65,
+                "layer": 0
+            },
+            {
+                "x": 1.39,
+                "y": 2.17,
+                "layer": 0
+            },
+            {
+                "x": 3.79,
+                "y": 2.17,
+                "layer": 0
+            },
+            {
+                "x": 1.8,
+                "y": 1.81,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 1.81,
+                "layer": 0
+            },
+            {
+                "x": 2.28,
+                "y": 1.58,
+                "layer": 0
+            },
+            {
+                "x": 4.68,
+                "y": 1.58,
+                "layer": 0
+            },
+            {
+                "x": 2.8,
+                "y": 1.5,
+                "layer": 0
+            },
+            {
+                "x": 5.2,
+                "y": 1.5,
+                "layer": 0
+            },
+            {
+                "x": 3.32,
+                "y": 1.58,
+                "layer": 0
+            },
+            {
+                "x": 5.72,
+                "y": 1.58,
+                "layer": 0
+            },
+            {
+                "x": 3.8,
+                "y": 1.81,
+                "layer": 0
+            },
+            {
+                "x": 6.2,
+                "y": 1.81,
+                "layer": 0
+            },
+            {
+                "x": 4.21,
+                "y": 2.17,
+                "layer": 0
+            },
+            {
+                "x": 6.61,
+                "y": 2.17,
+                "layer": 0
+            },
+            {
+                "x": 4.53,
+                "y": 2.65,
+                "layer": 0
+            },
+            {
+                "x": 6.93,
+                "y": 2.65,
+                "layer": 0
+            },
+            {
+                "x": 4.73,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 7.13,
+                "y": 3.2,
+                "layer": 0
+            },
+            {
+                "x": 4.0,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 6.4,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 3.93,
+                "y": 4.28,
+                "layer": 1
+            },
+            {
+                "x": 6.33,
+                "y": 4.28,
+                "layer": 1
+            },
+            {
+                "x": 3.72,
+                "y": 4.7,
+                "layer": 1
+            },
+            {
+                "x": 6.12,
+                "y": 4.7,
+                "layer": 1
+            },
+            {
+                "x": 3.4,
+                "y": 5.01,
+                "layer": 1
+            },
+            {
+                "x": 5.8,
+                "y": 5.01,
+                "layer": 1
+            },
+            {
+                "x": 3.01,
+                "y": 5.18,
+                "layer": 1
+            },
+            {
+                "x": 5.41,
+                "y": 5.18,
+                "layer": 1
+            },
+            {
+                "x": 2.59,
+                "y": 5.18,
+                "layer": 1
+            },
+            {
+                "x": 4.99,
+                "y": 5.18,
+                "layer": 1
+            },
+            {
+                "x": 2.2,
+                "y": 5.01,
+                "layer": 1
+            },
+            {
+                "x": 4.6,
+                "y": 5.01,
+                "layer": 1
+            },
+            {
+                "x": 1.88,
+                "y": 4.7,
+                "layer": 1
+            },
+            {
+                "x": 4.28,
+                "y": 4.7,
+                "layer": 1
+            },
+            {
+                "x": 1.67,
+                "y": 4.28,
+                "layer": 1
+            },
+            {
+                "x": 4.07,
+                "y": 4.28,
+                "layer": 1
+            },
+            {
+                "x": 1.6,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 4.0,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 1.67,
+                "y": 3.32,
+                "layer": 1
+            },
+            {
+                "x": 4.07,
+                "y": 3.32,
+                "layer": 1
+            },
+            {
+                "x": 1.88,
+                "y": 2.9,
+                "layer": 1
+            },
+            {
+                "x": 4.28,
+                "y": 2.9,
+                "layer": 1
+            },
+            {
+                "x": 2.2,
+                "y": 2.59,
+                "layer": 1
+            },
+            {
+                "x": 4.6,
+                "y": 2.59,
+                "layer": 1
+            },
+            {
+                "x": 2.59,
+                "y": 2.42,
+                "layer": 1
+            },
+            {
+                "x": 4.99,
+                "y": 2.42,
+                "layer": 1
+            },
+            {
+                "x": 3.01,
+                "y": 2.42,
+                "layer": 1
+            },
+            {
+                "x": 5.41,
+                "y": 2.42,
+                "layer": 1
+            },
+            {
+                "x": 3.4,
+                "y": 2.59,
+                "layer": 1
+            },
+            {
+                "x": 5.8,
+                "y": 2.59,
+                "layer": 1
+            },
+            {
+                "x": 3.72,
+                "y": 2.9,
+                "layer": 1
+            },
+            {
+                "x": 6.12,
+                "y": 2.9,
+                "layer": 1
+            },
+            {
+                "x": 3.93,
+                "y": 3.32,
+                "layer": 1
+            },
+            {
+                "x": 6.33,
+                "y": 3.32,
+                "layer": 1
+            },
+            {
+                "x": 4.0,
+                "y": 1.8,
+                "layer": 2
+            },
+            {
+                "x": 4.0,
+                "y": 2.6,
+                "layer": 2
+            },
+            {
+                "x": 4.0,
+                "y": 3.4,
+                "layer": 2
+            },
+            {
+                "x": 4.0,
+                "y": 4.2,
+                "layer": 2
+            },
+            {
+                "x": 4.0,
+                "y": 5.0,
+                "layer": 2
+            },
+            {
+                "x": 4.0,
+                "y": 5.8,
+                "layer": 2
+            },
+            {
+                "x": 2.8,
+                "y": 2.2,
+                "layer": 2
+            },
+            {
+                "x": 2.8,
+                "y": 2.9,
+                "layer": 2
+            },
+            {
+                "x": 2.8,
+                "y": 3.6,
+                "layer": 2
+            },
+            {
+                "x": 2.8,
+                "y": 4.3,
+                "layer": 2
+            },
+            {
+                "x": 2.8,
+                "y": 5.0,
+                "layer": 2
+            },
+            {
+                "x": 2.8,
+                "y": 5.7,
+                "layer": 2
+            },
+            {
+                "x": 5.2,
+                "y": 2.2,
+                "layer": 2
+            },
+            {
+                "x": 5.2,
+                "y": 2.9,
+                "layer": 2
+            },
+            {
+                "x": 5.2,
+                "y": 3.6,
+                "layer": 2
+            },
+            {
+                "x": 5.2,
+                "y": 4.3,
+                "layer": 2
+            },
+            {
+                "x": 5.2,
+                "y": 5.0,
+                "layer": 2
+            },
+            {
+                "x": 5.2,
+                "y": 5.7,
+                "layer": 2
+            },
+            {
+                "x": 3.6,
+                "y": 3.2,
+                "layer": 3
+            },
+            {
+                "x": 4.4,
+                "y": 3.2,
+                "layer": 3
+            },
+            {
+                "x": 4.0,
+                "y": 3.8,
+                "layer": 3
+            },
+            {
+                "x": 4.0,
+                "y": 4.4,
+                "layer": 3
+            },
+            {
+                "x": 3.6,
+                "y": 4.4,
+                "layer": 3
+            },
+            {
+                "x": 4.4,
+                "y": 4.4,
+                "layer": 3
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "name": "究極水果盛宴",
+        "subtitle": "六芒星曼陀羅巨作 (120 張牌)",
+        "iconsCount": 11,
+        "icons": [
+            "cherry",
+            "strawberry",
+            "grape",
+            "dekopon",
+            "persimmon",
+            "apple",
+            "pear",
+            "peach",
+            "pineapple",
+            "melon",
+            "watermelon"
+        ],
+        "cardPositions": [
+            {
+                "x": 6.45,
+                "y": 2.71,
+                "layer": 0
+            },
+            {
+                "x": 6.97,
+                "y": 2.94,
+                "layer": 0
+            },
+            {
+                "x": 6.67,
+                "y": 3.43,
+                "layer": 0
+            },
+            {
+                "x": 7.1,
+                "y": 3.8,
+                "layer": 0
+            },
+            {
+                "x": 6.67,
+                "y": 4.17,
+                "layer": 0
+            },
+            {
+                "x": 6.97,
+                "y": 4.66,
+                "layer": 0
+            },
+            {
+                "x": 6.45,
+                "y": 4.89,
+                "layer": 0
+            },
+            {
+                "x": 6.27,
+                "y": 5.21,
+                "layer": 0
+            },
+            {
+                "x": 6.33,
+                "y": 5.77,
+                "layer": 0
+            },
+            {
+                "x": 5.76,
+                "y": 5.75,
+                "layer": 0
+            },
+            {
+                "x": 5.65,
+                "y": 6.31,
+                "layer": 0
+            },
+            {
+                "x": 5.11,
+                "y": 6.13,
+                "layer": 0
+            },
+            {
+                "x": 4.84,
+                "y": 6.63,
+                "layer": 0
+            },
+            {
+                "x": 4.38,
+                "y": 6.29,
+                "layer": 0
+            },
+            {
+                "x": 4.02,
+                "y": 6.29,
+                "layer": 0
+            },
+            {
+                "x": 3.56,
+                "y": 6.63,
+                "layer": 0
+            },
+            {
+                "x": 3.29,
+                "y": 6.13,
+                "layer": 0
+            },
+            {
+                "x": 2.75,
+                "y": 6.31,
+                "layer": 0
+            },
+            {
+                "x": 2.64,
+                "y": 5.75,
+                "layer": 0
+            },
+            {
+                "x": 2.07,
+                "y": 5.77,
+                "layer": 0
+            },
+            {
+                "x": 2.13,
+                "y": 5.21,
+                "layer": 0
+            },
+            {
+                "x": 1.95,
+                "y": 4.89,
+                "layer": 0
+            },
+            {
+                "x": 1.43,
+                "y": 4.66,
+                "layer": 0
+            },
+            {
+                "x": 1.73,
+                "y": 4.17,
+                "layer": 0
+            },
+            {
+                "x": 1.3,
+                "y": 3.8,
+                "layer": 0
+            },
+            {
+                "x": 1.73,
+                "y": 3.43,
+                "layer": 0
+            },
+            {
+                "x": 1.43,
+                "y": 2.94,
+                "layer": 0
+            },
+            {
+                "x": 1.95,
+                "y": 2.71,
+                "layer": 0
+            },
+            {
+                "x": 2.13,
+                "y": 2.39,
+                "layer": 0
+            },
+            {
+                "x": 2.07,
+                "y": 1.83,
+                "layer": 0
+            },
+            {
+                "x": 2.64,
+                "y": 1.85,
+                "layer": 0
+            },
+            {
+                "x": 2.75,
+                "y": 1.29,
+                "layer": 0
+            },
+            {
+                "x": 3.29,
+                "y": 1.47,
+                "layer": 0
+            },
+            {
+                "x": 3.56,
+                "y": 0.97,
+                "layer": 0
+            },
+            {
+                "x": 4.02,
+                "y": 1.31,
+                "layer": 0
+            },
+            {
+                "x": 4.38,
+                "y": 1.31,
+                "layer": 0
+            },
+            {
+                "x": 4.84,
+                "y": 0.97,
+                "layer": 0
+            },
+            {
+                "x": 5.11,
+                "y": 1.47,
+                "layer": 0
+            },
+            {
+                "x": 5.65,
+                "y": 1.29,
+                "layer": 0
+            },
+            {
+                "x": 5.76,
+                "y": 1.85,
+                "layer": 0
+            },
+            {
+                "x": 6.33,
+                "y": 1.83,
+                "layer": 0
+            },
+            {
+                "x": 6.27,
+                "y": 2.39,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 2.8,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 2.8,
+                "layer": 0
+            },
+            {
+                "x": 5.2,
+                "y": 2.8,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 3.8,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 3.8,
+                "layer": 0
+            },
+            {
+                "x": 5.2,
+                "y": 3.8,
+                "layer": 0
+            },
+            {
+                "x": 3.2,
+                "y": 4.8,
+                "layer": 0
+            },
+            {
+                "x": 4.2,
+                "y": 4.8,
+                "layer": 0
+            },
+            {
+                "x": 5.2,
+                "y": 4.8,
+                "layer": 0
+            },
+            {
+                "x": 5.85,
+                "y": 4.74,
+                "layer": 1
+            },
+            {
+                "x": 6.11,
+                "y": 4.89,
+                "layer": 1
+            },
+            {
+                "x": 6.37,
+                "y": 5.04,
+                "layer": 1
+            },
+            {
+                "x": 6.63,
+                "y": 5.19,
+                "layer": 1
+            },
+            {
+                "x": 4.21,
+                "y": 5.7,
+                "layer": 1
+            },
+            {
+                "x": 4.21,
+                "y": 6.0,
+                "layer": 1
+            },
+            {
+                "x": 4.21,
+                "y": 6.3,
+                "layer": 1
+            },
+            {
+                "x": 4.21,
+                "y": 6.6,
+                "layer": 1
+            },
+            {
+                "x": 2.56,
+                "y": 4.76,
+                "layer": 1
+            },
+            {
+                "x": 2.3,
+                "y": 4.91,
+                "layer": 1
+            },
+            {
+                "x": 2.04,
+                "y": 5.06,
+                "layer": 1
+            },
+            {
+                "x": 1.78,
+                "y": 5.21,
+                "layer": 1
+            },
+            {
+                "x": 2.55,
+                "y": 2.86,
+                "layer": 1
+            },
+            {
+                "x": 2.29,
+                "y": 2.71,
+                "layer": 1
+            },
+            {
+                "x": 2.03,
+                "y": 2.56,
+                "layer": 1
+            },
+            {
+                "x": 1.77,
+                "y": 2.41,
+                "layer": 1
+            },
+            {
+                "x": 4.19,
+                "y": 1.9,
+                "layer": 1
+            },
+            {
+                "x": 4.19,
+                "y": 1.6,
+                "layer": 1
+            },
+            {
+                "x": 4.19,
+                "y": 1.3,
+                "layer": 1
+            },
+            {
+                "x": 4.19,
+                "y": 1.0,
+                "layer": 1
+            },
+            {
+                "x": 5.84,
+                "y": 2.84,
+                "layer": 1
+            },
+            {
+                "x": 6.1,
+                "y": 2.69,
+                "layer": 1
+            },
+            {
+                "x": 6.36,
+                "y": 2.54,
+                "layer": 1
+            },
+            {
+                "x": 6.62,
+                "y": 2.39,
+                "layer": 1
+            },
+            {
+                "x": 2.7,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 3.65,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 4.6,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 5.55,
+                "y": 2.8,
+                "layer": 1
+            },
+            {
+                "x": 2.7,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 3.65,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 4.6,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 5.55,
+                "y": 3.8,
+                "layer": 1
+            },
+            {
+                "x": 2.7,
+                "y": 4.8,
+                "layer": 1
+            },
+            {
+                "x": 3.65,
+                "y": 4.8,
+                "layer": 1
+            },
+            {
+                "x": 4.6,
+                "y": 4.8,
+                "layer": 1
+            },
+            {
+                "x": 5.55,
+                "y": 4.8,
+                "layer": 1
+            },
+            {
+                "x": 5.6,
+                "y": 3.8,
+                "layer": 2
+            },
+            {
+                "x": 5.41,
+                "y": 4.5,
+                "layer": 2
+            },
+            {
+                "x": 4.9,
+                "y": 5.01,
+                "layer": 2
+            },
+            {
+                "x": 4.2,
+                "y": 5.2,
+                "layer": 2
+            },
+            {
+                "x": 3.5,
+                "y": 5.01,
+                "layer": 2
+            },
+            {
+                "x": 2.99,
+                "y": 4.5,
+                "layer": 2
+            },
+            {
+                "x": 2.8,
+                "y": 3.8,
+                "layer": 2
+            },
+            {
+                "x": 2.99,
+                "y": 3.1,
+                "layer": 2
+            },
+            {
+                "x": 3.5,
+                "y": 2.59,
+                "layer": 2
+            },
+            {
+                "x": 4.2,
+                "y": 2.4,
+                "layer": 2
+            },
+            {
+                "x": 4.9,
+                "y": 2.59,
+                "layer": 2
+            },
+            {
+                "x": 5.41,
+                "y": 3.1,
+                "layer": 2
+            },
+            {
+                "x": 3.3,
+                "y": 2.9,
+                "layer": 2
+            },
+            {
+                "x": 4.2,
+                "y": 2.9,
+                "layer": 2
+            },
+            {
+                "x": 5.1,
+                "y": 2.9,
+                "layer": 2
+            },
+            {
+                "x": 3.3,
+                "y": 3.8,
+                "layer": 2
+            },
+            {
+                "x": 4.2,
+                "y": 3.8,
+                "layer": 2
+            },
+            {
+                "x": 5.1,
+                "y": 3.8,
+                "layer": 2
+            },
+            {
+                "x": 3.3,
+                "y": 4.7,
+                "layer": 2
+            },
+            {
+                "x": 4.2,
+                "y": 4.7,
+                "layer": 2
+            },
+            {
+                "x": 5.1,
+                "y": 4.7,
+                "layer": 2
+            },
+            {
+                "x": 3.4,
+                "y": 3.0,
+                "layer": 3
+            },
+            {
+                "x": 4.2,
+                "y": 3.0,
+                "layer": 3
+            },
+            {
+                "x": 5.0,
+                "y": 3.0,
+                "layer": 3
+            },
+            {
+                "x": 3.4,
+                "y": 3.8,
+                "layer": 3
+            },
+            {
+                "x": 4.2,
+                "y": 3.8,
+                "layer": 3
+            },
+            {
+                "x": 5.0,
+                "y": 3.8,
+                "layer": 3
+            },
+            {
+                "x": 3.4,
+                "y": 4.6,
+                "layer": 3
+            },
+            {
+                "x": 4.2,
+                "y": 4.6,
+                "layer": 3
+            },
+            {
+                "x": 5.0,
+                "y": 4.6,
+                "layer": 3
+            },
+            {
+                "x": 3.8,
+                "y": 3.5,
+                "layer": 4
+            },
+            {
+                "x": 4.6,
+                "y": 3.5,
+                "layer": 4
+            },
+            {
+                "x": 4.2,
+                "y": 4.2,
+                "layer": 4
+            }
         ]
     }
 ];
@@ -241,12 +4303,11 @@ function generateRandomSolvableLevel(totalCards = 48) {
     // Ensure multiple of 3
     totalCards = Math.floor(totalCards / 3) * 3;
     const suikaFruitKeys = ['cherry', 'strawberry', 'grape', 'dekopon', 'persimmon', 'apple', 'pear', 'peach', 'pineapple', 'melon', 'watermelon'];
-    const numTypes = Math.min(Math.max(4, Math.floor(totalCards / 9)), 10);
+    const numTypes = Math.min(Math.max(4, Math.floor(totalCards / 9)), 11);
     const chosenIcons = suikaFruitKeys.sort(() => Math.random() - 0.5).slice(0, numTypes);
 
     // Build positions procedurally in overlapping layers
     const cardPositions = [];
-    const maxLayers = 4;
     const cardsPerLayer = [
         Math.floor(totalCards * 0.44),
         Math.floor(totalCards * 0.30),
@@ -261,8 +4322,8 @@ function generateRandomSolvableLevel(totalCards = 48) {
         for (let r = 0; placed < count; r++) {
             for (let c = 0; c < cols && placed < count; c++) {
                 cardPositions.push({
-                    x: 1.4 + c * 0.95 + offset + (Math.random() - 0.5) * 0.16,
-                    y: 1.0 + r * 1.18 + offset + (Math.random() - 0.5) * 0.16,
+                    x: Math.round((1.4 + c * 0.95 + offset + (Math.random() - 0.5) * 0.16) * 100) / 100,
+                    y: Math.round((1.0 + r * 1.18 + offset + (Math.random() - 0.5) * 0.16) * 100) / 100,
                     layer: layer
                 });
                 placed++;
