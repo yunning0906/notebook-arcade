@@ -460,10 +460,8 @@ class PortalController {
         this.currentGame = gameKey;
         document.title = `${game.title} - Notebook Arcade`;
 
-        // Set iframe source
-        if (!this.gameFrame.src.endsWith(game.path)) {
-            this.gameFrame.src = game.path;
-        }
+        // Set iframe source with cache-buster to ensure latest version is always loaded
+        this.gameFrame.src = `${game.path}?t=${Date.now()}`;
 
         // Show game view, hide lobby
         this.lobbyView.classList.add('hidden');

@@ -111,11 +111,15 @@ class PaperTileGame {
         document.getElementById('btnPrevLevel').addEventListener('click', () => {
             if (this.currentLevelIndex > 0) {
                 this.loadLevel(this.currentLevelIndex - 1);
+            } else {
+                this.loadLevel(window.GAME_LEVELS.length - 1);
             }
         });
         document.getElementById('btnNextLevel').addEventListener('click', () => {
             if (this.currentLevelIndex < window.GAME_LEVELS.length - 1) {
                 this.loadLevel(this.currentLevelIndex + 1);
+            } else {
+                this.loadLevel(0);
             }
         });
         document.getElementById('btnLevelSelect').addEventListener('click', () => {
@@ -197,7 +201,8 @@ class PaperTileGame {
         this._updatePowerupUI();
 
         // Update UI
-        this.levelTitleEl.textContent = `第 ${levelData.id} 關 · ${levelData.name}`;
+        const totalLvls = window.GAME_LEVELS.length;
+        this.levelTitleEl.textContent = `第 ${levelData.id} / ${totalLvls} 關 · ${levelData.name}`;
         this.levelSubEl.textContent = levelData.subtitle;
 
         // Prepare Card Types with guaranteed multiples of 3
@@ -809,14 +814,15 @@ class PaperTileGame {
     _openLevelModal() {
         const grid = document.getElementById('levelListGrid');
         grid.innerHTML = '';
+        const total = window.GAME_LEVELS.length;
 
         window.GAME_LEVELS.forEach((lvl, idx) => {
             const btn = document.createElement('button');
             btn.className = `level-select-item ${idx === this.currentLevelIndex ? 'current' : ''}`;
             btn.innerHTML = `
-                <div class="level-stamp">第 ${lvl.id} 關</div>
+                <div class="level-stamp">第 ${lvl.id} / ${total} 關</div>
                 <div class="level-item-name">${lvl.name}</div>
-                <div class="level-item-cards">${lvl.cardPositions.length} 張牌</div>
+                <div class="level-item-cards">${lvl.cardPositions.length} 張牌 · ${lvl.iconsCount} 種水果</div>
             `;
             btn.addEventListener('click', () => {
                 this.levelModal.classList.add('hidden');

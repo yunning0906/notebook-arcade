@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PAPER TILES - 手繪卡牌三消手帳</title>
     <meta name="description" content="療癒溫暖的手繪紙質卡牌三消 / 靜態麻將連連看遊戲。桌面上交疊堆放著手繪薄卡片，點擊放進底部 7 格托盤，湊齊 3 張同款即可消除！">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20260925_12">
 </head>
 <body>
     <div class="game-container">
@@ -48,7 +48,7 @@
             <div class="level-navigation">
                 <button id="btnPrevLevel" class="nav-arrow-btn" aria-label="上一關">◀</button>
                 <div id="btnLevelSelect" class="level-info-wrap" title="點擊切換關卡">
-                    <div id="levelTitle" class="level-title">第 1 關 · 晨光果園</div>
+                    <div id="levelTitle" class="level-title">第 1 / 12 關 · 晨光果園</div>
                     <div id="levelSub" class="level-sub">手繪水果入學 (18 張牌)</div>
                 </div>
                 <button id="btnNextLevel" class="nav-arrow-btn" aria-label="下一關">▶</button>
@@ -160,8 +160,8 @@
     <!-- Level Selection Modal -->
     <div id="levelModal" class="modal-backdrop hidden">
         <div class="modal-paper-card">
-            <h2 class="modal-title">手帳關卡選擇</h2>
-            <p class="modal-desc">挑選您想要整理的精選桌面主題：</p>
+            <h2 class="modal-title">手帳關卡選擇（共 12 關）</h2>
+            <p class="modal-desc">可自由跳選任意精選關卡挑戰（第 1～12 關）：</p>
             <div id="levelListGrid" class="level-list-grid">
                 <!-- Level list populated dynamically -->
             </div>
@@ -187,11 +187,11 @@
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="js/icons.js"></script>
-    <script src="js/audio.js"></script>
-    <script src="js/particles.js"></script>
-    <script src="js/levels.js"></script>
-    <script src="js/game.js"></script>
+    <!-- Scripts (with cache-busters) -->
+    <script src="js/icons.js?v=20260925_12"></script>
+    <script src="js/audio.js?v=20260925_12"></script>
+    <script src="js/particles.js?v=20260925_12"></script>
+    <script src="js/levels.js?v=20260925_12"></script>
+    <script src="js/game.js?v=20260925_12"></script>
 </body>
 </html>
