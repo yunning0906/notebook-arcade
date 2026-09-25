@@ -1,5 +1,9 @@
 /**
  * Paper Tile Match 3 - Level Definitions & Solvable Level Generator
+ * 全部採用 Suika Game 水果圖標系列：
+ * 櫻桃 (cherry)、草莓 (strawberry)、葡萄 (grape)、凸頂柑 (dekopon)、
+ * 柿子 (persimmon)、蘋果 (apple)、梨子 (pear)、桃子 (peach)、
+ * 鳳梨 (pineapple)、哈密瓜 (melon)、大西瓜 (watermelon)。
  * 
  * Grid Coordinate Convention:
  * Center of desk is around (x: 4.5, y: 4.5).
@@ -11,10 +15,10 @@
 const LEVELS = [
     {
         id: 1,
-        name: '晨光餐桌',
-        subtitle: '入門手繪桌布 (18 張牌)',
+        name: '晨光果園',
+        subtitle: '手繪水果入學 (18 張牌)',
         iconsCount: 4, // 4 types * [3, 3, 6, 6] = 18 cards
-        icons: ['apple', 'toast', 'coffee', 'lemon'],
+        icons: ['cherry', 'strawberry', 'grape', 'apple'],
         cardPositions: [
             // Layer 0 (Base Layer, 12 cards)
             { x: 2.0, y: 1.5, layer: 0 },
@@ -44,12 +48,12 @@ const LEVELS = [
     },
     {
         id: 2,
-        name: '午後咖啡館',
-        subtitle: '精緻愛心與拿鐵 (36 張牌)',
+        name: '午後甜心',
+        subtitle: '經典愛心果盤 (36 張牌)',
         iconsCount: 6, // 6 types * 6 = 36 cards
-        icons: ['coffee', 'croissant', 'toast', 'cherry', 'strawberry', 'sun'],
+        icons: ['cherry', 'strawberry', 'grape', 'dekopon', 'apple', 'peach'],
         cardPositions: [
-            // Layer 0: Heart & Cup Outline (16 cards)
+            // Layer 0: Heart Outline (16 cards)
             { x: 2.0, y: 1.0, layer: 0 },
             { x: 3.2, y: 0.8, layer: 0 },
             { x: 4.4, y: 0.8, layer: 0 },
@@ -102,10 +106,10 @@ const LEVELS = [
     },
     {
         id: 3,
-        name: '秘密植物園',
-        subtitle: '四重階梯綠葉疊層 (54 張牌)',
+        name: '歡樂果物階梯',
+        subtitle: '四重階梯水果疊層 (54 張牌)',
         iconsCount: 7, // 18 sets of 3 = 54
-        icons: ['leaf', 'clover', 'tulip', 'acorn', 'avocado', 'lemon', 'apple'],
+        icons: ['cherry', 'strawberry', 'grape', 'dekopon', 'persimmon', 'apple', 'pear'],
         cardPositions: [
             // Layer 0: Diamond Base (24 cards)
             { x: 3.8, y: 0.6, layer: 0 },
@@ -141,10 +145,10 @@ const LEVELS = [
     },
     {
         id: 4,
-        name: '手帳工作台',
-        subtitle: '交錯文具筆記 (72 張牌)',
+        name: '繽紛果園派對',
+        subtitle: '交錯水果筆記 (72 張牌)',
         iconsCount: 9,
-        icons: ['pencil', 'coffee', 'toast', 'leaf', 'strawberry', 'acorn', 'tulip', 'lemon', 'sun'],
+        icons: ['cherry', 'strawberry', 'grape', 'dekopon', 'persimmon', 'apple', 'pear', 'peach', 'watermelon'],
         cardPositions: [
             // Layer 0: Quad-cluster desks (30 cards)
             // Cluster Top-Left
@@ -186,10 +190,10 @@ const LEVELS = [
     },
     {
         id: 5,
-        name: '野餐手帳大師',
-        subtitle: '全屏千層宏大交錯 (90 張牌)',
+        name: '大西瓜手帳大師',
+        subtitle: '全屏千層果香宏大交錯 (90 張牌)',
         iconsCount: 10,
-        icons: ['toast', 'croissant', 'coffee', 'apple', 'lemon', 'strawberry', 'avocado', 'cherry', 'sun', 'clover'],
+        icons: ['cherry', 'strawberry', 'grape', 'dekopon', 'persimmon', 'apple', 'pear', 'peach', 'pineapple', 'watermelon'],
         cardPositions: [
             // Generate dense concentric multi-tier pyramid with 90 cards
             // Layer 0: 36 cards
@@ -230,15 +234,15 @@ const LEVELS = [
 ];
 
 /**
- * Generate a random solvable level layout
+ * Generate a random solvable level layout using only the 11 official Suika Game fruits
  * @param {number} totalCards Multiple of 3, e.g. 48, 60, 75
  */
 function generateRandomSolvableLevel(totalCards = 48) {
     // Ensure multiple of 3
     totalCards = Math.floor(totalCards / 3) * 3;
-    const allIconKeys = Object.keys(window.TILE_ICONS);
+    const suikaFruitKeys = ['cherry', 'strawberry', 'grape', 'dekopon', 'persimmon', 'apple', 'pear', 'peach', 'pineapple', 'melon', 'watermelon'];
     const numTypes = Math.min(Math.max(4, Math.floor(totalCards / 9)), 10);
-    const chosenIcons = allIconKeys.sort(() => Math.random() - 0.5).slice(0, numTypes);
+    const chosenIcons = suikaFruitKeys.sort(() => Math.random() - 0.5).slice(0, numTypes);
 
     // Build positions procedurally in overlapping layers
     const cardPositions = [];
@@ -268,7 +272,7 @@ function generateRandomSolvableLevel(totalCards = 48) {
 
     return {
         id: 999,
-        name: '無盡手帳挑戰',
+        name: '無盡果園挑戰',
         subtitle: `隨機桌布 (${totalCards} 張牌)`,
         iconsCount: chosenIcons.length,
         icons: chosenIcons,
