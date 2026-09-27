@@ -170,16 +170,6 @@ class OneStrokeGame {
             this.restartLevel();
         });
 
-        // Keyboard shortcuts
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'z' || e.key === 'Z') {
-                this.undoStep();
-            } else if (e.key === 'r' || e.key === 'R') {
-                this.restartLevel();
-            } else if (e.key === 'h' || e.key === 'H') {
-                this.provideHint();
-            }
-        });
     }
 
     loadLevel(index) {

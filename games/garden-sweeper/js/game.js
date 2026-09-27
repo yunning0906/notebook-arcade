@@ -158,14 +158,6 @@
                 });
             }
 
-            // Keyboard shortcuts (Space/F to toggle tool, R to restart)
-            window.addEventListener('keydown', (e) => {
-                if (e.key === ' ' || e.key === 'f' || e.key === 'F') {
-                    this.setTool(this.activeTool === 'dig' ? 'flag' : 'dig');
-                } else if (e.key === 'r' || e.key === 'R') {
-                    this.startNewGame();
-                }
-            });
         }
 
         updateSoundIcon() {

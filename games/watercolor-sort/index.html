@@ -40,14 +40,6 @@
                     </svg>
                 </button>
 
-                <!-- Help Button -->
-                <button class="icon-btn" id="helpBtn" aria-label="玩法說明" title="遊戲玩法">
-                    <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                    </svg>
-                </button>
             </div>
         </header>
 
@@ -147,23 +139,6 @@
         </div>
     </div>
 
-    <!-- MODAL 3: HELP & RULES -->
-    <div class="modal-overlay hidden" id="helpModal">
-        <div class="modal-card">
-            <button class="modal-close-btn" aria-label="關閉說明">✕</button>
-            <div class="modal-stamp">玩法規則</div>
-            <h2 class="modal-title">如何調配水彩？</h2>
-            <ul class="help-list">
-                <li>點選任意試管將其拿取，再點選目標試管即可互相傾倒水彩。</li>
-                <li>只能倒在<strong>頂層相同色彩</strong>的試管中，或是倒入<strong>完全為空的試管</strong>。</li>
-                <li>目標試管必須還有足夠的容量空間（每支試管容量為 4 格）。</li>
-                <li>當一支試管集滿 4 格相同水彩時，會自動蓋上軟木塞。</li>
-                <li>沒有倒數計時與步數懲罰，隨時可使用<strong>「復原」</strong>或<strong>「+試管」</strong>慢慢放鬆探索。</li>
-            </ul>
-            <button class="btn-primary modal-close-btn-action">開始調色</button>
-        </div>
-    </div>
-
     <!-- Game Scripts -->
     <script src="js/colors.js?v=macaron_20260921_1"></script>
     <script src="js/audio.js?v=macaron_20260921_1"></script>
@@ -175,11 +150,6 @@
             const game = new WatercolorGame();
             const ui = new WatercolorUI(game);
             game.init(ui);
-
-            // Close modal button action
-            document.querySelector('.modal-close-btn-action')?.addEventListener('click', () => {
-                document.getElementById('helpModal')?.classList.add('hidden');
-            });
 
             // Start BGM on first user interaction anywhere
             const startAudioOnFirstClick = () => {

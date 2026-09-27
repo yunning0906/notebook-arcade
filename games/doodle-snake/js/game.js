@@ -161,35 +161,17 @@ class DoodleSnakeGame {
             let dir = null;
             switch (e.key) {
                 case 'ArrowUp':
-                case 'KeyW':
-                case 'w':
-                case 'W':
                     dir = { x: 0, y: -1 };
                     break;
                 case 'ArrowDown':
-                case 'KeyS':
-                case 's':
-                case 'S':
                     dir = { x: 0, y: 1 };
                     break;
                 case 'ArrowLeft':
-                case 'KeyA':
-                case 'a':
-                case 'A':
                     dir = { x: -1, y: 0 };
                     break;
                 case 'ArrowRight':
-                case 'KeyD':
-                case 'd':
-                case 'D':
                     dir = { x: 1, y: 0 };
                     break;
-                case 'KeyR':
-                case 'r':
-                case 'R':
-                    this.resetGame();
-                    this.startGame();
-                    return;
             }
 
             if (dir) {

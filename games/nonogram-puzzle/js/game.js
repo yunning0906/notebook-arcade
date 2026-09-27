@@ -137,16 +137,6 @@ class NonogramGame {
             this.gridContainer.addEventListener('contextmenu', (e) => e.preventDefault());
         }
 
-        // Keyboard shortcuts
-        window.addEventListener('keydown', (e) => {
-            if (e.key === '1' || e.key === 'p' || e.key === 'P') this.setTool('pencil');
-            if (e.key === '2' || e.key === 'x' || e.key === 'X') this.setTool('cross');
-            if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
-                e.preventDefault();
-                this.undo();
-            }
-        });
-
         // Start BGM on first user interaction
         const startAudioOnce = () => {
             window.soundEngine.init();

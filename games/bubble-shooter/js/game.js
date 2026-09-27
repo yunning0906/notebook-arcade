@@ -138,7 +138,7 @@ class BubbleShooterGame {
         // --- Keyboard Controls ---
         window.addEventListener('keydown', (e) => {
             if (this.isGameOver) {
-                if (e.key === ' ' || e.key === 'Enter' || e.key.toLowerCase() === 'r') {
+                if (e.key === ' ') {
                     this.restart();
                 }
                 return;
@@ -146,13 +146,9 @@ class BubbleShooterGame {
 
             switch (e.key) {
                 case 'ArrowLeft':
-                case 'a':
-                case 'A':
                     this.keys.left = true;
                     break;
                 case 'ArrowRight':
-                case 'd':
-                case 'D':
                     this.keys.right = true;
                     break;
                 case 'ArrowUp':
@@ -161,15 +157,9 @@ class BubbleShooterGame {
                     this.handleShoot();
                     break;
                 case 'ArrowDown':
-                case 'c':
-                case 'C':
                     e.preventDefault();
                     this.shooter.swap();
                     this.updateNextBubblePreview();
-                    break;
-                case 'r':
-                case 'R':
-                    this.restart();
                     break;
             }
         });
@@ -177,13 +167,9 @@ class BubbleShooterGame {
         window.addEventListener('keyup', (e) => {
             switch (e.key) {
                 case 'ArrowLeft':
-                case 'a':
-                case 'A':
                     this.keys.left = false;
                     break;
                 case 'ArrowRight':
-                case 'd':
-                case 'D':
                     this.keys.right = false;
                     break;
             }

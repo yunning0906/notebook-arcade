@@ -12,14 +12,14 @@ class Caterpillar {
     constructor(gridSize) {
         this.gridSize = gridSize;
 
-        // 柔和糖果粉彩配色盤
+        // 馬卡龍配色盤
         this.palette = [
-            '#A8E6CF', // 薄荷嫩綠 (頭部預設基調)
-            '#FFD3B6', // 蜜桃粉橘
-            '#FFAAA6', // 櫻花柔粉
-            '#FFF4A3', // 奶油粉黃
-            '#BFE3F7', // 晴空粉藍
-            '#D5C6E8'  // 薰衣草紫
+            '#B4CFAE', // 開心果綠 (頭部預設基調)
+            '#F4A6B7', // 覆盆莓粉
+            '#C9B6E4', // 薰衣草紫
+            '#F5E1A4', // 檸檬黃
+            '#E8B784', // 焦糖橘
+            '#A7D8D8'  // 薄荷藍
         ];
 
         // 網格座標陣列：[head, body1, body2, ..., tail]

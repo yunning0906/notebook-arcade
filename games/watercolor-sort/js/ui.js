@@ -30,7 +30,6 @@ class WatercolorUI {
         const hintBtn = document.getElementById('hintBtn');
         const levelSelectBtn = document.getElementById('levelSelectBtn');
         const soundToggleBtn = document.getElementById('soundToggleBtn');
-        const helpBtn = document.getElementById('helpBtn');
 
         if (undoBtn) undoBtn.addEventListener('click', () => this.game.undo());
         if (restartBtn) restartBtn.addEventListener('click', () => this.game.restart());
@@ -48,10 +47,6 @@ class WatercolorUI {
         if (levelSelectBtn) {
             levelSelectBtn.addEventListener('click', () => this.openLevelSelectModal());
         }
-        if (helpBtn) {
-            helpBtn.addEventListener('click', () => this.openHelpModal());
-        }
-
         // Close modal buttons
         document.querySelectorAll('.modal-close-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -577,13 +572,6 @@ class WatercolorUI {
         modal.classList.remove('hidden');
     }
 
-    /**
-     * Open Help / Rules Modal
-     */
-    openHelpModal() {
-        const modal = document.getElementById('helpModal');
-        if (modal) modal.classList.remove('hidden');
-    }
 }
 
 window.WatercolorUI = WatercolorUI;
